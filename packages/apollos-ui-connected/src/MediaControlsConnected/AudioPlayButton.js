@@ -1,17 +1,16 @@
 import React from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import { View } from 'react-native';
 import PropTypes from 'prop-types';
 
 import {
   styled,
   TouchableScale,
   Card,
-  CardLabel,
-  ConnectedImage,
   Icon,
   MediaThumbnailItem,
   PaddedView,
   withTheme,
+  H6,
 } from '@apollosproject/ui-kit';
 
 const Container = styled({
@@ -20,49 +19,33 @@ const Container = styled({
   justifyContent: 'flex-start',
 })(View);
 
-const StyledCard = styled({
+const StyledCard = styled(({ theme }) => ({
   margin: 0,
   marginHorizontal: 0,
   marginVertical: 0,
-  width: '100%',
-})(Card);
+  width: theme.sizing.baseUnit * 4,
+  backgroundColor: theme.colors.darkSecondary,
+}))(Card);
 
 const MediaThumbnailIcon = withTheme(({ theme }) => ({
-  size: theme.sizing.baseUnit * 3,
-  style: Platform.select(theme.shadows.default),
+  size: theme.sizing.baseUnit * 1.5,
 }))(Icon);
 
 const PlayButton = ({
   coverImageSources,
   icon,
   onPress,
-  title,
   isLoading,
-  isLive,
+  title,
   ...props
 }) => (
   <Container {...props}>
     <TouchableScale onPress={onPress}>
       <PaddedView vertical={false}>
-        <StyledCard isLoading={isLoading} forceRatio={16 / 9}>
-          <ConnectedImage
-            source={coverImageSources}
-            style={StyleSheet.absoluteFill}
-          />
-          <MediaThumbnailItem bottom right>
-            <PaddedView>
-              {isLive ? (
-                <CardLabel
-                  title="Live"
-                  type="secondary"
-                  icon="live-dot"
-                  iconSize={8}
-                />
-              ) : null}
-            </PaddedView>
-          </MediaThumbnailItem>
+        <StyledCard forceRatio={1} isLoading={isLoading}>
           <MediaThumbnailItem centered>
-            <MediaThumbnailIcon isLoading={isLoading} name={icon} />
+            <MediaThumbnailIcon name={icon} isLoading={isLoading} />
+            <H6>{title}</H6>
           </MediaThumbnailItem>
         </StyledCard>
       </PaddedView>
@@ -79,7 +62,7 @@ PlayButton.propTypes = {
 };
 
 PlayButton.defaultProps = {
-  icon: 'play',
+  icon: 'audio',
   title: 'Play',
 };
 

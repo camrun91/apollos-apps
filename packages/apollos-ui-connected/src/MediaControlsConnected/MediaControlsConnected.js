@@ -21,18 +21,32 @@ const MediaControlsConnected = ({ Component, contentId, ...props }) => {
         >
           {({
             data: {
-              node: { videos, title, parentChannel = {}, coverImage = {} } = {},
+              node: {
+                videos,
+                audios,
+                title,
+                parentChannel = {},
+                coverImage = {},
+              } = {},
             } = {},
             loading,
             error,
           }) => {
             const coverImageSources = (coverImage && coverImage.sources) || [];
-            const liveStreamSource = get(liveStream, 'media.sources[0]');
+            const liveStreamSource =
+              get(liveStream, 'isLive') && get(liveStream, 'media.sources[0]');
             const videoSource = get(videos, '[0].sources[0]', null);
+            const audioSource = get(audios, '[0].sources[0]', null);
             const webViewUrl = get(liveStream, 'webViewUrl');
 
+            const hasMedia =
+              webViewUrl || liveStreamSource || videoSource || audioSource;
+
+            const shouldShowLoadingState =
+              loading && !hasMedia && contentId.includes('WCCMessage');
+
             // if we don't have a media source don't render
-            if (!(webViewUrl || liveStreamSource || videoSource)) return null;
+            if (!hasMedia && !shouldShowLoadingState) return null;
 
             return (
               <Component
@@ -44,6 +58,7 @@ const MediaControlsConnected = ({ Component, contentId, ...props }) => {
                 parentChannelName={parentChannel.name}
                 title={title}
                 videoSource={videoSource}
+                audioSource={audioSource}
                 webViewUrl={webViewUrl}
                 {...props}
               />

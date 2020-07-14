@@ -4,6 +4,8 @@ import { get } from 'lodash';
 
 import WebView from './WebView';
 import PlayButtonConnected from './PlayButtonConnected';
+import PlayButton from './PlayButtonConnected/PlayButton';
+import AudioPlayButton from './AudioPlayButton';
 
 const MediaControls = ({
   coverImageSources,
@@ -13,6 +15,7 @@ const MediaControls = ({
   parentChannelName,
   title,
   videoSource,
+  audioSource,
   webViewUrl,
   ...props
 }) => {
@@ -20,10 +23,16 @@ const MediaControls = ({
 
   let Control = null;
 
+  const showLoadingState =
+    loading && !(videoSource || audioSource || liveStreamSource || webViewUrl);
+
   //  We have a `liveStreamSource` so content is live!
   if (get(liveStreamSource, 'uri', false)) {
     Control = (
       <PlayButtonConnected
+        isLive
+        isLoading={showLoadingState}
+        component={PlayButton}
         coverImageSources={coverImageSources}
         parentChannelName={parentChannelName}
         title={title}
@@ -31,13 +40,28 @@ const MediaControls = ({
         {...props}
       />
     );
-  }
-  // We don't have a `liveStreamSource` but we do have a `webviewUrl` so content is live!
-  else if (webViewUrl) {
+    // We don't have a `liveStreamSource` but we do have a `webviewUrl` so content is live!
+  } else if (webViewUrl) {
     Control = (
       <WebView
+        isLoading={showLoadingState}
+        Component={WebView}
         coverImageSources={coverImageSources}
         webViewUrl={webViewUrl}
+        {...props}
+      />
+    );
+    // We have audio but no video
+  } else if (get(audioSource, 'uri') && !get(videoSource, 'uri')) {
+    Control = (
+      <PlayButtonConnected
+        isLoading={showLoadingState}
+        Component={AudioPlayButton}
+        coverImageSources={coverImageSources}
+        parentChannelName={parentChannelName}
+        title={title}
+        isVideo={false}
+        videoSource={audioSource}
         {...props}
       />
     );
@@ -46,6 +70,8 @@ const MediaControls = ({
   else {
     Control = (
       <PlayButtonConnected
+        isLoading={showLoadingState}
+        Component={PlayButton}
         coverImageSources={coverImageSources}
         parentChannelName={parentChannelName}
         title={title}
@@ -66,6 +92,7 @@ MediaControls.propTypes = {
   parentChannelName: PropTypes.string,
   title: PropTypes.string,
   videoSource: PropTypes.shape({}),
+  audioSource: PropTypes.shape({}),
   webViewUrl: PropTypes.string,
 };
 
