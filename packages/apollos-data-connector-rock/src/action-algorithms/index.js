@@ -199,7 +199,7 @@ Make sure you structure your algorithm entry as \`{ type: 'CONTENT_CHANNEL', aru
     }));
   }
 
-  async userFeedAlgorithm({ limit = 20 } = {}) {
+  async userFeedAlgorithm({ limit = ApollosConfig.ROCK_MAPPINGS.FEED_CONTENT_LIMIT ? ApollosConfig.ROCK_MAPPINGS.FEED_CONTENT_LIMIT : 20} = {}) {
     const { ContentItem } = this.context.dataSources;
 
     const items = await ContentItem.byUserFeed()
