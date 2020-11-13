@@ -5,19 +5,19 @@ import { get } from 'lodash';
 
 import { LiveConsumer } from '../live';
 
-import GET_CONTENT_MEDIA from './getContentMedia';
+import GET_NODE_MEDIA from './getNodeMedia';
 
 import MediaControls from './MediaControls';
 
-const MediaControlsConnected = ({ Component, contentId, ...props }) => {
-  if (!contentId) return null;
+const MediaControlsConnected = ({ Component, contentId, nodeId, ...props }) => {
+  if (!contentId && !nodeId) return null;
   return (
     <LiveConsumer contentId={contentId}>
       {(liveStream) => (
         <Query
-          query={GET_CONTENT_MEDIA}
+          query={GET_NODE_MEDIA}
           fetchPolicy="cache-and-network"
-          variables={{ contentId }}
+          variables={{ nodeId: nodeId || contentId }}
         >
           {({
             data: {
@@ -55,7 +55,7 @@ const MediaControlsConnected = ({ Component, contentId, ...props }) => {
                 error={error}
                 liveStreamSource={liveStreamSource}
                 loading={loading}
-                parentChannelName={parentChannel.name}
+                parentChannelName={parentChannel?.name}
                 title={title}
                 videoSource={videoSource}
                 audioSource={audioSource}
@@ -77,6 +77,7 @@ MediaControlsConnected.propTypes = {
     PropTypes.object, // type check for React fragments
   ]),
   contentId: PropTypes.string,
+  nodeId: PropTypes.string,
 };
 
 MediaControlsConnected.defaultProps = {

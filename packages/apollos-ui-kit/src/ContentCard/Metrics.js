@@ -8,9 +8,12 @@ import ChannelLabel from '../ChannelLabel';
 import styled from '../styled';
 import { withTheme } from '../theme';
 
-const Container = styled({
-  flexDirection: 'column',
-})(View);
+const Container = styled(
+  {
+    flexDirection: 'column',
+  },
+  'ui-kit.ContentCard.Metrics.Container'
+)(View);
 
 const formatValue = (value) => numeral(value).format('0[.]0a');
 
@@ -53,7 +56,12 @@ Metrics.propTypes = {
     })
   ),
   isLoading: PropTypes.bool,
-  theme: PropTypes.shape({}),
+  theme: PropTypes.shape({
+    colors: PropTypes.shape({
+      primary: PropTypes.string,
+      text: PropTypes.shape({ secondary: PropTypes.string }),
+    }),
+  }),
   floating: PropTypes.bool,
 };
 

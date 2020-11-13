@@ -36,17 +36,18 @@ const UpNextButtonConnected = ({
   Component,
   navigation,
   contentId,
+  nodeId, // You can pass either nodeId or contentId.
 }) => {
   // We want to avoid rendering the Query component if we don't have the ID.
   // Running the query without a contentId throws an error, and the query won't rerun.
-  if (!contentId) {
+  if (!contentId && !nodeId) {
     return <Component loading />;
   }
   return (
     <Query
       query={GET_CONTENT_UP_NEXT}
       fetchPolicy="cache-and-network"
-      variables={{ nodeId: contentId }}
+      variables={{ nodeId: nodeId || contentId }}
     >
       {({ data, loading }) => {
         const upNextId = get(data, 'node.upNext.id');
@@ -56,7 +57,9 @@ const UpNextButtonConnected = ({
           'node.childContentItemsConnection.edges',
           []
         );
-        if (!loading && childContentItemsConnection.length === 0) {
+        // We shouldn't show the button if the content doesn't support it.
+        // The button is considered "supported" if it's a series (has children) or has an up next Id.
+        if (!loading && childContentItemsConnection.length === 0 && !upNextId) {
           return null;
         }
         return (
@@ -78,10 +81,23 @@ const UpNextButtonConnected = ({
 };
 
 UpNextButtonConnected.propTypes = {
-  continueText: PropTypes.node,
-  doneText: PropTypes.node,
-  Component: PropTypes.node,
+  continueText: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.func,
+  ]),
+  doneText: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.func,
+  ]),
+  Component: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.func,
+  ]),
   contentId: PropTypes.string,
+  nodeId: PropTypes.string,
 };
 
 UpNextButtonConnected.defaultProps = {

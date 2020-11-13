@@ -14,18 +14,19 @@ import {
   withTheme,
 } from '@apollosproject/ui-kit';
 
-const Container = styled({
-  flexDirection: 'row',
-  alignItems: 'flex-start',
-  justifyContent: 'flex-start',
-})(View);
+const Container = styled(
+  {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+  },
+  'ui-connected.MediaControlsConnected.PlayButtonConnected.PlayButton.Container'
+)(View);
 
-const StyledCard = styled({
-  margin: 0,
-  marginHorizontal: 0,
-  marginVertical: 0,
-  width: '100%',
-})(Card);
+const StyledMediaThumbnail = styled(
+  { marginVertical: 0 },
+  'ui-connected.MediaControlsConnected.PlayButtonConnected.PlayButton.StyledMediaThumbnail'
+)(MediaThumbnail);
 
 const MediaThumbnailIcon = withTheme(({ theme }) => ({
   size: theme.sizing.baseUnit * 3,

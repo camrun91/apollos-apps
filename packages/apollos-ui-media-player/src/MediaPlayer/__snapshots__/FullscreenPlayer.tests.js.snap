@@ -120,15 +120,6 @@ exports[`the FullscreenPlayer component should hide disabled controls 1`] = `
         }
       >
         <View
-          accessible={true}
-          clickable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
             Object {
               "bottom": 0,
@@ -487,6 +478,22 @@ exports[`the FullscreenPlayer component should hide disabled controls 1`] = `
                 </View>
               </View>
               <View
+                accessible={true}
+                clickable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "flex": 1,
+                  }
+                }
+              />
+              <View
                 horizontal={false}
                 style={
                   Object {
@@ -521,16 +528,6 @@ exports[`the FullscreenPlayer component should hide disabled controls 1`] = `
                     }
                   >
                     AirPlayButton
-                  </View>
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "justifyContent": "center",
-                      }
-                    }
-                  >
-                    GoogleCastButton
                   </View>
                 </View>
                 <View
@@ -1990,15 +1987,6 @@ exports[`the FullscreenPlayer component should render a custom VideoWindow compo
         }
       >
         <View
-          accessible={true}
-          clickable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
             Object {
               "bottom": 0,
@@ -2357,6 +2345,22 @@ exports[`the FullscreenPlayer component should render a custom VideoWindow compo
                 </View>
               </View>
               <View
+                accessible={true}
+                clickable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "flex": 1,
+                  }
+                }
+              />
+              <View
                 horizontal={false}
                 style={
                   Object {
@@ -2391,16 +2395,6 @@ exports[`the FullscreenPlayer component should render a custom VideoWindow compo
                     }
                   >
                     AirPlayButton
-                  </View>
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "justifyContent": "center",
-                      }
-                    }
-                  >
-                    GoogleCastButton
                   </View>
                 </View>
                 <View
@@ -4156,15 +4150,6 @@ exports[`the FullscreenPlayer component should render fullscreen 1`] = `
         }
       >
         <View
-          accessible={true}
-          clickable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
             Object {
               "bottom": 0,
@@ -4523,6 +4508,22 @@ exports[`the FullscreenPlayer component should render fullscreen 1`] = `
                 </View>
               </View>
               <View
+                accessible={true}
+                clickable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "flex": 1,
+                  }
+                }
+              />
+              <View
                 horizontal={false}
                 style={
                   Object {
@@ -4557,16 +4558,6 @@ exports[`the FullscreenPlayer component should render fullscreen 1`] = `
                     }
                   >
                     AirPlayButton
-                  </View>
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "justifyContent": "center",
-                      }
-                    }
-                  >
-                    GoogleCastButton
                   </View>
                 </View>
                 <View
@@ -6322,15 +6313,6 @@ exports[`the FullscreenPlayer component should render miniplayer with audio 1`] 
         }
       >
         <View
-          accessible={true}
-          clickable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
             Object {
               "bottom": 0,
@@ -6689,6 +6671,22 @@ exports[`the FullscreenPlayer component should render miniplayer with audio 1`] 
                 </View>
               </View>
               <View
+                accessible={true}
+                clickable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "flex": 1,
+                  }
+                }
+              />
+              <View
                 horizontal={false}
                 style={
                   Object {
@@ -6723,16 +6721,6 @@ exports[`the FullscreenPlayer component should render miniplayer with audio 1`] 
                     }
                   >
                     AirPlayButton
-                  </View>
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "justifyContent": "center",
-                      }
-                    }
-                  >
-                    GoogleCastButton
                   </View>
                 </View>
                 <View
@@ -8488,15 +8476,6 @@ exports[`the FullscreenPlayer component should render miniplayer with video 1`] 
         }
       >
         <View
-          accessible={true}
-          clickable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
             Object {
               "bottom": 0,
@@ -8855,6 +8834,22 @@ exports[`the FullscreenPlayer component should render miniplayer with video 1`] 
                 </View>
               </View>
               <View
+                accessible={true}
+                clickable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "flex": 1,
+                  }
+                }
+              />
+              <View
                 horizontal={false}
                 style={
                   Object {
@@ -8889,16 +8884,6 @@ exports[`the FullscreenPlayer component should render miniplayer with video 1`] 
                     }
                   >
                     AirPlayButton
-                  </View>
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "justifyContent": "center",
-                      }
-                    }
-                  >
-                    GoogleCastButton
                   </View>
                 </View>
                 <View

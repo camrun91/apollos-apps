@@ -17,11 +17,14 @@ const FieldTextAlignment = styled(({ textAlignment = 'LEFT' }) => {
   let textAlign = textAlignment.toLowerCase();
   if (textAlign === 'natural') textAlign = 'left';
   return { textAlign };
-})(Text);
+}, 'ui-passes.PassView.Fields.Field.FieldTextAlignment')(Text);
 
-const FieldColumn = styled({
-  flex: 1,
-})(View);
+const FieldColumn = styled(
+  {
+    flex: 1,
+  },
+  'ui-passes.PassView.Fields.Field.FieldColumn'
+)(View);
 
 const Field = ({
   label,
@@ -33,12 +36,12 @@ const Field = ({
 }) => (
   <FieldColumn>
     {isLoading ? (
-      <React.Fragment>
+      <>
         <LabelComponent isLoading />
         <ValueComponent isLoading />
-      </React.Fragment>
+      </>
     ) : (
-      <React.Fragment>
+      <>
         {label ? (
           <FieldTextAlignment textAlignment={textAlignment}>
             <LabelComponent>{label}</LabelComponent>
@@ -47,7 +50,7 @@ const Field = ({
         <FieldTextAlignment textAlignment={textAlignment}>
           <ValueComponent>{value}</ValueComponent>
         </FieldTextAlignment>
-      </React.Fragment>
+      </>
     )}
   </FieldColumn>
 );

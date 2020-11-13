@@ -55,7 +55,6 @@ export MediaThumbnail, {
 export ModalView, { ModalViewHeader } from './ModalView';
 export PaddedView from './PaddedView';
 export Placeholder, { withPlaceholder } from './Placeholder';
-export ProgressiveImage from './ProgressiveImage';
 export SideBySideView from './SideBySideView';
 export styled from './styled';
 export StretchyView from './StretchyView';
@@ -91,6 +90,7 @@ export {
   Paragraph,
   BlockQuote,
   BulletListItem,
+  OrderedListItem,
 } from './typography';
 export { getIsLoading, withIsLoading } from './isLoading';
 export Providers from './Providers';

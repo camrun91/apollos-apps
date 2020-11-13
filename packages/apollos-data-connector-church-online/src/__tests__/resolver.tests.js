@@ -4,10 +4,10 @@ import { graphql } from 'graphql';
 import { createTestHelpers } from '@apollosproject/server-core/lib/testUtils';
 import ApollosConfig from '@apollosproject/config';
 import {
-  themeSchema,
-  contentChannelSchema,
   contentItemSchema,
+  themeSchema,
   scriptureSchema,
+  contentChannelSchema,
 } from '@apollosproject/data-schema';
 import * as LiveStream from '../index';
 
@@ -27,10 +27,10 @@ describe('LiveStream', () => {
   let context;
   beforeEach(() => {
     schema = getSchema([
-      themeSchema,
-      contentChannelSchema,
       contentItemSchema,
+      themeSchema,
       scriptureSchema,
+      contentChannelSchema,
     ]);
     context = getContext();
 
@@ -60,6 +60,15 @@ describe('LiveStream', () => {
         ]),
       },
     };
+    context.dataSources.LiveStream.getAccessToken = () => 'ABC123';
+    context.dataSources.LiveStream.post = jest.fn(() => ({
+      data: {
+        currentService: {
+          content: { videoStarted: true },
+          startTime: new Date('August 19, 1975 23:15:30 GMT+11:00'),
+        },
+      },
+    }));
 
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();

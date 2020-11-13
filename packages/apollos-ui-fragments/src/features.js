@@ -33,8 +33,8 @@ const PRAYER_LIST_FEATURE_FRAGMENT = gql`
   }
 `;
 
-const FEED_FEATURES_FRAGMENT = gql`
-  fragment FeedFeaturesFragment on Feature {
+const LITE_FEATURES_FRAGMENT = gql`
+  fragment LiteFeaturesFragment on Feature {
     id
     __typename
     ... on VerticalCardListFeature {
@@ -59,6 +59,30 @@ const FEED_FEATURES_FRAGMENT = gql`
       subtitle
       isCard
     }
+    ... on TextFeature {
+      body
+    }
+    ... on ScriptureFeature {
+      scriptures {
+        reference
+      }
+    }
+    ... on WebviewFeature {
+      title
+    }
+  }
+`;
+
+// TODO: deprecated, name change
+const FEED_FEATURES_FRAGMENT = LITE_FEATURES_FRAGMENT;
+
+// TODO deprecated
+const FEATURES_FRAGMENT = gql`
+  fragment FeaturesFragment on Feature {
+    id
+    ...TextFeatureFragment
+    ...ScriptureFeatureFragment
+    ...WebviewFeatureFragment
   }
 `;
 
@@ -77,26 +101,34 @@ const SCRIPTURE_FEATURE_FRAGMENT = gql`
   }
 `;
 
-const FEATURES_FRAGMENT = gql`
-  fragment FeaturesFragment on Feature {
-    id
-    ...TextFeatureFragment
-    ...ScriptureFeatureFragment
-    ...WebviewFeatureFragment
-  }
-`;
-
 const CARD_FEATURES_FRAGMENT = gql`
   fragment CardFeaturesFragment on ContentItem {
     ... on ContentSeriesContentItem {
       features {
-        ...FeaturesFragment
+        id
+        ...TextFeatureFragment
+        ...ScriptureFeatureFragment
+        ...WebviewFeatureFragment
       }
     }
     ... on WeekendContentItem {
       features {
-        ...FeaturesFragment
+        id
+        ...TextFeatureFragment
+        ...ScriptureFeatureFragment
+        ...WebviewFeatureFragment
       }
+    }
+  }
+`;
+
+const NODE_FEATURES_FRAGMENT = gql`
+  fragment NodeFeaturesFragment on FeaturesNode {
+    features {
+      id
+      ...TextFeatureFragment
+      ...ScriptureFeatureFragment
+      ...WebviewFeatureFragment
     }
   }
 `;
@@ -122,6 +154,22 @@ const ACTION_LIST_FEATURE_FRAGMENT = gql`
     }
     primaryAction {
       title
+      action
+      relatedNode {
+        ...RelatedFeatureNodeFragment
+      }
+    }
+  }
+`;
+
+const ACTION_BAR_FEATURE_FRAGMENT = gql`
+  fragment ActionBarFeatureFragment on ActionBarFeature {
+    id
+    title
+    actions {
+      id
+      title
+      icon
       action
       relatedNode {
         ...RelatedFeatureNodeFragment
@@ -222,6 +270,13 @@ const HORIZONTAL_CARD_LIST_FEATURE_FRAGMENT = gql`
         ...RelatedFeatureNodeFragment
       }
     }
+    primaryAction {
+      title
+      action
+      relatedNode {
+        ...RelatedFeatureNodeFragment
+      }
+    }
   }
 `;
 
@@ -239,6 +294,9 @@ const RELATED_NODE_FRAGMENT = gql`
     ... on Url {
       url
     }
+    ... on ContentChannel {
+      name
+    }
   }
 `;
 
@@ -248,11 +306,14 @@ export {
   CARD_FEATURES_FRAGMENT,
   FEATURES_FRAGMENT,
   ACTION_LIST_FEATURE_FRAGMENT,
+  ACTION_BAR_FEATURE_FRAGMENT,
   HERO_LIST_FEATURE_FRAGMENT,
   HORIZONTAL_CARD_LIST_FEATURE_FRAGMENT,
   VERTICAL_CARD_LIST_FEATURE_FRAGMENT,
   FEED_FEATURES_FRAGMENT,
+  LITE_FEATURES_FRAGMENT,
   WEBVIEW_FEATURE_FRAGMENT,
   PRAYER_LIST_FEATURE_FRAGMENT,
   RELATED_NODE_FRAGMENT,
+  NODE_FEATURES_FRAGMENT,
 };

@@ -252,73 +252,20 @@ exports[`HorizontalLikedContentFeed renders a HorizontalLikedContentFeed 1`] = `
                   }
                 }
               >
-                <View
-                  animate={null}
-                  customAnimate={null}
-                  forceRatio={1.5}
-                  onReady={false}
+                <RCTImageView
+                  fadeDuration={250}
+                  hasTitleAndSummary={false}
+                  isLoading={true}
+                  onLoad={[Function]}
+                  resizeMode="cover"
+                  source={Array []}
                   style={
                     Object {
                       "aspectRatio": 1.5,
                       "backgroundColor": "#A5A5A5",
+                      "overflow": "hidden",
                       "resizeMode": "cover",
                       "width": "100%",
-                    }
-                  }
-                >
-                  <RCTImageView
-                    hasTitleAndSummary={false}
-                    maxAspectRatio={1.5}
-                    minAspectRatio={1.5}
-                    onLoad={[Function]}
-                    resizeMode="cover"
-                    source={Array []}
-                    style={
-                      Object {
-                        "aspectRatio": 1,
-                        "backgroundColor": "#A5A5A5",
-                        "opacity": 0,
-                        "overflow": "hidden",
-                        "resizeMode": "cover",
-                        "width": "100%",
-                      }
-                    }
-                  />
-                </View>
-                <BVLinearGradient
-                  colors={
-                    Array [
-                      2147483648,
-                      0,
-                    ]
-                  }
-                  endPoint={
-                    Object {
-                      "x": 0,
-                      "y": 1,
-                    }
-                  }
-                  locations={
-                    Array [
-                      0,
-                      1,
-                    ]
-                  }
-                  overlayColor="#000000"
-                  overlayType="gradient-top"
-                  startPoint={
-                    Object {
-                      "x": 0,
-                      "y": 0,
-                    }
-                  }
-                  style={
-                    Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
                     }
                   }
                 />
@@ -406,73 +353,20 @@ exports[`HorizontalLikedContentFeed renders a HorizontalLikedContentFeed 1`] = `
                   }
                 }
               >
-                <View
-                  animate={null}
-                  customAnimate={null}
-                  forceRatio={1.5}
-                  onReady={false}
+                <RCTImageView
+                  fadeDuration={250}
+                  hasTitleAndSummary={false}
+                  isLoading={true}
+                  onLoad={[Function]}
+                  resizeMode="cover"
+                  source={Array []}
                   style={
                     Object {
                       "aspectRatio": 1.5,
                       "backgroundColor": "#A5A5A5",
+                      "overflow": "hidden",
                       "resizeMode": "cover",
                       "width": "100%",
-                    }
-                  }
-                >
-                  <RCTImageView
-                    hasTitleAndSummary={false}
-                    maxAspectRatio={1.5}
-                    minAspectRatio={1.5}
-                    onLoad={[Function]}
-                    resizeMode="cover"
-                    source={Array []}
-                    style={
-                      Object {
-                        "aspectRatio": 1,
-                        "backgroundColor": "#A5A5A5",
-                        "opacity": 0,
-                        "overflow": "hidden",
-                        "resizeMode": "cover",
-                        "width": "100%",
-                      }
-                    }
-                  />
-                </View>
-                <BVLinearGradient
-                  colors={
-                    Array [
-                      2147483648,
-                      0,
-                    ]
-                  }
-                  endPoint={
-                    Object {
-                      "x": 0,
-                      "y": 1,
-                    }
-                  }
-                  locations={
-                    Array [
-                      0,
-                      1,
-                    ]
-                  }
-                  overlayColor="#000000"
-                  overlayType="gradient-top"
-                  startPoint={
-                    Object {
-                      "x": 0,
-                      "y": 0,
-                    }
-                  }
-                  style={
-                    Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
                     }
                   }
                 />
@@ -738,73 +632,20 @@ exports[`HorizontalLikedContentFeed renders a loading state 1`] = `
                   }
                 }
               >
-                <View
-                  animate={null}
-                  customAnimate={null}
-                  forceRatio={1.5}
-                  onReady={false}
+                <RCTImageView
+                  fadeDuration={250}
+                  hasTitleAndSummary={false}
+                  isLoading={true}
+                  onLoad={[Function]}
+                  resizeMode="cover"
+                  source={Array []}
                   style={
                     Object {
                       "aspectRatio": 1.5,
                       "backgroundColor": "#A5A5A5",
+                      "overflow": "hidden",
                       "resizeMode": "cover",
                       "width": "100%",
-                    }
-                  }
-                >
-                  <RCTImageView
-                    hasTitleAndSummary={false}
-                    maxAspectRatio={1.5}
-                    minAspectRatio={1.5}
-                    onLoad={[Function]}
-                    resizeMode="cover"
-                    source={Array []}
-                    style={
-                      Object {
-                        "aspectRatio": 1,
-                        "backgroundColor": "#A5A5A5",
-                        "opacity": 0,
-                        "overflow": "hidden",
-                        "resizeMode": "cover",
-                        "width": "100%",
-                      }
-                    }
-                  />
-                </View>
-                <BVLinearGradient
-                  colors={
-                    Array [
-                      2147483648,
-                      0,
-                    ]
-                  }
-                  endPoint={
-                    Object {
-                      "x": 0,
-                      "y": 1,
-                    }
-                  }
-                  locations={
-                    Array [
-                      0,
-                      1,
-                    ]
-                  }
-                  overlayColor="#000000"
-                  overlayType="gradient-top"
-                  startPoint={
-                    Object {
-                      "x": 0,
-                      "y": 0,
-                    }
-                  }
-                  style={
-                    Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
                     }
                   }
                 />
@@ -892,73 +733,20 @@ exports[`HorizontalLikedContentFeed renders a loading state 1`] = `
                   }
                 }
               >
-                <View
-                  animate={null}
-                  customAnimate={null}
-                  forceRatio={1.5}
-                  onReady={false}
+                <RCTImageView
+                  fadeDuration={250}
+                  hasTitleAndSummary={false}
+                  isLoading={true}
+                  onLoad={[Function]}
+                  resizeMode="cover"
+                  source={Array []}
                   style={
                     Object {
                       "aspectRatio": 1.5,
                       "backgroundColor": "#A5A5A5",
+                      "overflow": "hidden",
                       "resizeMode": "cover",
                       "width": "100%",
-                    }
-                  }
-                >
-                  <RCTImageView
-                    hasTitleAndSummary={false}
-                    maxAspectRatio={1.5}
-                    minAspectRatio={1.5}
-                    onLoad={[Function]}
-                    resizeMode="cover"
-                    source={Array []}
-                    style={
-                      Object {
-                        "aspectRatio": 1,
-                        "backgroundColor": "#A5A5A5",
-                        "opacity": 0,
-                        "overflow": "hidden",
-                        "resizeMode": "cover",
-                        "width": "100%",
-                      }
-                    }
-                  />
-                </View>
-                <BVLinearGradient
-                  colors={
-                    Array [
-                      2147483648,
-                      0,
-                    ]
-                  }
-                  endPoint={
-                    Object {
-                      "x": 0,
-                      "y": 1,
-                    }
-                  }
-                  locations={
-                    Array [
-                      0,
-                      1,
-                    ]
-                  }
-                  overlayColor="#000000"
-                  overlayType="gradient-top"
-                  startPoint={
-                    Object {
-                      "x": 0,
-                      "y": 0,
-                    }
-                  }
-                  style={
-                    Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
                     }
                   }
                 />

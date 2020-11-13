@@ -1,5 +1,84 @@
 import gql from 'graphql-tag';
-import { extendForEachContentItemType } from './utils';
+import {
+  extendForEachContentItemType,
+  addInterfacesForEachContentItemType,
+} from './utils';
+
+export const interfacesSchema = gql`
+  interface ContentNode {
+    title(hyphenated: Boolean): String
+    coverImage: ImageMedia
+    htmlContent: String
+  }
+
+  interface Card {
+    title(hyphenated: Boolean): String
+    coverImage: ImageMedia
+    summary: String
+  }
+
+  interface VideoNode {
+    videos: [VideoMedia]
+  }
+
+  interface AudioNode {
+    audios: [AudioMedia]
+  }
+
+  interface ContentParentNode {
+    childContentItemsConnection(
+      first: Int
+      after: String
+    ): ContentItemsConnection
+  }
+
+  interface ContentChildNode {
+    parentChannel: ContentChannel
+    siblingContentItemsConnection(
+      first: Int
+      after: String
+    ): ContentItemsConnection
+  }
+
+  interface ThemedNode {
+    theme: Theme
+  }
+
+  interface ProgressNode {
+    percentComplete: Float @cacheControl(maxAge: 0)
+    upNext: ContentItem @cacheControl(maxAge: 0)
+  }
+
+  interface ScriptureNode {
+    scriptures: [Scripture]
+  }
+
+  # Maps to each type implementing each interface.
+  # Reduces visual fluff in this file. No magic.
+  ${addInterfacesForEachContentItemType(
+    [
+      'ContentNode',
+      'Card',
+      'VideoNode',
+      'AudioNode',
+      'ContentChildNode',
+      'ContentParentNode',
+      'ThemedNode',
+    ],
+    [
+      'UniversalContentItem',
+      'WeekendContentItem',
+      'MediaContentItem',
+      'ContentSeriesContentItem',
+      'DevotionalContentItem',
+    ]
+  )}
+
+  extend type MediaContentItem implements ScriptureNode
+  extend type DevotionalContentItem implements ScriptureNode
+
+  extend type ContentSeriesContentItem implements ProgressNode
+`;
 
 export const testSchema = gql`
   scalar Upload
@@ -109,6 +188,18 @@ export const peopleSchema = gql`
     updateProfileField(input: UpdateProfileInput!): Person
     updateProfileFields(input: [UpdateProfileInput]!): Person
     uploadProfileImage(file: Upload!, size: Int!): Person
+  }
+`;
+
+export const deviceSchema = gql`
+  type Device implements Node {
+    id: ID!
+    pushId: String!
+    notificationsEnabled: Boolean!
+  }
+
+  extend type Person {
+    devices: [Device]
   }
 `;
 
@@ -394,7 +485,6 @@ export const contentItemSchema = gql`
     ): ContentItemsConnection
     parentChannel: ContentChannel
     theme: Theme
-
     percentComplete: Float @cacheControl(maxAge: 0)
     upNext: ContentItem @cacheControl(maxAge: 0)
     scriptures: [Scripture]
@@ -501,6 +591,21 @@ export const sharableSchema = gql`
     sharing: SharableContentItem
 `)}
 
+  interface ShareableNode {
+    sharing: SharableContentItem
+  }
+
+  ${addInterfacesForEachContentItemType(
+    ['ShareableNode'],
+    [
+      'UniversalContentItem',
+      'WeekendContentItem',
+      'MediaContentItem',
+      'ContentSeriesContentItem',
+      'DevotionalContentItem',
+    ]
+  )}
+
   type SharableFeature implements Sharable {
     message: String
     title: String
@@ -534,6 +639,12 @@ export const liveSchema = gql`
   extend type WeekendContentItem {
     liveStream: LiveStream
   }
+
+  interface LiveNode {
+    liveStream: LiveStream
+  }
+
+  extend type WeekendContentItem implements LiveNode
 `;
 
 export const pushSchema = gql`
@@ -613,12 +724,30 @@ export const followingsSchema = gql`
 
   extend type Mutation {
     updateLikeEntity(input: LikeEntityInput!): ContentItem
+      @deprecated(reason: "Use the more general updateLikeNode instead")
+    updateLikeNode(input: LikeEntityInput!): Node
   }
 
   ${extendForEachContentItemType(`
     isLiked: Boolean @cacheControl(maxAge: 0)
     likedCount: Int @cacheControl(maxAge: 0)
 `)}
+
+  interface LikableNode {
+    isLiked: Boolean
+    likedCount: Int
+  }
+
+  ${addInterfacesForEachContentItemType(
+    ['LikableNode'],
+    [
+      'UniversalContentItem',
+      'WeekendContentItem',
+      'MediaContentItem',
+      'ContentSeriesContentItem',
+      'DevotionalContentItem',
+    ]
+  )}
 
   extend type Query {
     likedContent(first: Int, after: String): ContentItemsConnection
@@ -676,6 +805,8 @@ export const featuresSchema = gql`
     READ_CONTENT
     READ_EVENT
     OPEN_URL
+    OPEN_NODE
+    OPEN_CHANNEL
   }
 
   type Url implements Node {
@@ -683,12 +814,14 @@ export const featuresSchema = gql`
     id: ID!
   }
 
+  # Represents a generic action. Typically a button or link.
   type FeatureAction {
     relatedNode: Node
     action: ACTION_FEATURE_ACTION
     title: String
   }
 
+  # An item on an ActionListFeature.
   type ActionListAction {
     id: ID!
 
@@ -699,6 +832,8 @@ export const featuresSchema = gql`
     action: ACTION_FEATURE_ACTION
   }
 
+  # A list of "actions", in this case thumbnails, title, and subtitle.
+  # Has a button at the very bottom (primary action)
   type ActionListFeature implements Feature & Node {
     id: ID!
     order: Int
@@ -709,6 +844,27 @@ export const featuresSchema = gql`
     primaryAction: FeatureAction
   }
 
+  # An item in an ActionBarFeature. Buttons with an icon and title.
+  type ActionBarAction {
+    id: ID!
+    icon: String
+    title: String
+    action: ACTION_FEATURE_ACTION
+    relatedNode: Node
+  }
+
+  # A list of actions, represented as a series of horizontal buttons with icons.
+  # Also has a title above the actions (which can exist by itself by omotting the actions)
+  type ActionBarFeature implements Feature & Node {
+    id: ID!
+    order: Int
+
+    title: String
+    actions: [ActionBarAction]
+  }
+
+  # A Hero Card with (essentially) an Action List attached to the bottom.
+  # Also has a button at the very bottom.
   type HeroListFeature implements Feature & Node {
     id: ID!
     order: Int
@@ -720,6 +876,9 @@ export const featuresSchema = gql`
     primaryAction: FeatureAction
   }
 
+  # Represents a Card (card type is dictated on the client)
+  # Cards are rendered through either a HeroListFeature (hero) or Vertical/HorizontalCardList
+  # Similar to ActionListAction
   type CardListItem {
     id: ID!
 
@@ -734,6 +893,7 @@ export const featuresSchema = gql`
     action: ACTION_FEATURE_ACTION
   }
 
+  # A Vertical list of cards.
   type VerticalCardListFeature implements Feature & Node {
     id: ID!
     order: Int
@@ -744,6 +904,8 @@ export const featuresSchema = gql`
     cards: [CardListItem]
   }
 
+  # A Vertical list of cards.
+  # Also has a button at the top right.
   type HorizontalCardListFeature implements Feature & Node {
     id: ID!
     order: Int
@@ -751,6 +913,7 @@ export const featuresSchema = gql`
     title: String
     subtitle: String
     cards: [CardListItem]
+    primaryAction: FeatureAction
   }
 
   type TextFeature implements Feature & Node {
@@ -776,16 +939,32 @@ export const featuresSchema = gql`
     url: String
   }
 
-  extend type WeekendContentItem {
+  type FeatureFeed implements Node {
+    id: ID!
     features: [Feature]
   }
 
-  extend type ContentSeriesContentItem {
-    features: [Feature]
+  interface FeaturesNode {
+    features: [Feature] @deprecated(reason: "Use featureFeed")
+    featureFeed: FeatureFeed
+  }
+
+  extend type WeekendContentItem implements FeaturesNode {
+    features: [Feature] @deprecated(reason: "Use featureFeed")
+    featureFeed: FeatureFeed
+  }
+
+  extend type ContentSeriesContentItem implements FeaturesNode {
+    features: [Feature] @deprecated(reason: "Use featureFeed")
+    featureFeed: FeatureFeed
   }
 
   extend type Query {
-    userFeedFeatures: [Feature] @cacheControl(maxAge: 0)
+    userFeedFeatures: [Feature]
+      @cacheControl(maxAge: 0)
+      @deprecated(reason: "Use homeFeedFeatures or discoverFeedFeatures")
+    homeFeedFeatures(campusId: ID): FeatureFeed @cacheControl(maxAge: 0)
+    discoverFeedFeatures: FeatureFeed @cacheControl(maxAge: 0)
   }
 `;
 

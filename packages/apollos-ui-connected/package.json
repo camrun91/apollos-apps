@@ -1,7 +1,7 @@
 {
   "name": "@apollosproject/ui-connected",
-  "version": "1.4.3",
-  "homepage": "https://github.com/ApollosProject/apollos-prototype#readme",
+  "repository": "git://github.com/apollosproject/apollos-apps.git",
+  "version": "1.7.0-beta.3",
   "main": "src/index.js",
   "files": [
     "src/**",
@@ -51,6 +51,7 @@
     "react-navigation": "*"
   },
   "dependencies": {
+    "apollo-storybook-react-native": "0.2.12",
     "apollo-upload-client": "9.0.0",
     "graphql-tag": "2.9.2",
     "lodash": "^4.17.11",
@@ -68,7 +69,7 @@
     "react-native-permissions": "2.0.5",
     "react-native-webview": "^7.0.0",
     "react-navigation": "^3.11.0",
-    "react-test-renderer": "16.6.3",
+    "react-test-renderer": "16.8.6",
     "waait": "1.0.2"
   },
   "publishConfig": {

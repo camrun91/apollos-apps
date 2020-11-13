@@ -1,7 +1,7 @@
 {
   "name": "@apollosproject/ui-kit",
-  "version": "1.4.3",
-  "homepage": "https://github.com/ApollosProject/apollos-prototype#readme",
+  "repository": "git://github.com/apollosproject/apollos-apps.git",
+  "version": "1.7.0-beta.3",
   "main": "src/index.js",
   "files": [
     "src/**",
@@ -46,7 +46,7 @@
   "peerDependencies": {
     "@apollosproject/storybook": "*",
     "@apollosproject/ui-media-player": "*",
-    "@react-native-community/datetimepicker": "*",
+    "@react-native-community/datetimepicker": "^3.0.2",
     "react": "*",
     "react-native": "*",
     "react-native-gesture-handler": "*",
@@ -67,18 +67,21 @@
     "rn-placeholder": "1.2.0"
   },
   "devDependencies": {
-    "@react-native-community/datetimepicker": "2.4.0",
+    "@react-native-community/datetimepicker": "3.0.2",
     "jest": "24.8.0",
     "jest-react-native": "18.0.0",
     "prop-types": "15.6.1",
     "react": "16.8.6",
     "react-docgen": "^4.1.0",
     "react-native": "0.60.5",
-    "react-native-safe-area-context": "^0.3.6",
     "react-native-linear-gradient": "2.5.4",
+    "react-native-safe-area-context": "^0.3.6",
     "react-native-svg": "9.4.0",
     "react-navigation": "^3.11.0",
     "react-test-renderer": "16.8.6"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "license": "SEE LICENSE IN LICENSE.md",
   "gitHead": "eb803583da83beeab7756baddcae3adca7650c39"

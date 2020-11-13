@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { H3, PaddedView, withIsLoading } from '@apollosproject/ui-kit';
-import TextFeature from '../TextFeature';
-import ScriptureFeature from '../ScriptureFeature';
-import WebviewFeature from '../WebviewFeature';
+import TextFeature from '../../features/TextFeature';
+import ScriptureFeature from '../../features/ScriptureFeature';
+import WebviewFeature from '../../features/WebviewFeature';
 
 const FEATURE_MAP = {
   TextFeature,
@@ -35,11 +35,13 @@ const ContentSingleFeatures = memo(
 
 ContentSingleFeatures.propTypes = {
   contentId: PropTypes.string,
-  features: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    order: PropTypes.string,
-    __typename: PropTypes.string.isRequired,
-  }),
+  features: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      order: PropTypes.string,
+      __typename: PropTypes.string.isRequired,
+    })
+  ),
   featureMap: PropTypes.shape({}),
   isLoading: PropTypes.bool,
   title: PropTypes.string,

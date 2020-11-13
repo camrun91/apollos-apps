@@ -109,43 +109,28 @@ exports[`The CampaignItemListFeature component should render 1`] = `
                   }
                 }
               >
-                <View
-                  animate={null}
-                  customAnimate={null}
-                  onReady={false}
+                <RCTImageView
+                  fadeDuration={250}
+                  onLoad={[Function]}
+                  resizeMode="cover"
+                  source={
+                    Array [
+                      Object {
+                        "cache": "force-cache",
+                        "uri": "https://picsum.photos/800",
+                      },
+                    ]
+                  }
                   style={
                     Object {
                       "aspectRatio": 1,
                       "backgroundColor": "#A5A5A5",
+                      "overflow": "hidden",
                       "resizeMode": "cover",
                       "width": "100%",
                     }
                   }
-                >
-                  <RCTImageView
-                    maxAspectRatio={1}
-                    minAspectRatio={1}
-                    onLoad={[Function]}
-                    resizeMode="cover"
-                    source={
-                      Array [
-                        Object {
-                          "cache": "force-cache",
-                          "uri": "https://picsum.photos/800",
-                        },
-                      ]
-                    }
-                    style={
-                      Object {
-                        "backgroundColor": "#A5A5A5",
-                        "opacity": 0,
-                        "overflow": "hidden",
-                        "resizeMode": "cover",
-                        "width": "100%",
-                      }
-                    }
-                  />
-                </View>
+                />
                 <BVLinearGradient
                   colors={
                     Array [
@@ -284,8 +269,8 @@ exports[`The CampaignItemListFeature component should render a loading state for
           "alignSelf": "stretch",
           "backgroundColor": "#A5A5A5",
           "borderRadius": 16,
-          "height": 36,
-          "marginVertical": 2.6999999999999993,
+          "height": 24,
+          "marginVertical": 1.8000000000000007,
           "width": "100%",
         }
       }
@@ -400,44 +385,29 @@ exports[`The CampaignItemListFeature component should render a loading state for
                   }
                 }
               >
-                <View
-                  animate={null}
-                  customAnimate={null}
-                  onReady={false}
+                <RCTImageView
+                  fadeDuration={250}
+                  isLoading={true}
+                  onLoad={[Function]}
+                  resizeMode="cover"
+                  source={
+                    Array [
+                      Object {
+                        "cache": "force-cache",
+                        "uri": "",
+                      },
+                    ]
+                  }
                   style={
                     Object {
                       "aspectRatio": 1,
                       "backgroundColor": "#A5A5A5",
+                      "overflow": "hidden",
                       "resizeMode": "cover",
                       "width": "100%",
                     }
                   }
-                >
-                  <RCTImageView
-                    maxAspectRatio={1}
-                    minAspectRatio={1}
-                    onLoad={[Function]}
-                    resizeMode="cover"
-                    source={
-                      Array [
-                        Object {
-                          "cache": "force-cache",
-                          "uri": "",
-                        },
-                      ]
-                    }
-                    style={
-                      Object {
-                        "aspectRatio": 1,
-                        "backgroundColor": "#A5A5A5",
-                        "opacity": 0,
-                        "overflow": "hidden",
-                        "resizeMode": "cover",
-                        "width": "100%",
-                      }
-                    }
-                  />
-                </View>
+                />
                 <BVLinearGradient
                   colors={
                     Array [
@@ -685,43 +655,28 @@ exports[`The CampaignItemListFeature component should render a section title 1`]
                   }
                 }
               >
-                <View
-                  animate={null}
-                  customAnimate={null}
-                  onReady={false}
+                <RCTImageView
+                  fadeDuration={250}
+                  onLoad={[Function]}
+                  resizeMode="cover"
+                  source={
+                    Array [
+                      Object {
+                        "cache": "force-cache",
+                        "uri": "https://picsum.photos/800",
+                      },
+                    ]
+                  }
                   style={
                     Object {
                       "aspectRatio": 1,
                       "backgroundColor": "#A5A5A5",
+                      "overflow": "hidden",
                       "resizeMode": "cover",
                       "width": "100%",
                     }
                   }
-                >
-                  <RCTImageView
-                    maxAspectRatio={1}
-                    minAspectRatio={1}
-                    onLoad={[Function]}
-                    resizeMode="cover"
-                    source={
-                      Array [
-                        Object {
-                          "cache": "force-cache",
-                          "uri": "https://picsum.photos/800",
-                        },
-                      ]
-                    }
-                    style={
-                      Object {
-                        "backgroundColor": "#A5A5A5",
-                        "opacity": 0,
-                        "overflow": "hidden",
-                        "resizeMode": "cover",
-                        "width": "100%",
-                      }
-                    }
-                  />
-                </View>
+                />
                 <BVLinearGradient
                   colors={
                     Array [
@@ -847,8 +802,8 @@ exports[`The CampaignItemListFeature component should render with a subtitle 1`]
         Object {
           "color": "#303030",
           "fontFamily": "InterUI-Black",
-          "fontSize": 36,
-          "lineHeight": 41.4,
+          "fontSize": 24,
+          "lineHeight": 27.6,
         }
       }
     >
@@ -962,43 +917,28 @@ exports[`The CampaignItemListFeature component should render with a subtitle 1`]
                   }
                 }
               >
-                <View
-                  animate={null}
-                  customAnimate={null}
-                  onReady={false}
+                <RCTImageView
+                  fadeDuration={250}
+                  onLoad={[Function]}
+                  resizeMode="cover"
+                  source={
+                    Array [
+                      Object {
+                        "cache": "force-cache",
+                        "uri": "https://picsum.photos/800",
+                      },
+                    ]
+                  }
                   style={
                     Object {
                       "aspectRatio": 1,
                       "backgroundColor": "#A5A5A5",
+                      "overflow": "hidden",
                       "resizeMode": "cover",
                       "width": "100%",
                     }
                   }
-                >
-                  <RCTImageView
-                    maxAspectRatio={1}
-                    minAspectRatio={1}
-                    onLoad={[Function]}
-                    resizeMode="cover"
-                    source={
-                      Array [
-                        Object {
-                          "cache": "force-cache",
-                          "uri": "https://picsum.photos/800",
-                        },
-                      ]
-                    }
-                    style={
-                      Object {
-                        "backgroundColor": "#A5A5A5",
-                        "opacity": 0,
-                        "overflow": "hidden",
-                        "resizeMode": "cover",
-                        "width": "100%",
-                      }
-                    }
-                  />
-                </View>
+                />
                 <BVLinearGradient
                   colors={
                     Array [

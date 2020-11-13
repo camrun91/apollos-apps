@@ -1,5 +1,5 @@
 import React from 'react';
-import { Providers, renderWithApolloData } from '../utils/testUtils';
+import { Providers, renderWithApolloData } from '../testUtils';
 
 import getShareContent from './getShareContent';
 
@@ -8,7 +8,7 @@ import ShareButtonConnected from '.';
 const shareMock = {
   request: {
     query: getShareContent,
-    variables: { itemId: '1' },
+    variables: { nodeId: '1' },
   },
   result: {
     data: {
@@ -18,6 +18,7 @@ const shareMock = {
         sharing: {
           url: 'https://apolloschurchapp.newspring.cc',
           title: 'Test Title ',
+          message: 'Test Title ',
           __typename: 'SharableContentItem',
         },
       },

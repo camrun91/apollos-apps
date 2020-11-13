@@ -24,22 +24,27 @@ import { Provider, ControlsConsumer, PlayheadConsumer } from './PlayheadState';
 import MediaPlayerSafeLayout from './MediaPlayerSafeLayout';
 import GoogleCastController from './GoogleCastController';
 
-const VideoSizer = styled(({ isFullscreen, isVideo, theme }) =>
-  isFullscreen
-    ? StyleSheet.absoluteFill
-    : {
-        height: MINI_PLAYER_HEIGHT,
-        borderTopLeftRadius: theme.sizing.baseUnit / 2,
-        borderBottomLeftRadius: theme.sizing.baseUnit / 2,
-        overflow: 'hidden',
-        aspectRatio: isVideo ? 16 / 9 : 1,
-      }
+const VideoSizer = styled(
+  ({ isFullscreen, isVideo, theme }) =>
+    isFullscreen
+      ? StyleSheet.absoluteFill
+      : {
+          height: MINI_PLAYER_HEIGHT,
+          borderTopLeftRadius: theme.sizing.baseUnit / 2,
+          borderBottomLeftRadius: theme.sizing.baseUnit / 2,
+          overflow: 'hidden',
+          aspectRatio: isVideo ? 16 / 9 : 1,
+        },
+  'ui-media.MediaPlayer.FullscreenPlayer.VideoSizer'
 )(View);
 
-const FullscreenMediaPlayerSafeLayout = styled(({ isFullscreen, theme }) => ({
-  ...StyleSheet.absoluteFillObject,
-  margin: isFullscreen ? 0 : theme.sizing.baseUnit,
-}))(MediaPlayerSafeLayout);
+const FullscreenMediaPlayerSafeLayout = styled(
+  ({ isFullscreen, theme }) => ({
+    ...StyleSheet.absoluteFillObject,
+    margin: isFullscreen ? 0 : theme.sizing.baseUnit,
+  }),
+  'ui-media.MediaPlayer.FullscreenPlayer.FullscreenMediaPlayerSafeLayout'
+)(MediaPlayerSafeLayout);
 
 /**
  * FullscreenPlayer is a animating media player that transitions between
@@ -182,7 +187,11 @@ class FullscreenPlayer extends PureComponent {
   ]);
 
   renderCover = ({ data: { mediaPlayer = {} } = {} }) => {
-    const { isFullscreen = false, isCasting = false } = mediaPlayer;
+    const {
+      isFullscreen = false,
+      isCasting = false,
+      isCastAvailable = false,
+    } = mediaPlayer;
 
     Animated.spring(this.fullscreen, {
       toValue: isFullscreen ? 1 : 0,
@@ -229,7 +238,7 @@ class FullscreenPlayer extends PureComponent {
             showAudioToggleControl={this.props.showAudioToggleControl}
             showVideoToggleControl={this.props.showVideoToggleControl}
             airPlayEnabled={this.props.airPlayEnabled}
-            googleCastEnabled={this.props.googleCastEnabled}
+            googleCastEnabled={this.props.googleCastEnabled && isCastAvailable}
             isCasting={isCasting}
           />
         </Animated.View>

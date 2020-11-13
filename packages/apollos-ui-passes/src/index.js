@@ -7,10 +7,13 @@ import PassView from './PassView';
 import GET_PASS from './getPass';
 import AddToAppleWalletButton from './AddToAppleWalletButton';
 
-const CenteredSafeAreaView = styled({
-  flex: 1,
-  justifyContent: 'center',
-})(SafeAreaView);
+const CenteredSafeAreaView = styled(
+  {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  'ui-passes.CenteredSafeAreaView'
+)(SafeAreaView);
 
 class Passes extends Component {
   static navigationOptions = {
@@ -26,14 +29,14 @@ class Passes extends Component {
               error ? (
                 <ErrorCard error={error} />
               ) : (
-                <React.Fragment>
+                <>
                   <PassView isLoading={loading} {...data.userPass || {}} />
                   {Platform.OS === 'ios' ? (
                     <AddToAppleWalletButton
                       url={(data.userPass || {}).passkitFileUrl}
                     />
                   ) : null}
-                </React.Fragment>
+                </>
               )
             }
           </Query>

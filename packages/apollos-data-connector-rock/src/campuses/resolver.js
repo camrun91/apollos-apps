@@ -13,18 +13,26 @@ export default {
   Campus: {
     id: ({ id }, args, context, { parentType }) =>
       createGlobalId(id, parentType.name),
-    city: ({ location }) => location.city,
     latitude: ({ location }) => location.latitude,
     longitude: ({ location }) => location.longitude,
-    postalCode: ({ location }) => location.postalCode,
-    state: ({ location }) => location.state,
-    street1: ({ location }) => location.street1,
-    street2: ({ location }) => location.street2,
-    image: ({ location }) => ({
-      uri: createImageUrlFromGuid(location.image.guid),
-      width: location.image.width,
-      height: location.image.height,
-    }),
+    postalCode: (root, args, { dataSources: { Campus } }) =>
+      Campus.getAddressField({ field: 'postalCode', root }),
+    city: (root, args, { dataSources: { Campus } }) =>
+      Campus.getAddressField({ field: 'city', root }),
+    state: (root, args, { dataSources: { Campus } }) =>
+      Campus.getAddressField({ field: 'state', root }),
+    street1: (root, args, { dataSources: { Campus } }) =>
+      Campus.getAddressField({ field: 'street1', root }),
+    street2: (root, args, { dataSources: { Campus } }) =>
+      Campus.getAddressField({ field: 'street2', root }),
+    image: ({ location }) =>
+      location.image
+        ? {
+            uri: createImageUrlFromGuid(location.image.guid),
+            width: location.image.width,
+            height: location.image.height,
+          }
+        : null,
     distanceFromLocation: (campus, { location } = {}) => {
       if (location) {
         return latLonDistance(

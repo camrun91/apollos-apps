@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextInput, View } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import PropTypes from 'prop-types';
 
 import {
@@ -11,10 +12,13 @@ import {
   withTheme,
 } from '@apollosproject/ui-kit';
 
-const Input = styled(({ theme }) => ({
-  minHeight: theme.sizing.baseUnit * 3.25, // 🧙‍This magic numbers fixes jitter when you begin typing. At least one `baseUnit` is to ofset `paddingTop` on `Prompt`
-  paddingVertical: 0, // fixes jitter when you begin typing on Android
-}))(TextInput);
+const Input = styled(
+  ({ theme }) => ({
+    minHeight: theme.sizing.baseUnit * 3.25, // 🧙‍This magic numbers fixes jitter when you begin typing. At least one `baseUnit` is to ofset `paddingTop` on `Prompt`
+    paddingVertical: 0, // fixes jitter when you begin typing on Android
+  }),
+  'ui-prayer.PrayerInput.Input'
+)(TextInput);
 
 const TextLimit = withTheme(
   ({ length, maxLength, maxLengthWarning }) => ({
@@ -62,10 +66,26 @@ const PrayerInput = ({
   maxLengthWarning,
   prompt,
   onChangeText,
+  completed,
   ...TextInputProps
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [prayer, setPrayer] = useState('');
+  const [timer, setTimer] = useState(null);
+
+  // get current prayer from storage
+  useEffect(() => {
+    // hooks can't return promises, so we need a proxy
+    const getPrayer = async () => {
+      try {
+        const text = await AsyncStorage.getItem('currentPrayer');
+        setPrayer(text || '');
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    getPrayer();
+  }, []);
 
   // eslint-disable-next-line consistent-return
   const handleOnBlur = () => {
@@ -84,10 +104,30 @@ const PrayerInput = ({
 
   const handleOnChangeText = (text) => {
     setPrayer(text);
+
+    // autosave after 3 sec
+    // check for existing timeout, clear it, and set a new one
+    clearTimeout(timer);
+    const newTimer = setTimeout(() => {
+      try {
+        AsyncStorage.setItem('currentPrayer', text);
+      } catch (e) {
+        console.error(e);
+      }
+    }, 3000);
+    setTimer(newTimer);
+
     return onChangeText && onChangeText(text);
   };
 
-  return !isEditing ? (
+  useEffect(() => {
+    // Clear out the prayer box when we submit the prayer.
+    if (completed) {
+      handleOnChangeText('');
+    }
+  }, [completed]);
+
+  return !isEditing && prayer === '' ? (
     <Touchable onPress={handleOnPress}>
       <Prompt>
         <PromptIcon />
@@ -129,6 +169,7 @@ PrayerInput.propTypes = {
   maxLength: PropTypes.number,
   maxLengthWarning: PropTypes.number, // triggers the "warning" to the user based on the number of characters remaining. `maxLength - maxLengthWarning = visual ui warning`
   prompt: PropTypes.string,
+  completed: PropTypes.bool,
 };
 
 PrayerInput.defaultProps = {

@@ -38,77 +38,24 @@ exports[`HorizontalDefaultCard should render 1`] = `
         }
       }
     >
-      <View
-        animate={null}
-        customAnimate={null}
-        forceRatio={1.5}
-        onReady={false}
+      <Image
+        fadeDuration={250}
+        hasTitleAndSummary={false}
+        onLoad={[Function]}
+        source={
+          Array [
+            Object {
+              "cache": "force-cache",
+              "uri": "https://picsum.photos/800/1600/?random",
+            },
+          ]
+        }
         style={
           Object {
             "aspectRatio": 1.5,
             "backgroundColor": "#A5A5A5",
             "resizeMode": "cover",
             "width": "100%",
-          }
-        }
-      >
-        <Image
-          hasTitleAndSummary={false}
-          maxAspectRatio={1.5}
-          minAspectRatio={1.5}
-          onLoad={[Function]}
-          source={
-            Array [
-              Object {
-                "cache": "force-cache",
-                "uri": "https://picsum.photos/800/1600/?random",
-              },
-            ]
-          }
-          style={
-            Object {
-              "backgroundColor": "#A5A5A5",
-              "opacity": 0,
-              "resizeMode": "cover",
-              "width": "100%",
-            }
-          }
-        />
-      </View>
-      <BVLinearGradient
-        colors={
-          Array [
-            2147483648,
-            0,
-          ]
-        }
-        endPoint={
-          Object {
-            "x": 0,
-            "y": 1,
-          }
-        }
-        locations={
-          Array [
-            0,
-            1,
-          ]
-        }
-        overlayColor="#000000"
-        overlayType="gradient-top"
-        startPoint={
-          Object {
-            "x": 0,
-            "y": 0,
-          }
-        }
-        style={
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
           }
         }
       />
@@ -166,78 +113,25 @@ exports[`HorizontalDefaultCard should render a loading state with isLoading 1`] 
         }
       }
     >
-      <View
-        animate={null}
-        customAnimate={null}
-        forceRatio={2}
-        onReady={false}
+      <Image
+        fadeDuration={250}
+        hasTitleAndSummary={true}
+        isLoading={true}
+        onLoad={[Function]}
+        source={
+          Array [
+            Object {
+              "cache": "force-cache",
+              "uri": "https://picsum.photos/800/1600/?random",
+            },
+          ]
+        }
         style={
           Object {
             "aspectRatio": 2,
             "backgroundColor": "#A5A5A5",
             "resizeMode": "cover",
             "width": "100%",
-          }
-        }
-      >
-        <Image
-          hasTitleAndSummary={true}
-          maxAspectRatio={2}
-          minAspectRatio={2}
-          onLoad={[Function]}
-          source={
-            Array [
-              Object {
-                "cache": "force-cache",
-                "uri": "https://picsum.photos/800/1600/?random",
-              },
-            ]
-          }
-          style={
-            Object {
-              "aspectRatio": 1,
-              "backgroundColor": "#A5A5A5",
-              "opacity": 0,
-              "resizeMode": "cover",
-              "width": "100%",
-            }
-          }
-        />
-      </View>
-      <BVLinearGradient
-        colors={
-          Array [
-            2147483648,
-            0,
-          ]
-        }
-        endPoint={
-          Object {
-            "x": 0,
-            "y": 1,
-          }
-        }
-        locations={
-          Array [
-            0,
-            1,
-          ]
-        }
-        overlayColor="#000000"
-        overlayType="gradient-top"
-        startPoint={
-          Object {
-            "x": 0,
-            "y": 0,
-          }
-        }
-        style={
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
           }
         }
       />
@@ -320,77 +214,24 @@ exports[`HorizontalDefaultCard should render with a summary 1`] = `
         }
       }
     >
-      <View
-        animate={null}
-        customAnimate={null}
-        forceRatio={2}
-        onReady={false}
+      <Image
+        fadeDuration={250}
+        hasTitleAndSummary={true}
+        onLoad={[Function]}
+        source={
+          Array [
+            Object {
+              "cache": "force-cache",
+              "uri": "https://picsum.photos/800/1600/?random",
+            },
+          ]
+        }
         style={
           Object {
             "aspectRatio": 2,
             "backgroundColor": "#A5A5A5",
             "resizeMode": "cover",
             "width": "100%",
-          }
-        }
-      >
-        <Image
-          hasTitleAndSummary={true}
-          maxAspectRatio={2}
-          minAspectRatio={2}
-          onLoad={[Function]}
-          source={
-            Array [
-              Object {
-                "cache": "force-cache",
-                "uri": "https://picsum.photos/800/1600/?random",
-              },
-            ]
-          }
-          style={
-            Object {
-              "backgroundColor": "#A5A5A5",
-              "opacity": 0,
-              "resizeMode": "cover",
-              "width": "100%",
-            }
-          }
-        />
-      </View>
-      <BVLinearGradient
-        colors={
-          Array [
-            2147483648,
-            0,
-          ]
-        }
-        endPoint={
-          Object {
-            "x": 0,
-            "y": 1,
-          }
-        }
-        locations={
-          Array [
-            0,
-            1,
-          ]
-        }
-        overlayColor="#000000"
-        overlayType="gradient-top"
-        startPoint={
-          Object {
-            "x": 0,
-            "y": 0,
-          }
-        }
-        style={
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
           }
         }
       />
@@ -479,78 +320,25 @@ exports[`HorizontalDefaultCard should render with a title 1`] = `
         }
       }
     >
-      <View
-        animate={null}
-        customAnimate={null}
-        forceRatio={1.5}
-        onReady={false}
+      <Image
+        fadeDuration={250}
+        hasTitleAndSummary={false}
+        isLoading={true}
+        onLoad={[Function]}
+        source={
+          Array [
+            Object {
+              "cache": "force-cache",
+              "uri": "https://picsum.photos/800/1600/?random",
+            },
+          ]
+        }
         style={
           Object {
             "aspectRatio": 1.5,
             "backgroundColor": "#A5A5A5",
             "resizeMode": "cover",
             "width": "100%",
-          }
-        }
-      >
-        <Image
-          hasTitleAndSummary={false}
-          maxAspectRatio={1.5}
-          minAspectRatio={1.5}
-          onLoad={[Function]}
-          source={
-            Array [
-              Object {
-                "cache": "force-cache",
-                "uri": "https://picsum.photos/800/1600/?random",
-              },
-            ]
-          }
-          style={
-            Object {
-              "aspectRatio": 1,
-              "backgroundColor": "#A5A5A5",
-              "opacity": 0,
-              "resizeMode": "cover",
-              "width": "100%",
-            }
-          }
-        />
-      </View>
-      <BVLinearGradient
-        colors={
-          Array [
-            2147483648,
-            0,
-          ]
-        }
-        endPoint={
-          Object {
-            "x": 0,
-            "y": 1,
-          }
-        }
-        locations={
-          Array [
-            0,
-            1,
-          ]
-        }
-        overlayColor="#000000"
-        overlayType="gradient-top"
-        startPoint={
-          Object {
-            "x": 0,
-            "y": 0,
-          }
-        }
-        style={
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
           }
         }
       />
@@ -620,77 +408,24 @@ exports[`HorizontalDefaultCard should should render a like icon 1`] = `
         }
       }
     >
-      <View
-        animate={null}
-        customAnimate={null}
-        forceRatio={1.5}
-        onReady={false}
+      <Image
+        fadeDuration={250}
+        hasTitleAndSummary={false}
+        onLoad={[Function]}
+        source={
+          Array [
+            Object {
+              "cache": "force-cache",
+              "uri": "https://picsum.photos/800/1600/?random",
+            },
+          ]
+        }
         style={
           Object {
             "aspectRatio": 1.5,
             "backgroundColor": "#A5A5A5",
             "resizeMode": "cover",
             "width": "100%",
-          }
-        }
-      >
-        <Image
-          hasTitleAndSummary={false}
-          maxAspectRatio={1.5}
-          minAspectRatio={1.5}
-          onLoad={[Function]}
-          source={
-            Array [
-              Object {
-                "cache": "force-cache",
-                "uri": "https://picsum.photos/800/1600/?random",
-              },
-            ]
-          }
-          style={
-            Object {
-              "backgroundColor": "#A5A5A5",
-              "opacity": 0,
-              "resizeMode": "cover",
-              "width": "100%",
-            }
-          }
-        />
-      </View>
-      <BVLinearGradient
-        colors={
-          Array [
-            2147483648,
-            0,
-          ]
-        }
-        endPoint={
-          Object {
-            "x": 0,
-            "y": 1,
-          }
-        }
-        locations={
-          Array [
-            0,
-            1,
-          ]
-        }
-        overlayColor="#000000"
-        overlayType="gradient-top"
-        startPoint={
-          Object {
-            "x": 0,
-            "y": 0,
-          }
-        }
-        style={
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
           }
         }
       />
@@ -887,77 +622,24 @@ exports[`HorizontalDefaultCard should should render as isLiked 1`] = `
         }
       }
     >
-      <View
-        animate={null}
-        customAnimate={null}
-        forceRatio={1.5}
-        onReady={false}
+      <Image
+        fadeDuration={250}
+        hasTitleAndSummary={false}
+        onLoad={[Function]}
+        source={
+          Array [
+            Object {
+              "cache": "force-cache",
+              "uri": "https://picsum.photos/800/1600/?random",
+            },
+          ]
+        }
         style={
           Object {
             "aspectRatio": 1.5,
             "backgroundColor": "#A5A5A5",
             "resizeMode": "cover",
             "width": "100%",
-          }
-        }
-      >
-        <Image
-          hasTitleAndSummary={false}
-          maxAspectRatio={1.5}
-          minAspectRatio={1.5}
-          onLoad={[Function]}
-          source={
-            Array [
-              Object {
-                "cache": "force-cache",
-                "uri": "https://picsum.photos/800/1600/?random",
-              },
-            ]
-          }
-          style={
-            Object {
-              "backgroundColor": "#A5A5A5",
-              "opacity": 0,
-              "resizeMode": "cover",
-              "width": "100%",
-            }
-          }
-        />
-      </View>
-      <BVLinearGradient
-        colors={
-          Array [
-            2147483648,
-            0,
-          ]
-        }
-        endPoint={
-          Object {
-            "x": 0,
-            "y": 1,
-          }
-        }
-        locations={
-          Array [
-            0,
-            1,
-          ]
-        }
-        overlayColor="#000000"
-        overlayType="gradient-top"
-        startPoint={
-          Object {
-            "x": 0,
-            "y": 0,
-          }
-        }
-        style={
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
           }
         }
       />

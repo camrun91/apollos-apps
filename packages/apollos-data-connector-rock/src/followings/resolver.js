@@ -26,6 +26,17 @@ const resolvers = {
         operation,
         resolveInfo,
       }),
+    updateLikeNode: async (
+      root,
+      { input: { nodeId, operation } },
+      { dataSources },
+      resolveInfo
+    ) =>
+      dataSources.Followings.updateLikeNode({
+        nodeId,
+        operation,
+        resolveInfo,
+      }),
   },
   Query: {
     likedContent: async (root, { after, first }, { dataSources }) => {
@@ -55,6 +66,7 @@ const resolvers = {
   UniversalContentItem: defaultContentItemResolvers,
   DevotionalContentItem: defaultContentItemResolvers,
   ContentSeriesContentItem: defaultContentItemResolvers,
+  WeekendContentItem: defaultContentItemResolvers,
   MediaContentItem: defaultContentItemResolvers,
 };
 

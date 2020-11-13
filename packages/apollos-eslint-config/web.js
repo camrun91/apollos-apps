@@ -7,15 +7,7 @@ module.exports = {
     'prettier/react',
   ],
   parser: 'babel-eslint',
-  plugins: [
-    'import',
-    'jsx-a11y',
-    'babel',
-    'prettier',
-    'jest',
-    'react',
-    'graphql',
-  ],
+  plugins: ['import', 'jsx-a11y', 'babel', 'prettier', 'jest', 'react'],
   rules: {
     'prettier/prettier': [
       'error',
@@ -31,6 +23,7 @@ module.exports = {
     'react/jsx-filename-extension': 0,
     'react/jsx-handler-names': 2,
     'react/jsx-curly-brace-presence': 0,
+    'react/jsx-props-no-spreading': 0,
     'react/prefer-stateless-function': [2, { ignorePureComponents: true }],
     'react/require-default-props': 0,
     'react/prop-types': ['error', { ignore: ['navigation'] }],
@@ -59,7 +52,6 @@ module.exports = {
     'import/no-cycle': 0,
     'function-paren-newline': 0,
     'no-underscore-dangle': 0,
-    'graphql/template-strings': ['warn', { env: 'apollo' }],
   },
   parserOptions: {
     ecmaVersion: 7,

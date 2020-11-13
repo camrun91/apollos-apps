@@ -2,23 +2,33 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
 
-import { styled, ActionList, H3, H6 } from '@apollosproject/ui-kit';
+import { styled, ActionList, H3, H5 } from '@apollosproject/ui-kit';
 import { get } from 'lodash';
 
 const Title = styled(
   ({ theme }) => ({
     color: theme.colors.text.tertiary,
   }),
-  'ActionListFeature.Title'
-)(H6);
+  'ui-connected.ActionListFeatureConnected.ActionListFeature.Title'
+)(H5);
 
-const Subtitle = styled({}, 'ActionListFeature.Subtitle')(H3);
+const Subtitle = styled(
+  {},
+  'ui-connected.ActionListFeatureConnected.ActionListFeature.Subtitle'
+)(H3);
 
-const ActionListHeader = styled(({ theme: { sizing: { baseUnit } } }) => ({
-  paddingHorizontal: baseUnit,
-  paddingTop: baseUnit,
-  // Padding Bottom is baked into the card content
-}))(View);
+const ActionListHeader = styled(
+  ({
+    theme: {
+      sizing: { baseUnit },
+    },
+  }) => ({
+    paddingHorizontal: baseUnit,
+    paddingTop: baseUnit,
+    // Padding Bottom is baked into the card content
+  }),
+  'ui-connected.ActionListFeatureConnected.ActionListFeature.ActionListHeader'
+)(View);
 
 const loadingStateArray = [
   {
@@ -130,7 +140,6 @@ const ActionListFeature = memo(
 ActionListFeature.displayName = 'Features';
 
 ActionListFeature.propTypes = {
-  // TODO: refactor ActionListCard to safely render without an actions array.
   actions: PropTypes.arrayOf(PropTypes.shape({})),
   primaryAction: PropTypes.shape({}),
   id: PropTypes.string.isRequired,

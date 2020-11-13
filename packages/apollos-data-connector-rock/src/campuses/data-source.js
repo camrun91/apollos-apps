@@ -1,5 +1,7 @@
+import { get } from 'lodash';
 import RockApolloDataSource from '@apollosproject/rock-apollo-data-source';
 import { parseGlobalId } from '@apollosproject/server-core';
+import ApollosConfig from '@apollosproject/config';
 import { latLonDistance } from '../utils';
 
 export default class Campus extends RockApolloDataSource {
@@ -9,21 +11,31 @@ export default class Campus extends RockApolloDataSource {
 
   getFromId = (id) =>
     this.request()
-      .find(id)
+      .filter(`Id eq ${id}`)
       .expand('Location')
       .expand('Location/Image')
-      .get();
+      .expand('CampusTypeValue')
+      .first();
 
   getAll = () =>
     this.request()
       .filter('IsActive eq true')
       .expand('Location')
       .expand('Location/Image')
+      .expand('CampusTypeValue')
       .cache({ ttl: 600 }) // ten minutes
       .get();
 
   getByLocation = async ({ latitude, longitude } = {}) => {
     let campuses = await this.getAll();
+
+    const onlineCampuses = campuses.filter(
+      ({ campusTypeValue }) => campusTypeValue?.value === 'Online'
+    );
+    campuses = campuses.filter(
+      ({ campusTypeValue }) => campusTypeValue?.value !== 'Online'
+    );
+
     campuses = campuses.map((campus) => ({
       ...campus,
       distanceFromLocation: latLonDistance(
@@ -38,6 +50,14 @@ export default class Campus extends RockApolloDataSource {
       (a, b) => a.distanceFromLocation - b.distanceFromLocation
     );
 
+    if (
+      campuses.every(({ distanceFromLocation }) => distanceFromLocation > 50)
+    ) {
+      campuses = [...onlineCampuses, ...campuses];
+    } else {
+      campuses = [...campuses, ...onlineCampuses];
+    }
+
     return campuses;
   };
 
@@ -45,6 +65,7 @@ export default class Campus extends RockApolloDataSource {
     const family = await this.request(`/Groups/GetFamilies/${personId}`)
       .expand('Campus')
       .expand('Campus/Location')
+      .expand('Campus/CampusTypeValue')
       .expand('Campus/Location/Image')
       .first();
 
@@ -57,6 +78,25 @@ export default class Campus extends RockApolloDataSource {
       return family.campus;
     }
     return null;
+  };
+
+  ONLINE_CAMPUS_FIELDS = {
+    street1: 'No locations near you. ',
+    city: "When there's one",
+    state: "we'll let you know!",
+    postalCode: '',
+  };
+
+  getAddressField = ({ field, root }) => {
+    if (root.campusTypeValue?.value === 'Online') {
+      return (
+        get(ApollosConfig, `ONLINE_CAMPUS.FIELDS.${field}`) ||
+        // TODO: deprecated, use ONLINE_CAMPUS_FIELDS and swap in config yaml
+        get(ApollosConfig, `REMOTE_CAMPUS.FIELDS.${field}`) ||
+        this.ONLINE_CAMPUS_FIELDS[field]
+      );
+    }
+    return root.location[field];
   };
 
   updateCurrentUserCampus = async ({ campusId }) => {
