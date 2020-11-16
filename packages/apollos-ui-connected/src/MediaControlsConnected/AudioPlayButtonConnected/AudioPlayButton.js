@@ -37,12 +37,11 @@ const AudioPlayButton = ({
       <StyledMediaThumbnail image={coverImageSources}>
         <MediaThumbnailItem centered>
           <MediaThumbnailIcon name={icon} />
-          <H6>{title}</H6>
         </MediaThumbnailItem>
-        {/* <MediaThumbnailItem centered bottom>
+        <MediaThumbnailItem centered bottom>
           <H6 padded>{title}</H6>
-        </MediaThumbnailItem> */}
-      </StyledMediaThumbnail> 
+        </MediaThumbnailItem>
+      </StyledMediaThumbnail>
     </TouchableScale>
   </Container>
 );

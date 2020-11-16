@@ -227,13 +227,31 @@ exports[`AudioPlayButton should render 1`] = `
               />
             </RNSVGGroup>
           </RNSVGSvgView>
+        </View>
+        <View
+          bottom={true}
+          centered={true}
+          style={
+            Object {
+              "alignItems": "center",
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": undefined,
+            }
+          }
+        >
           <Text
+            padded={true}
             style={
               Object {
                 "color": "#DBDBD9",
                 "fontFamily": "InterUI-Bold",
                 "fontSize": 12,
                 "lineHeight": 18,
+                "paddingBottom": 9,
               }
             }
           >
@@ -246,7 +264,7 @@ exports[`AudioPlayButton should render 1`] = `
 </View>
 `;
 
-exports[`AudioPlayButton should render with custom audio icon 1`] = `
+exports[`AudioPlayButton should render with custom play icon 1`] = `
 <View
   style={
     Object {
@@ -473,13 +491,31 @@ exports[`AudioPlayButton should render with custom audio icon 1`] = `
               />
             </RNSVGGroup>
           </RNSVGSvgView>
+        </View>
+        <View
+          bottom={true}
+          centered={true}
+          style={
+            Object {
+              "alignItems": "center",
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": undefined,
+            }
+          }
+        >
           <Text
+            padded={true}
             style={
               Object {
                 "color": "#DBDBD9",
                 "fontFamily": "InterUI-Bold",
                 "fontSize": 12,
                 "lineHeight": 18,
+                "paddingBottom": 9,
               }
             }
           >
@@ -719,13 +755,31 @@ exports[`AudioPlayButton should render with custom title 1`] = `
               />
             </RNSVGGroup>
           </RNSVGSvgView>
+        </View>
+        <View
+          bottom={true}
+          centered={true}
+          style={
+            Object {
+              "alignItems": "center",
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": undefined,
+            }
+          }
+        >
           <Text
+            padded={true}
             style={
               Object {
                 "color": "#DBDBD9",
                 "fontFamily": "InterUI-Bold",
                 "fontSize": 12,
                 "lineHeight": 18,
+                "paddingBottom": 9,
               }
             }
           >

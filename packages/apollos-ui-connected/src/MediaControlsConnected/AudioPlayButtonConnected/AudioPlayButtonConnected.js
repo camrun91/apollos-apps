@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Mutation } from 'react-apollo';
+
+import { PLAY_VIDEO } from '@apollosproject/ui-media-player';
 
 import AudioPlayButton from './AudioPlayButton';
 
@@ -12,21 +15,25 @@ const AudioPlayButtonConnected = ({
   Component,
   ...props
 }) => (
-  <Component
-    onPress={() =>
-      play({
-        variables: {
-          mediaSource: audioSource,
-          posterSources: coverImageSources,
-          title,
-          isVideo,
-          artist: parentChannelName,
-        },
-      })
-    }
-    coverImageSources={coverImageSources}
-    {...props}
-  />
+  <Mutation mutation={PLAY_VIDEO}>
+    {(play) => (
+      <Component
+        onPress={() =>
+          play({
+            variables: {
+              mediaSource: audioSource,
+              posterSources: coverImageSources,
+              title,
+              isVideo,
+              artist: parentChannelName,
+            },
+          })
+        }
+        coverImageSources={coverImageSources}
+        {...props}
+      />
+    )}
+  </Mutation>
 );
 
 AudioPlayButtonConnected.propTypes = {

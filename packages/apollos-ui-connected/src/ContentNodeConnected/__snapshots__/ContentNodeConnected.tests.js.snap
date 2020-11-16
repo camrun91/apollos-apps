@@ -139,7 +139,7 @@ Array [
     </View>
   </View>,
   <Text>
-    {"coverImage":{"sources":[{"uri":"https://picsum.photos/2000/200/?random","__typename":"ImageMediaSource"}],"__typename":"ImageMedia"},"coverImageSources":[{"uri":"https://picsum.photos/2000/200/?random","__typename":"ImageMediaSource"}],"loading":false,"title":"Here is the title","videoSource":{"uri":"https://somevideo.com/video.bin","__typename":"VideoMediaSource"}}
+    {"coverImage":{"sources":[{"uri":"https://picsum.photos/2000/200/?random","__typename":"ImageMediaSource"}],"__typename":"ImageMedia"},"coverImageSources":[{"uri":"https://picsum.photos/2000/200/?random","__typename":"ImageMediaSource"}],"loading":false,"title":"Here is the title","videoSource":{"uri":"https://somevideo.com/video.bin","__typename":"VideoMediaSource"},"audioSource":null}
   </Text>,
   <View
     style={
