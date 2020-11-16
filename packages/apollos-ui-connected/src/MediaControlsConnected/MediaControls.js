@@ -5,7 +5,8 @@ import { get } from 'lodash';
 import WebView from './WebView';
 import PlayButtonConnected from './PlayButtonConnected';
 import PlayButton from './PlayButtonConnected/PlayButton';
-import AudioPlayButton from './AudioPlayButton';
+import AudioPlayButtonConnected from './AudioPlayButtonConnected';
+import AudioPlayButton from './AudioPlayButtonConnected/AudioPlayButton';
 
 const MediaControls = ({
   coverImageSources,
@@ -54,7 +55,7 @@ const MediaControls = ({
     // We have audio but no video
   } else if (get(audioSource, 'uri') && !get(videoSource, 'uri')) {
     Control = (
-      <PlayButtonConnected
+      <AudioPlayButtonConnected
         isLoading={showLoadingState}
         Component={AudioPlayButton}
         coverImageSources={coverImageSources}

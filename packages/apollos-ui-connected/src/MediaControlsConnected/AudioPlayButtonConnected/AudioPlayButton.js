@@ -5,50 +5,44 @@ import PropTypes from 'prop-types';
 import {
   styled,
   TouchableScale,
-  Card,
-  Icon,
+  MediaThumbnail,
+  MediaThumbnailIcon,
   MediaThumbnailItem,
-  PaddedView,
-  withTheme,
   H6,
 } from '@apollosproject/ui-kit';
 
-const Container = styled({
-  flexDirection: 'row',
-  alignItems: 'flex-start',
-  justifyContent: 'flex-start',
-})(View);
+const Container = styled(
+  {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+  },
+  'ui-connected.MediaControlsConnected.AudioPlayButtonConnected.PlayButton.Container'
+)(View);
 
-const StyledCard = styled(({ theme }) => ({
-  margin: 0,
-  marginHorizontal: 0,
-  marginVertical: 0,
-  width: theme.sizing.baseUnit * 4,
-  backgroundColor: theme.colors.darkSecondary,
-}))(Card);
-
-const MediaThumbnailIcon = withTheme(({ theme }) => ({
-  size: theme.sizing.baseUnit * 1.5,
-}))(Icon);
+const StyledMediaThumbnail = styled(
+  { marginVertical: 0 },
+  'ui-connected.MediaControlsConnected.PlayButtonConnected.PlayButton.StyledMediaThumbnail'
+)(MediaThumbnail);
 
 const AudioPlayButton = ({
   coverImageSources,
   icon,
   onPress,
-  isLoading,
   title,
   ...props
 }) => (
   <Container {...props}>
     <TouchableScale onPress={onPress}>
-      <PaddedView vertical={false}>
-        <StyledCard forceRatio={1} isLoading={isLoading}>
-          <MediaThumbnailItem centered>
-            <MediaThumbnailIcon name={icon} isLoading={isLoading} />
-            <H6>{title}</H6>
-          </MediaThumbnailItem>
-        </StyledCard>
-      </PaddedView>
+      <StyledMediaThumbnail image={coverImageSources}>
+        <MediaThumbnailItem centered>
+          <MediaThumbnailIcon name={icon} />
+          <H6>{title}</H6>
+        </MediaThumbnailItem>
+        {/* <MediaThumbnailItem centered bottom>
+          <H6 padded>{title}</H6>
+        </MediaThumbnailItem> */}
+      </StyledMediaThumbnail> 
     </TouchableScale>
   </Container>
 );
@@ -58,7 +52,6 @@ AudioPlayButton.propTypes = {
   icon: PropTypes.string,
   onPress: PropTypes.func,
   title: PropTypes.string,
-  isLoading: PropTypes.bool,
 };
 
 AudioPlayButton.defaultProps = {

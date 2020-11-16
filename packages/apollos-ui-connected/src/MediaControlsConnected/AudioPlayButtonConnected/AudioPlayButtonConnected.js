@@ -12,21 +12,21 @@ const AudioPlayButtonConnected = ({
   Component,
   ...props
 }) => (
-      <Component
-        onPress={() =>
-          play({
-            variables: {
-              mediaSource: audioSource,
-              posterSources: coverImageSources,
-              title,
-              isVideo,
-              artist: parentChannelName,
-            },
-          })
-        }
-        coverImageSources={coverImageSources}
-        {...props}
-      />
+  <Component
+    onPress={() =>
+      play({
+        variables: {
+          mediaSource: audioSource,
+          posterSources: coverImageSources,
+          title,
+          isVideo,
+          artist: parentChannelName,
+        },
+      })
+    }
+    coverImageSources={coverImageSources}
+    {...props}
+  />
 );
 
 AudioPlayButtonConnected.propTypes = {

@@ -1,17 +1,14 @@
 import React from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import { View } from 'react-native';
 import PropTypes from 'prop-types';
 
 import {
   styled,
   TouchableScale,
-  Card,
-  CardLabel,
-  ConnectedImage,
-  Icon,
+  MediaThumbnail,
+  MediaThumbnailIcon,
   MediaThumbnailItem,
-  PaddedView,
-  withTheme,
+  H6,
 } from '@apollosproject/ui-kit';
 
 const Container = styled(
@@ -28,45 +25,17 @@ const StyledMediaThumbnail = styled(
   'ui-connected.MediaControlsConnected.PlayButtonConnected.PlayButton.StyledMediaThumbnail'
 )(MediaThumbnail);
 
-const MediaThumbnailIcon = withTheme(({ theme }) => ({
-  size: theme.sizing.baseUnit * 3,
-  style: Platform.select(theme.shadows.default),
-}))(Icon);
-
-const PlayButton = ({
-  coverImageSources,
-  icon,
-  onPress,
-  title,
-  isLoading,
-  isLive,
-  ...props
-}) => (
+const PlayButton = ({ coverImageSources, icon, onPress, title, ...props }) => (
   <Container {...props}>
     <TouchableScale onPress={onPress}>
-      <PaddedView vertical={false}>
-        <StyledCard isLoading={isLoading} forceRatio={16 / 9}>
-          <ConnectedImage
-            source={coverImageSources}
-            style={StyleSheet.absoluteFill}
-          />
-          <MediaThumbnailItem bottom right>
-            <PaddedView>
-              {isLive ? (
-                <CardLabel
-                  title="Live"
-                  type="secondary"
-                  icon="live-dot"
-                  iconSize={8}
-                />
-              ) : null}
-            </PaddedView>
-          </MediaThumbnailItem>
-          <MediaThumbnailItem centered>
-            <MediaThumbnailIcon isLoading={isLoading} name={icon} />
-          </MediaThumbnailItem>
-        </StyledCard>
-      </PaddedView>
+      <StyledMediaThumbnail image={coverImageSources}>
+        <MediaThumbnailItem centered>
+          <MediaThumbnailIcon name={icon} />
+        </MediaThumbnailItem>
+        <MediaThumbnailItem centered bottom>
+          <H6 padded>{title}</H6>
+        </MediaThumbnailItem>
+      </StyledMediaThumbnail>
     </TouchableScale>
   </Container>
 );
@@ -76,7 +45,6 @@ PlayButton.propTypes = {
   icon: PropTypes.string,
   onPress: PropTypes.func,
   title: PropTypes.string,
-  isLoading: PropTypes.bool,
 };
 
 PlayButton.defaultProps = {
