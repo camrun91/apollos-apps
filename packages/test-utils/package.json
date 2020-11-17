@@ -1,0 +1,15 @@
+{
+  "name": "@apollosproject/test-utils",
+  "repository": "git://github.com/apollosproject/apollos-apps.git",
+  "version": "1.0.0",
+  "main": "./index.js",
+  "dependencies": {
+    "react-test-renderer": "*",
+    "waait": "*"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "eb803583da83beeab7756baddcae3adca7650c39"
+}
