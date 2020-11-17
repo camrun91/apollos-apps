@@ -1,9 +1,10 @@
 import React from 'react';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { MockedProvider } from 'react-apollo/test-utils';
-import { Providers as UIProviders } from '@apollosproject/ui-kit';
 import renderer from 'react-test-renderer';
 import wait from 'waait';
+import TestProvider from './TestProvider';
+
+export { TestProvider };
 
 export const renderWithApolloData = async (component) => {
   const tree = renderer.create(component);
@@ -11,12 +12,6 @@ export const renderWithApolloData = async (component) => {
   tree.update(component);
   return tree;
 };
-
-export const TestProviders = ({ children, mocks }) => (
-  <UIProviders>
-    <MockedProvider mocks={mocks}>{children}</MockedProvider>
-  </UIProviders>
-);
 
 export const WithReactNavigator = (Component) => {
   const AppNavigator = createStackNavigator({
