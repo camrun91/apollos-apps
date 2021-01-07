@@ -23,15 +23,14 @@ const defineModel = ({
   sequelizeOptions = {},
   external = false,
 }) => () => {
-  console.log('defining', modelName);
   const model = sequelize.define(
     modelName,
     {
       ...attributes,
-      apollos_id: DataTypes.STRING,
-      ...(resolveType ? { apollos_type: DataTypes.STRING } : {}),
+      // apollos_id: DataTypes.STRING,
+      // ...(resolveType ? { apollosType: DataTypes.STRING } : {}),
       ...(external
-        ? { origin_id: DataTypes.STRING, origin_type: DataTypes.STRING }
+        ? { originId: DataTypes.STRING, originType: DataTypes.STRING }
         : {}),
     },
     {
@@ -71,6 +70,6 @@ const defineModel = ({
 // Creates a function that returns a function that can be called with sequelize as an argument.
 const configureModel = (callback) => () => callback({ sequelize });
 
-const sync = async () => await sequelize.sync();
+const sync = async () => await sequelize.sync({ alter: true });
 
 export { defineModel, configureModel, sequelize, sync, PostgresDataSource };
