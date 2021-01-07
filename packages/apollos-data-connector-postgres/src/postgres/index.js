@@ -1,12 +1,12 @@
 /* eslint-disable no-param-reassign */
 
 import { Sequelize, DataTypes } from 'sequelize';
-import { Config } from '@apollosproject/config';
+import ApollosConfig from '@apollosproject/config';
 import { createGlobalId } from '@apollosproject/server-core';
 
 const sequelize = new Sequelize(
-  Config?.DATABASE?.URL ||
-    `sqlite:${process.env.PWD}/${process.env.NODE_ENV}.db`
+  ApollosConfig?.DATABASE?.URL ||
+    `sqlite:${process.env.PWD}/${process.env.NODE_ENV || 'development'}.db`
 );
 
 class PostgresDataSource {
@@ -16,13 +16,14 @@ class PostgresDataSource {
   }
 }
 
-const createModel = ({
+const defineModel = ({
   modelName,
   attributes,
-  sequelizeOptions,
   resolveType,
+  sequelizeOptions = {},
   external = false,
-}) => {
+}) => () => {
+  console.log('defining', modelName);
   const model = sequelize.define(
     modelName,
     {
@@ -59,7 +60,7 @@ const createModel = ({
       ...sequelizeOptions,
       indexes: [
         { unique: true, fields: ['apollos_id'] },
-        ...sequelizeOptions.indexes,
+        ...(sequelizeOptions?.indexes || []),
       ],
     }
   );
@@ -67,6 +68,9 @@ const createModel = ({
   return model;
 };
 
+// Creates a function that returns a function that can be called with sequelize as an argument.
+const configureModel = (callback) => () => callback({ sequelize });
+
 const sync = async () => await sequelize.sync();
 
-export { createModel, sync, sequelize, PostgresDataSource };
+export { defineModel, configureModel, sequelize, sync, PostgresDataSource };
