@@ -27,6 +27,24 @@ const setupModel = configureModel(({ sequelize }) => {
     foreignKey: 'mediableId',
     constraints: false,
   });
+
+  content_item.belongsTo(media, {
+    scope: { mediableType: 'image' },
+    foreignKey: 'coverImageId',
+    as: 'coverImage',
+  });
+
+  content_item.belongsTo(content_item, {
+    foreignKey: 'parentId',
+    as: 'parent',
+    constraints: false,
+  });
+
+  content_item.hasMany(content_item, {
+    foreignKey: 'parentId',
+    as: 'children',
+    constraints: false,
+  });
 });
 
 export { createModel, setupModel };
