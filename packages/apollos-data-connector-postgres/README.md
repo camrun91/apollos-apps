@@ -3,7 +3,7 @@
 Provides a data-connector to manage and read/write data stored in postgres (or potentially other SQL databases)
 
 
-## Usage
+## Setup
 
 Models can be created by calling and exporting `defineModel` function, and then optionally by calling and exporting the `configureModel` function. The `defineModel` is used to setup the schema of your database model, while the `configureModel` function can be used to setup relationships between other models (ie: defining foreign keys). These are two seperate functions so that circular import issues caused by models needing to import each other can be avoided. Below is an example of a `models.js` file. 
 
@@ -82,3 +82,6 @@ export default class ContentItem extends PostgresDataSource {
 }
 ```
 
+## Usage
+
+You can use the postgres datasource like you would any other Datasource. In order for your schema to updated to match the config you have created in your models, you'll need to sync. The easiest way to do that is import `sync` from `@apollosproject/data-connector-postgres` and call it on app boot.
