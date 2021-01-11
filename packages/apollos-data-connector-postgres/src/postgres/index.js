@@ -4,6 +4,8 @@ import { Sequelize, DataTypes } from 'sequelize';
 import ApollosConfig from '@apollosproject/config';
 import { createGlobalId } from '@apollosproject/server-core';
 
+// Use the DB url from the apollos config if provided.
+// Otherwise, use a SQlite database in the server root directory.
 const sequelize = new Sequelize(
   ApollosConfig?.DATABASE?.URL ||
     `sqlite:${process.env.PWD}/${process.env.NODE_ENV || 'development'}.db`
@@ -16,6 +18,8 @@ class PostgresDataSource {
   }
 }
 
+// Define model is used to define the base attributes of a model
+// as well as any pre/post hooks.
 const defineModel = ({
   modelName,
   attributes,
@@ -27,38 +31,56 @@ const defineModel = ({
     modelName,
     {
       ...attributes,
-      // apollos_id: DataTypes.STRING,
-      // ...(resolveType ? { apollosType: DataTypes.STRING } : {}),
+      apollosId: {
+        type: DataTypes.STRING,
+        allowNull: true, // we set this value with an "afterCreate" hook if not set.
+        unique: true,
+      },
+      apollosType: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       ...(external
-        ? { originId: DataTypes.STRING, originType: DataTypes.STRING }
+        ? {
+            originId: { type: DataTypes.STRING, allowNull: false },
+            originType: { type: DataTypes.STRING, allowNull: false },
+          }
         : {}),
     },
     {
-      beforeCreate: (instance) => {
-        // First, compoute the apollos type from the resolve type, if passed.
-        if (resolveType && !instance.apollos_type) {
-          instance.apollos_type = resolveType(instance);
-        }
-        // Second, use the origin id to copmute the apollos id (if it exists)
-        if (
-          instance.origin_id != null &&
-          instance.apollos_type != null &&
-          !instance.apollos_id
-        ) {
-          instance.apollos_id = createGlobalId(
-            instance.apollos_type,
-            instance.origin_id
-          );
-          // Finally, compute the apollos_id from the apollos_type and the id if passed.
-          // } else if (instance.id != null && instance.apollos_type && != null && !instance.apollos_id){
-          // instance.apollos_id = createGlobalId(instance.apollos_type, instance.origin_id);
-        }
-      },
-    },
-    {
       ...sequelizeOptions,
+      hooks: {
+        ...(sequelizeOptions?.hooks || {}),
+        beforeValidate: (instance) => {
+          // First, compoute the apollos type from the resolve type, if passed.
+          if (resolveType && !instance.apollosType) {
+            instance.apollosType = resolveType(instance);
+          }
+          // Second, use the origin id to compute the apollos id (if it exists)
+          if (
+            instance.originId != null &&
+            instance.apollosType != null &&
+            !instance.apollosId
+          ) {
+            instance.apollosId = createGlobalId(
+              instance.originId,
+              instance.apollosType
+            );
+          }
+        },
+        afterCreate: async (instance, options) => {
+          if (!instance.apollosId) {
+            await instance.set(
+              { apollosId: createGlobalId(instance.id, instance.apollosType) },
+              {
+                transaction: options.transaction,
+              }
+            );
+          }
+        },
+      },
       indexes: [
-        { unique: true, fields: ['apollos_id'] },
+        { unique: true, fields: ['apollosId'] },
         ...(sequelizeOptions?.indexes || []),
       ],
     }
@@ -68,8 +90,11 @@ const defineModel = ({
 };
 
 // Creates a function that returns a function that can be called with sequelize as an argument.
+// Used to configure relationships between models.
 const configureModel = (callback) => () => callback({ sequelize });
 
-const sync = async () => await sequelize.sync({ alter: true });
+// Replaces DB migrations - alters the tables so they match the structure defined in code.
+// Potentially harmful - will clober columns and tables that no longer exist - so use with caution.
+const sync = async () => sequelize.sync({ alter: true });
 
 export { defineModel, configureModel, sequelize, sync, PostgresDataSource };

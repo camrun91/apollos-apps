@@ -41,7 +41,8 @@
   },
   "devDependencies": {
     "@apollosproject/babel-preset-apollos": "^1.7.0",
-    "jest": "^25.1.0"
+    "jest": "^25.1.0",
+    "sequelize-mock": "^0.10.2"
   },
   "publishConfig": {
     "access": "public"
