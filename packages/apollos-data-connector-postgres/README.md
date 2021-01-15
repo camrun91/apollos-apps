@@ -84,4 +84,4 @@ export default class ContentItem extends PostgresDataSource {
 
 ## Usage
 
-You can use the postgres datasource like you would any other Datasource. In order for your schema to updated to match the config you have created in your models, you'll need to sync. The easiest way to do that is import `sync` from `@apollosproject/data-connector-postgres` and call it on app boot.
+You can use the postgres datasource like you would any other Datasource. In order for your schema to updated to match the config you have created in your models, you'll need to sync. The easiest way to do that is import `sync` from `@apollosproject/data-connector-postgres` and call it on app boot. *Calling sync has the potential to be destructive and should not be done in production without the means to restore your database*
