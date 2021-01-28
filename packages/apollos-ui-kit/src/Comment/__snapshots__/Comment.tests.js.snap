@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ui-kit/ScriptureComment Should render 1`] = `
+exports[`ui-kit/Comment Should render 1`] = `
 <View
   style={
     Object {
@@ -544,7 +544,7 @@ exports[`ui-kit/ScriptureComment Should render 1`] = `
 </View>
 `;
 
-exports[`ui-kit/ScriptureComment Should render without onPressLike 1`] = `
+exports[`ui-kit/Comment Should render without onPressLike 1`] = `
 <View
   style={
     Object {
@@ -878,7 +878,7 @@ exports[`ui-kit/ScriptureComment Should render without onPressLike 1`] = `
 </View>
 `;
 
-exports[`ui-kit/ScriptureComment should render without onPressActionMenu 1`] = `
+exports[`ui-kit/Comment should render without onPressActionMenu 1`] = `
 <View
   style={
     Object {
