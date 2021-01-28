@@ -109,7 +109,7 @@ export default class ContentItem extends RockApolloDataSource {
     }));
   };
 
-  getFeatures({ attributeValues, __type, id }) {
+  getFeatures({ attributeValues, id, ...args }) {
     const { Feature } = this.context.dataSources;
     const features = [];
 
@@ -179,6 +179,7 @@ export default class ContentItem extends RockApolloDataSource {
 
     const commentFeatures = get(attributeValues, 'comments.value', 'False');
     if (commentFeatures === 'True') {
+      const __type = this.resolveType({ attributeValues, id, ...args });
       features.push(
         Feature.createCommentListFeature({ nodeId: id, nodeType: __type })
       );
