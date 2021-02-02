@@ -15,6 +15,7 @@ const AddCommentFeatureConnected = ({
   Component,
   isLoading,
   refetchRef,
+  onAddComment,
   ...props
 }) => {
   const { data, loading, refetch } = useQuery(GET_ADD_COMMENT_FEATURE, {
@@ -29,42 +30,55 @@ const AddCommentFeatureConnected = ({
   const currentPerson = data?.currentUser;
   const node = data?.node;
 
-  const [addComment] = useMutation(ADD_COMMENT, {
-    update: (cache, { data: { addComment } }) => {
-      try {
-        const parentNode = cache.readQuery({
-          query: GET_NODE_FEATURES,
-          variables: { nodeId: node.relatedNode.id },
-        }).node;
-        const myFeatureFeed = cache.readQuery({
-          query: GET_NODE_FEATURE_FEED,
-          variables: { featureFeedId: parentNode.featureFeed.id },
-        }).node;
+  const addCommentUpdate = (cache, { data: { addComment: newComment } }) => {
+    // Let's get started! No crashing allowed.
+    // This function is brittle and will fail under a variety of circumstances.
+    // That's okay for now, because what those "other circumstances" will be and if they occur
+    // is pretty undefined at this point. We can revisit this in the future if needed.
+    try {
+      // Find the parent of this feature. We need to add the new comment to the comment list on this node.
+      const parentNode = cache.readQuery({
+        query: GET_NODE_FEATURES,
+        variables: { nodeId: node.relatedNode.id },
+      }).node;
 
-        const commentListFeatureId = myFeatureFeed.features.find(
-          ({ __typename }) => __typename === 'CommentListFeature'
-        ).id;
+      // Okay, we have our parent. Let's find the feature feed belonging to this parent.
+      const myFeatureFeed = cache.readQuery({
+        query: GET_NODE_FEATURE_FEED,
+        variables: { featureFeedId: parentNode.featureFeed.id },
+      }).node;
 
-        const commentListFeature = cache.readQuery({
-          query: GET_COMMENT_LIST_FEATURE,
-          variables: { featureId: commentListFeatureId },
-        });
+      // Nice, we have our list of features (just ids and typenames).
+      // Let's find the CommentList that should be attached.
+      const commentListFeatureId = myFeatureFeed.features.find(
+        ({ __typename }) => __typename === 'CommentListFeature'
+      ).id;
 
-        cache.writeQuery({
-          query: GET_COMMENT_LIST_FEATURE,
-          variables: { featureId: commentListFeatureId },
-          data: {
-            ...commentListFeature,
-            node: {
-              ...commentListFeature.node,
-              comments: [addComment, ...commentListFeature.node.comments],
-            },
+      // Now that we have our CommentListFeature, let's get the comment list.
+      const commentListFeature = cache.readQuery({
+        query: GET_COMMENT_LIST_FEATURE,
+        variables: { featureId: commentListFeatureId },
+      });
+
+      // Finally, let's add the comment we added to that comment list.
+      cache.writeQuery({
+        query: GET_COMMENT_LIST_FEATURE,
+        variables: { featureId: commentListFeatureId },
+        data: {
+          ...commentListFeature,
+          node: {
+            ...commentListFeature.node,
+            comments: [newComment, ...commentListFeature.node.comments],
           },
-        });
-      } catch (e) {
-        console.warn('Failed to update cache after adding comment', e);
-      }
-    },
+        },
+      });
+    } catch (e) {
+      console.warn('Failed to update cache after adding comment', e);
+    }
+  };
+
+  const [addComment] = useMutation(ADD_COMMENT, {
+    update: onAddComment || addCommentUpdate,
   });
 
   return (
@@ -94,6 +108,7 @@ AddCommentFeatureConnected.propTypes = {
   featureId: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
   refetchRef: PropTypes.func,
+  onAddComment: PropTypes.func,
 };
 
 AddCommentFeatureConnected.defaultProps = {
