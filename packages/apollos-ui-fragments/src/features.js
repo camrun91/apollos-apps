@@ -195,6 +195,20 @@ const ACTION_BAR_FEATURE_FRAGMENT = gql`
   }
 `;
 
+const ADD_COMMENT_FEATURE_FRAGMENT = gql`
+  fragment AddCommentFeatureFragment on AddCommentFeature {
+    id
+
+    addPrompt
+    initialPrompt
+
+    relatedNode {
+      id
+      __typename
+    }
+  }
+`;
+
 const COMMENT_LIST_FEATURE_FRAGMENT = gql`
   fragment CommentListFeatureFragment on CommentListFeature {
     id
@@ -345,6 +359,7 @@ export {
   FEATURES_FRAGMENT,
   ACTION_LIST_FEATURE_FRAGMENT,
   ACTION_BAR_FEATURE_FRAGMENT,
+  ADD_COMMENT_FEATURE_FRAGMENT,
   COMMENT_LIST_FEATURE_FRAGMENT,
   HERO_LIST_FEATURE_FRAGMENT,
   HORIZONTAL_CARD_LIST_FEATURE_FRAGMENT,
