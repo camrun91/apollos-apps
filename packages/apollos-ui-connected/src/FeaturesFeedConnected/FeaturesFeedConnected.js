@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Query } from '@apollo/client/react/components';
 import { get } from 'lodash';
 
-import { FeedView } from '@apollosproject/ui-kit';
+import { FeedView, named } from '@apollosproject/ui-kit';
 
 import featuresFeedComponentMapper from './featuresFeedComponentMapper';
 import GET_FEATURE_FEED from './getFeatureFeed';
@@ -29,6 +29,9 @@ export const ACTION_MAP = {
   },
   OPEN_URL: ({ openUrl, relatedNode }) => {
     openUrl(relatedNode.url);
+  },
+  OPEN_AUTHENTICATED_URL: ({ openUrl, relatedNode }) => {
+    openUrl(relatedNode.url, {}, { useRockToken: true });
   },
   OPEN_CHANNEL: ({ relatedNode, navigation }) => {
     navigation.navigate('ContentFeed', {
@@ -137,4 +140,6 @@ FeaturesFeedConnected.propTypes = {
   additionalFeatures: PropTypes.shape({}),
 };
 
-export default FeaturesFeedConnected;
+export default named('ui-connected.FeaturesFeedConnected')(
+  FeaturesFeedConnected
+);

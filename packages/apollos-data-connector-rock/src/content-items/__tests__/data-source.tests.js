@@ -16,6 +16,7 @@ ApollosConfig.loadJs({
   },
   ROCK_MAPPINGS: {
     SERMON_CHANNEL_ID: 'TEST_ID',
+    CAMPAIGN_CHANNEL_IDS: [1],
   },
   BIBLE_API: {
     BIBLE_ID: {
@@ -296,7 +297,12 @@ describe('ContentItemsModel', () => {
       reference: 'john 3',
     }));
     dataSource.context = {
-      dataSources: { Feature: { createTextFeature, createScriptureFeature } },
+      dataSources: {
+        Feature: {
+          createTextFeature,
+          createScriptureFeature,
+        },
+      },
     };
     const result = dataSource.getFeatures({
       attributeValues: {
@@ -309,6 +315,42 @@ describe('ContentItemsModel', () => {
     expect(result).toMatchSnapshot();
     expect(createTextFeature.mock.calls).toMatchSnapshot();
     expect(createScriptureFeature.mock.calls).toMatchSnapshot();
+  });
+
+  it('returns comment features when a contentItem has a Comments field set to true', async () => {
+    const dataSource = new ContentItemsDataSource();
+    const createCommentListFeature = jest.fn(() => ({
+      id: 'CommentListFeature:123',
+      comments: [],
+      __typename: 'CommentListFeature',
+    }));
+    const createAddCommentFeature = jest.fn(() => ({
+      id: 'AddCommentFeature:123',
+      initialPrompt: 'Write Something...',
+      addPrompt: 'What stands out to you?',
+      __typename: 'AddCommentFeature',
+    }));
+    dataSource.context = {
+      dataSources: {
+        Feature: {
+          createCommentListFeature,
+          createAddCommentFeature,
+        },
+      },
+    };
+    const result = dataSource.getFeatures({
+      attributeValues: {
+        comments: {
+          id: 123,
+          value: 'True',
+        },
+      },
+      attributes: {},
+      id: 'ContentItem:123Test',
+    });
+    expect(result).toMatchSnapshot();
+    expect(createCommentListFeature.mock.calls).toMatchSnapshot();
+    expect(createAddCommentFeature.mock.calls).toMatchSnapshot();
   });
 
   it('returns a text feature when a contentItem has a TextFeature field', async () => {
@@ -904,7 +946,7 @@ describe('ContentItemsModel', () => {
     const dataSource = new ContentItemsDataSource();
     dataSource.get = jest.fn(() => Promise.resolve([{ id: 3 }]));
     dataSource.getPercentComplete = jest.fn(({ id }) => (id === '1' ? 100 : 0));
-    dataSource.getFromIds = jest.fn();
+    dataSource.getFromIds = jest.fn(() => ({ andFilter: () => null }));
     dataSource.context = {
       dataSources: {
         Auth: { getCurrentPerson: () => ({ id: '1' }) },
@@ -922,6 +964,35 @@ describe('ContentItemsModel', () => {
     };
 
     await dataSource.getSeriesWithUserProgress();
+    expect(dataSource.getFromIds.mock.calls).toMatchSnapshot('get from ids');
+    expect(dataSource.getPercentComplete.mock.calls).toMatchSnapshot(
+      'get percent complete'
+    );
+  });
+  it('gets series from specific channel a user has viewed', async () => {
+    const dataSource = new ContentItemsDataSource();
+    dataSource.get = jest.fn(() => Promise.resolve([{ id: 3 }]));
+    dataSource.getPercentComplete = jest.fn(({ id }) => (id === '1' ? 100 : 0));
+    dataSource.getFromIds = jest.fn(() => ({
+      andFilter: () => ({ andFilter: () => null }),
+    }));
+    dataSource.context = {
+      dataSources: {
+        Auth: { getCurrentPerson: () => ({ id: '1' }) },
+        Interactions: {
+          getInteractionsForCurrentUser: jest.fn(() =>
+            Promise.resolve([
+              { foreignKey: createGlobalId('1', 'UniversalContentItem') },
+              { foreignKey: createGlobalId('2', 'UniversalContentItem') },
+              { foreignKey: createGlobalId('2', 'UniversalContentItem') },
+              { foreignKey: createGlobalId('3', 'UniversalContentItem') },
+            ])
+          ),
+        },
+      },
+    };
+
+    await dataSource.getSeriesWithUserProgress({ channelIds: [10] });
     expect(dataSource.getFromIds.mock.calls).toMatchSnapshot('get from ids');
     expect(dataSource.getPercentComplete.mock.calls).toMatchSnapshot(
       'get percent complete'

@@ -535,12 +535,44 @@ Array [
   Array [
     Array [
       "2",
+      "3",
     ],
   ],
 ]
 `;
 
 exports[`ContentItemsModel gets series a user has viewed: get percent complete 1`] = `
+Array [
+  Array [
+    Object {
+      "id": "1",
+    },
+  ],
+  Array [
+    Object {
+      "id": "2",
+    },
+  ],
+  Array [
+    Object {
+      "id": "3",
+    },
+  ],
+]
+`;
+
+exports[`ContentItemsModel gets series from specific channel a user has viewed: get from ids 1`] = `
+Array [
+  Array [
+    Array [
+      "2",
+      "3",
+    ],
+  ],
+]
+`;
+
+exports[`ContentItemsModel gets series from specific channel a user has viewed: get percent complete 1`] = `
 Array [
   Array [
     Object {
@@ -766,6 +798,57 @@ Array [
     Object {
       "cacheOptions": Object {
         "ttl": 60,
+      },
+    },
+  ],
+]
+`;
+
+exports[`ContentItemsModel returns comment features when a contentItem has a Comments field set to true 1`] = `
+Array [
+  Object {
+    "__typename": "AddCommentFeature",
+    "addPrompt": "What stands out to you?",
+    "id": "AddCommentFeature:123",
+    "initialPrompt": "Write Something...",
+  },
+  Object {
+    "__typename": "CommentListFeature",
+    "comments": Array [],
+    "id": "CommentListFeature:123",
+  },
+]
+`;
+
+exports[`ContentItemsModel returns comment features when a contentItem has a Comments field set to true 2`] = `
+Array [
+  Array [
+    Object {
+      "flagLimit": 0,
+      "nodeId": "ContentItem:123Test",
+      "nodeType": "UniversalContentItem",
+    },
+  ],
+]
+`;
+
+exports[`ContentItemsModel returns comment features when a contentItem has a Comments field set to true 3`] = `
+Array [
+  Array [
+    Object {
+      "addPrompt": "What stands out to you?",
+      "initialPrompt": "Write Something...",
+      "nodeId": "ContentItem:123Test",
+      "nodeType": "UniversalContentItem",
+      "relatedNode": Object {
+        "attributeValues": Object {
+          "comments": Object {
+            "id": 123,
+            "value": "True",
+          },
+        },
+        "attributes": Object {},
+        "id": "ContentItem:123Test",
       },
     },
   ],

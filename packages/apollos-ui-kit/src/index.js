@@ -5,6 +5,7 @@ export ActivityIndicator, {
   InlineActivityIndicator,
 } from './ActivityIndicator';
 export ActionBar, { ActionBarItem } from './ActionBar';
+export AddCommentInput from './AddCommentInput';
 export Avatar, { AvatarList, AvatarCloud } from './Avatar';
 export BackgroundImageBlur from './BackgroundImageBlur';
 export BackgroundView from './BackgroundView';
@@ -59,6 +60,7 @@ export ModalView, {
 } from './ModalView';
 export PaddedView from './PaddedView';
 export Placeholder, { withPlaceholder } from './Placeholder';
+export Comment, { CommentLikeButton, ActionMenu } from './Comment';
 export SideBySideView from './SideBySideView';
 export styled from './styled';
 export StretchyView from './StretchyView';
@@ -76,6 +78,7 @@ export ThemeProvider, {
   ThemeMixin,
   withThemeMixin,
   ThemeConsumer,
+  named,
 } from './theme';
 export ThumbnailCard from './ThumbnailCard';
 export TileImage from './TileImage';

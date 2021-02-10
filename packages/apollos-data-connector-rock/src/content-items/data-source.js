@@ -109,7 +109,8 @@ export default class ContentItem extends RockApolloDataSource {
     }));
   };
 
-  getFeatures({ attributeValues }) {
+  getFeatures(item) {
+    const { attributeValues, id } = item;
     const { Feature } = this.context.dataSources;
     const features = [];
 
@@ -177,8 +178,32 @@ export default class ContentItem extends RockApolloDataSource {
       });
     }
 
+    const commentFeatures = get(attributeValues, 'comments.value', 'False');
+    if (commentFeatures === 'True') {
+      const nodeType = item.__type || this.resolveType(item);
+      const flagLimit = get(ApollosConfig, 'APP.FLAG_LIMIT', 0);
+      features.push(
+        Feature.createAddCommentFeature({
+          nodeId: id,
+          nodeType,
+          relatedNode: item,
+          initialPrompt: this.getAddCommentInitialPrompt(attributeValues),
+          addPrompt: this.getAddCommentAddPrompt(attributeValues),
+        }),
+        Feature.createCommentListFeature({ nodeId: id, nodeType, flagLimit })
+      );
+    }
+
     return features;
   }
+
+  getAddCommentInitialPrompt = (attributeValues) => {
+    return get(attributeValues, 'initialPrompt.value', 'Write Something...');
+  };
+
+  getAddCommentAddPrompt = (attributeValues) => {
+    return get(attributeValues, 'addPrompt.value', 'What stands out to you?');
+  };
 
   createSummary = ({ content, attributeValues }) => {
     const summary = get(attributeValues, 'summary.value', '');
@@ -514,7 +539,7 @@ export default class ContentItem extends RockApolloDataSource {
     return childItemsWithApollosIds[firstInteractedIndex - 1];
   }
 
-  async getSeriesWithUserProgress() {
+  async getSeriesWithUserProgress({ channelIds = [] } = {}) {
     const { Auth, Interactions } = this.context.dataSources;
 
     // Safely exit if we don't have a current user.
@@ -535,13 +560,6 @@ export default class ContentItem extends RockApolloDataSource {
       })
     );
 
-    // We need to make sure we don't include the campaign channels.
-    // We could also consider doing this using a whitelist.
-    // This also may be part of a broader conversation about how we identify the true parent of a content item
-    const blacklistedIds = (
-      await this.byContentChannelIds(ROCK_MAPPINGS.CAMPAIGN_CHANNEL_IDS).get()
-    ).map(({ id }) => `${id}`);
-
     const completedIds = (
       await Promise.all(
         ids.map(async (id) => ({
@@ -553,11 +571,20 @@ export default class ContentItem extends RockApolloDataSource {
       .filter(({ percent }) => percent === 100)
       .map(({ id }) => id);
 
-    const finalIds = ids.filter(
-      (id) => ![...blacklistedIds, ...completedIds].includes(id)
-    );
+    const inProgressIds = ids.filter((id) => ![...completedIds].includes(id));
+    let cursor = this.getFromIds(inProgressIds);
 
-    return this.getFromIds(finalIds);
+    // only search through allowed channels
+    channelIds.forEach((id) => {
+      cursor = cursor.andFilter(`ContentChannelId eq ${id}`);
+    });
+
+    // exclude campaign channels
+    ROCK_MAPPINGS.CAMPAIGN_CHANNEL_IDS.forEach((id) => {
+      cursor = cursor.andFilter(`ContentChannelId ne ${id}`);
+    });
+
+    return cursor;
   }
 
   async getPercentComplete({ id }) {

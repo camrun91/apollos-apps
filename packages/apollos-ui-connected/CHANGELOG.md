@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/apollosproject/apollos-apps/compare/v2.0.0-beta.4...v2.0.0) (2021-02-03)
+
+
+### Bug Fixes
+
+* Missing scripture node export ([#1717](https://github.com/apollosproject/apollos-apps/issues/1717)) ([fa19d9a](https://github.com/apollosproject/apollos-apps/commit/fa19d9a4af26c2f691ba67e657b6c2af02f6d6fc))
+
+
+
+
+
+# [2.0.0-beta.2](https://github.com/apollosproject/apollos-apps/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2021-01-27)
+
+**Note:** Version bump only for package @apollosproject/ui-connected
+
+
+
+
+
+# [2.0.0-beta.1](https://github.com/apollosproject/apollos-apps/compare/v2.0.0-beta.0...v2.0.0-beta.1) (2021-01-22)
+
+**Note:** Version bump only for package @apollosproject/ui-connected
+
+
+
+
+
+# [1.8.0-beta.0](https://github.com/apollosproject/apollos-apps/compare/v1.7.0...v1.8.0-beta.0) (2021-01-06)
+
+
+### Bug Fixes
+
+* Horizontal card loading states ([#1674](https://github.com/apollosproject/apollos-apps/issues/1674)) ([8b7730d](https://github.com/apollosproject/apollos-apps/commit/8b7730d))
+
+
+### Features
+
+* Allows Action URLs to be Authenticated ([#1669](https://github.com/apollosproject/apollos-apps/issues/1669)) ([d223513](https://github.com/apollosproject/apollos-apps/commit/d223513))
+
+
+
+
+
 # [1.7.0](https://github.com/apollosproject/apollos-apps/compare/v1.7.0-beta.3...v1.7.0) (2020-11-18)
 
 **Note:** Version bump only for package @apollosproject/ui-connected

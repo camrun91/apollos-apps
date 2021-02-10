@@ -2,6 +2,10 @@ export ActionListFeatureConnected, {
   ActionListFeature,
   GET_ACTION_LIST_FEATURE,
 } from './ActionListFeatureConnected';
+export AddCommentFeatureConnected, {
+  GET_ADD_COMMENT_FEATURE,
+  ADD_COMMENT,
+} from './AddCommentFeatureConnected';
 export ContentCardConnected, {
   ContentCardComponentMapper,
   contentCardComponentMapper, // TODO: Update to `ContentCardComponentMapper` export below is for temporary backwards compatibility.
@@ -82,5 +86,8 @@ export VerticalCardListFeatureConnected, {
   GET_VERTICAL_CARD_LIST_FEATURE,
 } from './VerticalCardListFeatureConnected';
 export safeHandleUrl from './safeOpenUrl';
+export ScriptureNodeConnected, {
+  GET_SCRIPTURE_NODE,
+} from './ScriptureNodeConnected';
 export { ScriptureFeature, TextFeature, WebviewFeature } from './features';
 export ThemeMixinConnected, { GET_NODE_THEME } from './ThemeMixinConnected';

@@ -11,15 +11,22 @@ export default class PrayerRequest extends RockApolloDataSource {
 
   getFromId = (id) => this.request().find(id).get();
 
-  byDailyPrayerFeed = async () => {
+  byDailyPrayerFeed = async ({ primaryAliasId, numberDaysSincePrayer = 3 }) => {
     const {
       dataSources: { Auth },
     } = this.context;
 
-    const { primaryAliasId } = await Auth.getCurrentPerson();
+    let excludedAliasId;
+    if (!primaryAliasId) {
+      excludedAliasId = (await Auth.getCurrentPerson()).primaryAliasId;
+    }
 
     return this.request()
-      .filter(`RequestedByPersonAliasId ${'ne'} ${primaryAliasId}`) // don't show your own prayers
+      .filter(
+        `RequestedByPersonAliasId ${
+          primaryAliasId ? `eq ${primaryAliasId}` : `ne ${excludedAliasId}`
+        }`
+      ) // don't show your own prayers
       .andFilter(`IsActive eq true`) // prayers can be marked as "in-active" in Rock
       .andFilter(`IsApproved eq true`) // prayers can be moderated in Rock
       .andFilter('IsPublic eq true') // prayers can be set to private in Rock
@@ -30,11 +37,11 @@ export default class PrayerRequest extends RockApolloDataSource {
           .format()}' or ExpirationDate eq null`
       )
       .andFilter(
-        // prayers that were entered less then 24 hours ago
+        // prayers that were entered less then x days ago
         `EnteredDateTime gt datetime'${moment
           .tz(ROCK.TIMEZONE)
-          .subtract(1, 'day')
-          .format()}' or PrayerCount eq null` // include prayers that haven't prayed yet >24 hours old
+          .subtract(numberDaysSincePrayer, 'day')
+          .format()}' or PrayerCount eq null` // include prayers that haven't prayed yet and within x number of days old
       )
       .andFilter(`Answer eq null or Answer eq ''`) // prayers that aren't answered
       .sort([
