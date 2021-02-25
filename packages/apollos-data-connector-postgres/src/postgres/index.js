@@ -5,7 +5,7 @@ import './pgEnum-fix';
 import { Sequelize, DataTypes } from 'sequelize';
 import { createGlobalId } from '@apollosproject/server-core';
 import ApollosConfig from '@apollosproject/config';
-import connectJest from '../../test-connect';
+import connectJest from './test-connect';
 
 const sequelizeConfigOptions =
   process.env.NODE_ENV === 'test' ? { logging: false } : {};
@@ -45,6 +45,11 @@ const defineModel = ({
     modelName,
     {
       ...attributes,
+      id: {
+        primaryKey: true,
+        type: DataTypes.UUID,
+        defaultValue: Sequelize.literal('uuid_generate_v4()'),
+      },
       apollosId: {
         type: DataTypes.STRING,
         allowNull: true, // we set this value with an "afterCreate" hook if not set.
@@ -96,6 +101,9 @@ const defineModel = ({
       },
       indexes: [
         { unique: true, fields: ['apollosId'] },
+        ...(external
+          ? [{ unique: true, fields: ['originId', 'originType'] }]
+          : []),
         ...(sequelizeOptions?.indexes || []),
       ],
     }
