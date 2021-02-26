@@ -26,17 +26,15 @@ class PostgresDataSource {
     this.model = sequelize.models[this.modelName];
   }
 
-  getFromId(id) {
+  getFromId(id, apollosId, { originType = null } = {}) {
+    if (originType) {
+      return this.model.findOne({
+        where: { originId: String(id), originType },
+      });
+    }
     return this.model.findByPk(id);
   }
 }
-
-// Really tests to see if the id is a uuidv4
-const isApollosId = (id) => {
-  return /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i.test(
-    `${id}`
-  );
-};
 
 // Define model is used to define the base attributes of a model
 // as well as any pre/post hooks.
@@ -131,11 +129,4 @@ const configureModel = (callback) => () => callback({ sequelize });
 // Potentially harmful - will clober columns and tables that no longer exist - so use with caution.
 const sync = async (options) => sequelize.sync({ ...options, alter: true });
 
-export {
-  defineModel,
-  configureModel,
-  sequelize,
-  sync,
-  PostgresDataSource,
-  isApollosId,
-};
+export { defineModel, configureModel, sequelize, sync, PostgresDataSource };

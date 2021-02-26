@@ -50,6 +50,17 @@ export default class PrayerRequest extends RockApolloDataSource {
       ]);
   };
 
+  getRequestor = async ({ requestedByPersonAliasId }) => {
+    const { personId } = await this.request('/PersonAlias')
+      .filter(`Id eq ${requestedByPersonAliasId}`)
+      .select('PersonId')
+      .first();
+
+    return this.context.dataSources.Person.getFromId(personId, null, {
+      originType: 'rock',
+    });
+  };
+
   incrementPrayed = async (id) => {
     this.put(`PrayerRequests/Prayed/${id}`, {});
 

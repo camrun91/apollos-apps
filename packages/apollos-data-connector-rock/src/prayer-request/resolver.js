@@ -10,7 +10,7 @@ export default {
       createGlobalId(id, parentType.name),
     isAnonymous: ({ isPublic }) => !isPublic,
     requestor: ({ requestedByPersonAliasId }, args, { dataSources }) =>
-      dataSources.Person.getFromAliasId(requestedByPersonAliasId),
+      dataSources.PrayerRequest.getRequestor(requestedByPersonAliasId),
     isPrayed: async ({ id }, args, { dataSources }, { parentType }) => {
       const interactions = await dataSources.Interactions.getInteractionsForCurrentUserAndNodes(
         {

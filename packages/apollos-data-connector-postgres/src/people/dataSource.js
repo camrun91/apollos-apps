@@ -1,14 +1,13 @@
-import { AuthenticationError, UserInputError } from 'apollo-server';
-import { camelCase, mapKeys } from 'lodash';
+import { AuthenticationError } from 'apollo-server';
+import { camelCase } from 'lodash';
 
-import ApollosConfig from '@apollosproject/config';
-import { PostgresDataSource, isApollosId } from '../postgres';
+import { PostgresDataSource } from '../postgres';
 
 export const fieldsAsObject = (fields) =>
   fields.reduce(
     (accum, { field, value }) => ({
       ...accum,
-      [field]: typeof value === 'string' ? value.trim() : value,
+      [camelCase(field)]: typeof value === 'string' ? value.trim() : value,
     }),
     {}
   );
@@ -24,15 +23,9 @@ export default class Person extends PostgresDataSource {
 
     if (!currentPerson) throw new AuthenticationError('Invalid Credentials');
 
-    let query = { id: currentPerson.id };
-
-    if (!isApollosId(currentPerson.id) && Auth.ORIGIN_TYPE) {
-      query = { originId: currentPerson.id, originType: Auth.ORIGIN_TYPE };
-    }
-
     const profileFields = fieldsAsObject(fields);
 
-    await this.model.update(profileFields, query);
+    await this.model.update(profileFields, { where: { id: currentPerson.id } });
 
     return {
       ...currentPerson,
@@ -54,12 +47,13 @@ export default class Person extends PostgresDataSource {
     const stream = createReadStream();
 
     const photoId = await BinaryFiles.uploadFile({ filename, stream, length });
+    const url = await BinaryFiles.findOrReturnImageUrl({ id: photoId });
 
-    const person = await this.updateProfile([
-      { field: 'PhotoId', value: photoId },
-    ]);
+    await this.model.update(
+      { profileImageUrl: url },
+      { where: { id: currentPerson.id } }
+    );
 
-    const photo = await BinaryFiles.getFromId(photoId);
-    return { ...person, photo };
+    return { ...currentPerson, { profileImageUrl: url } };
   };
 }
