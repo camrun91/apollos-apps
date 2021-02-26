@@ -4,6 +4,7 @@ export {
   sequelize,
   sync,
   PostgresDataSource,
+  isApollosId,
 } from './postgres';
 
 export * as Comment from './comments';
