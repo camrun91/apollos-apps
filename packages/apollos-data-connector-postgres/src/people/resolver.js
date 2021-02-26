@@ -14,7 +14,8 @@ export default {
   },
   Person: {
     id: ({ apollosId }) => apollosId,
-    photo: ({ photo: { url } }) => (url ? { uri: url } : null),
+    photo: ({ profileImageUrl }) =>
+      profileImageUrl ? { uri: profileImageUrl } : null,
     birthDate: ({ birthDate }) =>
       birthDate ? moment(birthDate).toJSON() : null,
     // email: enforceCurrentUser(({ email }) => email),
