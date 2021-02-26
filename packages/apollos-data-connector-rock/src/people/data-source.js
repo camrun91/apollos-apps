@@ -1,8 +1,7 @@
 import { AuthenticationError, UserInputError } from 'apollo-server';
-import { camelCase, mapKeys, get } from 'lodash';
+import { camelCase, mapKeys } from 'lodash';
 import RockApolloDataSource from '@apollosproject/rock-apollo-data-source';
 import moment from 'moment';
-import ApollosConfig from '@apollosproject/config';
 import { fieldsAsObject } from '../utils';
 
 const RockGenderMap = {
