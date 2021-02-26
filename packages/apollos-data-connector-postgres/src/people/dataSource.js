@@ -25,17 +25,17 @@ export default class Person extends PostgresDataSource {
 
     let where = { id: currentPerson.id };
     if (Auth.ORIGIN_TYPE) {
-       where = { originId: String(currentPerson.id), originType: Auth.ORIGIN_TYPE }
-    }    
+      where = {
+        originId: String(currentPerson.id),
+        originType: Auth.ORIGIN_TYPE,
+      };
+    }
 
     const profileFields = fieldsAsObject(fields);
 
-    await this.model.update(profileFields, { where  });
+    await this.model.update(profileFields, { where });
 
-    return {
-      ...currentPerson,
-      ...profileFields,
-    };
+    return this.model.findOne({ where });
   };
 
   uploadProfileImage = async (file, length) => {
@@ -56,14 +56,14 @@ export default class Person extends PostgresDataSource {
 
     let where = { id: currentPerson.id };
     if (Auth.ORIGIN_TYPE) {
-       where = { originId: String(currentPerson.id), originType: Auth.ORIGIN_TYPE }
+      where = {
+        originId: String(currentPerson.id),
+        originType: Auth.ORIGIN_TYPE,
+      };
     }
 
-    await this.model.update(
-      { profileImageUrl: url },
-      { where }
-    );
+    await this.model.update({ profileImageUrl: url }, { where });
 
-    return { ...currentPerson, { profileImageUrl: url } };
+    return this.model.findOne({ where });
   };
 }
