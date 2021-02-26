@@ -23,9 +23,14 @@ export default class Person extends PostgresDataSource {
 
     if (!currentPerson) throw new AuthenticationError('Invalid Credentials');
 
+    let where = { id: currentPerson.id };
+    if (Auth.ORIGIN_TYPE) {
+       where = { originId: String(currentPerson.id), originType: Auth.ORIGIN_TYPE }
+    }    
+
     const profileFields = fieldsAsObject(fields);
 
-    await this.model.update(profileFields, { where: { id: currentPerson.id } });
+    await this.model.update(profileFields, { where  });
 
     return {
       ...currentPerson,
@@ -49,9 +54,14 @@ export default class Person extends PostgresDataSource {
     const photoId = await BinaryFiles.uploadFile({ filename, stream, length });
     const url = await BinaryFiles.findOrReturnImageUrl({ id: photoId });
 
+    let where = { id: currentPerson.id };
+    if (Auth.ORIGIN_TYPE) {
+       where = { originId: String(currentPerson.id), originType: Auth.ORIGIN_TYPE }
+    }
+
     await this.model.update(
       { profileImageUrl: url },
-      { where: { id: currentPerson.id } }
+      { where }
     );
 
     return { ...currentPerson, { profileImageUrl: url } };
