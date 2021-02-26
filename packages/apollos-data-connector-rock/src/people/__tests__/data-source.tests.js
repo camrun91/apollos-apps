@@ -16,65 +16,10 @@ const auth = (dataSource) => ({
     dataSource
   ),
 });
-const personaAuth = (dataSource) => ({
-  getCurrentPerson: buildGetMock(
-    { id: 51, FirstName: 'Vincent', LastName: 'Wilson' },
-    dataSource
-  ),
-});
-const rockConstants = () => ({
-  modelType: (type) => ({ id: 15, type }),
-});
+
 describe('Person', () => {
   it('constructs', () => {
     expect(new Person()).toBeTruthy();
-  });
-
-  it('gets persons dataview associations', async () => {
-    const dataSource = new Person();
-    const Auth = personaAuth(dataSource);
-
-    const RockConstants = rockConstants();
-    const categoryId = 210;
-
-    dataSource.context = {
-      rockCookie: 'fakeCookie',
-      dataSources: { Auth, RockConstants },
-    };
-    dataSource.get = buildGetMock({}, dataSource);
-
-    const result = await dataSource.getPersonas(categoryId);
-    expect(result).toMatchSnapshot();
-    expect(dataSource.get.mock.calls).toMatchSnapshot();
-  });
-
-  it('gets persons dataview associations from plugin endpoints', async () => {
-    ApollosConfig.loadJs({
-      ROCK: {
-        USE_PLUGIN: true,
-      },
-    });
-    const dataSource = new Person();
-    const Auth = personaAuth(dataSource);
-
-    const RockConstants = rockConstants();
-    const categoryId = 210;
-
-    dataSource.context = {
-      rockCookie: 'fakeCookie',
-      dataSources: { Auth, RockConstants },
-    };
-    dataSource.get = buildGetMock({}, dataSource);
-
-    const result = await dataSource.getPersonas({ categoryId });
-    expect(result).toMatchSnapshot();
-    expect(dataSource.get.mock.calls).toMatchSnapshot();
-
-    ApollosConfig.loadJs({
-      ROCK: {
-        USE_PLUGIN: false,
-      },
-    });
   });
 
   it('gets person from id', () => {

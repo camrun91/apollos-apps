@@ -1,4 +1,3 @@
-import { createGlobalId } from '@apollosproject/server-core';
 import { sequelize, sync } from '../../postgres/index';
 import { createModel } from '../model';
 import PeopleDataSource from '../dataSource';

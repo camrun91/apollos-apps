@@ -43,30 +43,6 @@ Object {
 }
 `;
 
-exports[`Person gets persons dataview associations 1`] = `Object {}`;
-
-exports[`Person gets persons dataview associations 2`] = `
-Array [
-  Array [
-    "DataViews/GetPersistedDataViewsForEntity/15/51?categoryId=undefined&%24select=Guid",
-    Object {},
-    Object {},
-  ],
-]
-`;
-
-exports[`Person gets persons dataview associations from plugin endpoints 1`] = `Object {}`;
-
-exports[`Person gets persons dataview associations from plugin endpoints 2`] = `
-Array [
-  Array [
-    "Apollos/GetPersistedDataViewsForEntity/15/51?categoryId=210&%24select=Guid",
-    Object {},
-    Object {},
-  ],
-]
-`;
-
 exports[`Person returns null when getPersonByAliasId is not valid: The call to fetch the alias id 1`] = `
 Array [
   Array [
