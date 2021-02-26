@@ -25,6 +25,10 @@ class PostgresDataSource {
     this.sequelize = sequelize;
     this.model = sequelize.models[this.modelName];
   }
+
+  getFromId(id) {
+    return this.model.findByPk(id);
+  }
 }
 
 // Define model is used to define the base attributes of a model
