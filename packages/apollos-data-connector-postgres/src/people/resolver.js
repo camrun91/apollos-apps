@@ -1,7 +1,7 @@
 import moment from 'moment-timezone';
 // import { createGlobalId } from '@apollosproject/server-core';
 // import ApollosConfig from '@apollosproject/config';
-// import { enforceCurrentUser } from '../utils';
+import { enforceCurrentUser } from '../utils';
 
 export default {
   Mutation: {
@@ -16,8 +16,9 @@ export default {
     id: ({ apollosId }) => apollosId,
     photo: ({ profileImageUrl }) =>
       profileImageUrl ? { uri: profileImageUrl } : null,
-    birthDate: ({ birthDate }) =>
-      birthDate ? moment(birthDate).toJSON() : null,
-    // email: enforceCurrentUser(({ email }) => email),
+    birthDate: enforceCurrentUser(({ birthDate }) =>
+      birthDate ? moment(birthDate).toJSON() : null
+    ),
+    email: enforceCurrentUser(({ email }) => email),
   },
 };
