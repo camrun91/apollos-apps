@@ -60,7 +60,6 @@ describe('Person', () => {
 
   it('creates a profile', () => {
     const dataSource = new Person();
-    const Auth = auth(dataSource);
     dataSource.post = buildGetMock({}, dataSource);
     const result = dataSource.create({
       FirstName: 'Vincent',
@@ -68,8 +67,7 @@ describe('Person', () => {
       BirthDate: new Date(2020, 1, 1, 0, 0, 0, 0),
     });
     expect(result).resolves.toMatchSnapshot();
-    expect(Auth.getCurrentPerson.mock.calls).toMatchSnapshot();
-    expect(dataSource.patch.mock.calls).toMatchSnapshot();
+    expect(dataSource.post.mock.calls).toMatchSnapshot();
   });
 
   it("updates a user's profile attributes", () => {

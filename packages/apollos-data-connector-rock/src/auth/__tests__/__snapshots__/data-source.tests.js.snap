@@ -110,8 +110,6 @@ Array [
 ]
 `;
 
-exports[`Auth should throw an error when creating an invalid user 2`] = `[Error: Unable to create profile!]`;
-
 exports[`Auth should throw an error when looking up a user login that doesn't exist while retrying getCurrentPerson 1`] = `"Invalid user cookie; no user login found"`;
 
 exports[`Auth should throw an error when looking up a user login that doesn't exist while retrying getCurrentPerson 2`] = `

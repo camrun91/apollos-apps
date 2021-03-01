@@ -20,7 +20,6 @@ describe('Auth', () => {
       dataSources: {
         Person: new PersonDataSource(),
         Cache: new CacheDataSource(),
-        Person,
       },
     };
   }
@@ -43,7 +42,7 @@ describe('Auth', () => {
       email: 'bob-jones@example.com',
     });
     expect(result).toMatchSnapshot();
-    expect(Person.create.mock.calls).toMatchSnapshot();
+    expect(Auth.context.dataSources.Person.create.mock.calls).toMatchSnapshot();
   });
 
   it('should post with userProfile fields when creating a new user', async () => {
@@ -60,7 +59,7 @@ describe('Auth', () => {
       ],
     });
     expect(result).toMatchSnapshot();
-    expect(Person.create.mock.calls).toMatchSnapshot();
+    expect(Auth.context.dataSources.Person.create.mock.calls).toMatchSnapshot();
   });
 
   it('should try and find an auth token from redis when curent cookie is invalid', async () => {
@@ -144,7 +143,7 @@ describe('Auth', () => {
       ],
     });
     expect(result).toMatchSnapshot();
-    expect(Person.create.mock.calls).toMatchSnapshot();
+    expect(Auth.context.dataSources.Person.create.mock.calls).toMatchSnapshot();
   });
 
   it('should throw an error when creating an invalid user', async () => {
@@ -155,6 +154,6 @@ describe('Auth', () => {
       email: 'bob-jones@example.com',
     });
     expect(result).rejects.toMatchSnapshot();
-    expect(Person.create.mock.calls).toMatchSnapshot();
+    expect(Auth.context.dataSources.Person.create.mock.calls).toMatchSnapshot();
   });
 });

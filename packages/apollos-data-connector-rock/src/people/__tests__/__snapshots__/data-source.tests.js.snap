@@ -2,6 +2,24 @@
 
 exports[`Person Throws an error if trying to set an invalid gender 1`] = `"Rock gender must be either Unknown, Male, or Female"`;
 
+exports[`Person creates a profile 1`] = `
+Array [
+  Array [
+    "/People",
+    Object {
+      "BirthDay": 1,
+      "BirthMonth": 2,
+      "BirthYear": 2020,
+      "FirstName": "Vincent",
+      "Gender": 1,
+      "IsSystem": false,
+    },
+  ],
+]
+`;
+
+exports[`Person creates a profile 2`] = `Object {}`;
+
 exports[`Person gets person from aliasId: The call to fetch the alias id 1`] = `
 Array [
   Array [
