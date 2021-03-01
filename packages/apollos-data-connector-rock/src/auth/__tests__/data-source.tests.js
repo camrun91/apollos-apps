@@ -147,7 +147,7 @@ describe('Auth', () => {
   });
 
   it('should throw an error when creating an invalid user', async () => {
-    Person.create = jest.fn(() => {
+    Auth.context.dataSources.Person.create = jest.fn(() => {
       throw new Error('HTTP error');
     });
     const result = Auth.createUserProfile({
