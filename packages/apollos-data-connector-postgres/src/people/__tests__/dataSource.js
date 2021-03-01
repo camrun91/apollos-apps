@@ -66,6 +66,21 @@ describe('Apollos Postgres People DataSource', () => {
     expect(person.id).toBe(newPerson.id);
   });
 
+  it('should create a user', async () => {
+    const newPersonId = await peopleDataSource.create({
+      FirstName: 'Vincent',
+      lastName: 'Vincent',
+      Gender: 'Male',
+      originId: 1,
+      originType: 'rock',
+    });
+
+    const newPerson = await peopleDataSource.getFromId(newPersonId);
+
+    expect(newPerson.firstName).toBe('Vincent');
+    expect(newPerson.gender).toBe('MALE');
+  });
+
   it('update a users attributes', async () => {
     await peopleDataSource.model.create({
       originId: '1',
