@@ -11,14 +11,40 @@ export default class PrayerRequest extends RockApolloDataSource {
 
   getFromId = (id) => this.request().find(id).get();
 
-  byDailyPrayerFeed = async ({ primaryAliasId, numberDaysSincePrayer = 3 }) => {
+  getPersonAliasId = async ({ personId }) => {
+    // This is tricky. I would prefer not to have this method here
+    // But ultimately the postgres module shouldn't have an aliasId
+    // but we depend on the alias ID from Rock. I don't want to have to keep around
+    // a RockPerson module and a PostgresPerson module long term.
+    // This problem goes away long term when we don't rely on Rock for Prayers.
+    const { Person } = this.context.dataSources;
+
+    const person = await Person.getFromId(personId);
+
+    if (person.originType && person.originType === 'rock') {
+      const { primaryAliasId } = await this.request('/People')
+        .find(`Id eq ${person.originId}`)
+        .first();
+      return primaryAliasId;
+    }
+
+    const { primaryAliasId } = await this.request('/People')
+      .find(`Id eq ${personId}`)
+      .first();
+    return primaryAliasId;
+  };
+
+  byDailyPrayerFeed = async ({ personId, numberDaysSincePrayer = 3 }) => {
     const {
       dataSources: { Auth },
     } = this.context;
 
     let excludedAliasId;
-    if (!primaryAliasId) {
+    let primaryAliasId;
+    if (!personId) {
       excludedAliasId = (await Auth.getCurrentPerson()).primaryAliasId;
+    } else {
+      primaryAliasId = await this.getPersonAliasId({ personId });
     }
 
     return this.request()
@@ -50,7 +76,7 @@ export default class PrayerRequest extends RockApolloDataSource {
       ]);
   };
 
-  getRequestor = async ({ requestedByPersonAliasId }) => {
+  getRequestor = async ({ requestedByPersonAliasId, ...args }) => {
     const { personId } = await this.request('/PersonAlias')
       .filter(`Id eq ${requestedByPersonAliasId}`)
       .select('PersonId')

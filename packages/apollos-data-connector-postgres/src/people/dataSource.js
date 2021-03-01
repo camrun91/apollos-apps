@@ -12,8 +12,27 @@ export const fieldsAsObject = (fields) =>
     {}
   );
 
+export const camelCaseKeys = (obj) => {
+  return Object.keys(obj).reduce((accum, curr) => {
+    // eslint-disable-next-line no-param-reassign
+    accum[camelCase(curr)] = obj[curr];
+    return accum;
+  }, {});
+};
+
 export default class Person extends PostgresDataSource {
   modelName = 'people';
+
+  async create(attributes) {
+    const cleanedAttributes = camelCaseKeys(attributes);
+    const person = await this.model.create({
+      ...cleanedAttributes,
+      ...(cleanedAttributes.gender
+        ? { gender: cleanedAttributes.gender.toUpperCase() }
+        : {}),
+    });
+    return person.id;
+  }
 
   // fields is an array of objects matching the pattern
   // [{ field: String, value: String }]

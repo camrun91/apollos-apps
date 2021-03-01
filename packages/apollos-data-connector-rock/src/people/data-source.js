@@ -10,6 +10,40 @@ const RockGenderMap = {
   Female: 2,
 };
 
+export const mapApollosFieldsToRock = (fields) => {
+  const profileFields = { ...fields };
+
+  if (profileFields.Gender) {
+    if (!Object.keys(RockGenderMap).includes(profileFields.Gender)) {
+      throw new UserInputError(
+        'Rock gender must be either Unknown, Male, or Female'
+      );
+    }
+    profileFields.Gender = RockGenderMap[profileFields.Gender];
+  }
+
+  let rockUpdateFields = { ...profileFields };
+
+  if (profileFields.BirthDate) {
+    delete rockUpdateFields.BirthDate;
+    const birthDate = moment(profileFields.BirthDate);
+
+    if (!birthDate.isValid()) {
+      throw new UserInputError('BirthDate must be a valid date');
+    }
+
+    rockUpdateFields = {
+      ...rockUpdateFields,
+      // months in moment are 0 indexed
+      BirthMonth: birthDate.month() + 1,
+      BirthDay: birthDate.date(),
+      BirthYear: birthDate.year(),
+    };
+  }
+
+  return rockUpdateFields;
+};
+
 export default class Person extends RockApolloDataSource {
   resource = 'People';
 
@@ -31,6 +65,15 @@ export default class Person extends RockApolloDataSource {
     return null;
   };
 
+  create = (profile) => {
+    const rockUpdateFields = this.mapApollosFieldsToRock(profile);
+    return this.post('/People', {
+      Gender: 0, // required by Rock. Listed first so it can be overridden.
+      ...rockUpdateFields,
+      IsSystem: false, // required by rock
+    });
+  };
+
   mapGender = ({ gender }) => {
     // If the gender is coming from Rock (an int) map into the string value.
     if (typeof gender === 'number') {
@@ -43,37 +86,7 @@ export default class Person extends RockApolloDataSource {
   };
 
   mapApollosFieldsToRock = (fields) => {
-    const profileFields = { ...fields };
-
-    if (profileFields.Gender) {
-      if (!Object.keys(RockGenderMap).includes(profileFields.Gender)) {
-        throw new UserInputError(
-          'Rock gender must be either Unknown, Male, or Female'
-        );
-      }
-      profileFields.Gender = RockGenderMap[profileFields.Gender];
-    }
-
-    let rockUpdateFields = { ...profileFields };
-
-    if (profileFields.BirthDate) {
-      delete rockUpdateFields.BirthDate;
-      const birthDate = moment(profileFields.BirthDate);
-
-      if (!birthDate.isValid()) {
-        throw new UserInputError('BirthDate must be a valid date');
-      }
-
-      rockUpdateFields = {
-        ...rockUpdateFields,
-        // months in moment are 0 indexed
-        BirthMonth: birthDate.month() + 1,
-        BirthDay: birthDate.date(),
-        BirthYear: birthDate.year(),
-      };
-    }
-
-    return rockUpdateFields;
+    return mapApollosFieldsToRock(fields);
   };
 
   // fields is an array of objects matching the pattern

@@ -20,12 +20,14 @@ describe('Auth', () => {
       dataSources: {
         Person: new PersonDataSource(),
         Cache: new CacheDataSource(),
+        Person,
       },
     };
   }
   let Auth;
   beforeEach(() => {
     Auth = new AuthWithContext();
+    Auth.context.dataSources.Person.create = jest.fn(() => 1);
   });
 
   it('should get a person token', async () => {
@@ -41,7 +43,7 @@ describe('Auth', () => {
       email: 'bob-jones@example.com',
     });
     expect(result).toMatchSnapshot();
-    expect(Auth.post.mock.calls).toMatchSnapshot();
+    expect(Person.create.mock.calls).toMatchSnapshot();
   });
 
   it('should post with userProfile fields when creating a new user', async () => {
@@ -58,7 +60,7 @@ describe('Auth', () => {
       ],
     });
     expect(result).toMatchSnapshot();
-    expect(Auth.post.mock.calls).toMatchSnapshot();
+    expect(Person.create.mock.calls).toMatchSnapshot();
   });
 
   it('should try and find an auth token from redis when curent cookie is invalid', async () => {
@@ -142,17 +144,17 @@ describe('Auth', () => {
       ],
     });
     expect(result).toMatchSnapshot();
-    expect(Auth.post.mock.calls).toMatchSnapshot();
+    expect(Person.create.mock.calls).toMatchSnapshot();
   });
 
   it('should throw an error when creating an invalid user', async () => {
-    Auth.post = jest.fn(() => {
+    Person.create = jest.fn(() => {
       throw new Error('HTTP error');
     });
     const result = Auth.createUserProfile({
       email: 'bob-jones@example.com',
     });
     expect(result).rejects.toMatchSnapshot();
-    expect(Auth.post.mock.calls).toMatchSnapshot();
+    expect(Person.create.mock.calls).toMatchSnapshot();
   });
 });
