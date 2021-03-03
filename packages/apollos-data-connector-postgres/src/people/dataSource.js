@@ -1,7 +1,9 @@
 import { AuthenticationError } from 'apollo-server';
-import { camelCase } from 'lodash';
+import { camelCase, get } from 'lodash';
+import ApollosConfig from '@apollosproject/config';
+import { Op } from 'sequelize';
 
-import { PostgresDataSource } from '../postgres';
+import { PostgresDataSource, assertUuid } from '../postgres';
 
 export const fieldsAsObject = (fields) =>
   fields.reduce(
@@ -33,6 +35,8 @@ export default class Person extends PostgresDataSource {
     });
     return person.id;
   }
+
+  buildFindOneQuery = () => {};
 
   // fields is an array of objects matching the pattern
   // [{ field: String, value: String }]
@@ -84,5 +88,31 @@ export default class Person extends PostgresDataSource {
     await this.model.update({ profileImageUrl: url }, { where });
 
     return this.model.findOne({ where });
+  };
+
+  getStaticSuggestedFollowsFor = async ({ campusId, id }) => {
+    assertUuid(campusId, 'getStaticSuggestedFollowsFor');
+    assertUuid(id, 'getStaticSuggestedFollowsFor');
+
+    const suggestedFollowers = get(ApollosConfig, 'SUGGESTED_FOLLOWERS', []);
+    const suggestedFollowersForCampus = suggestedFollowers.filter((p) => {
+      // if the suggested follower has a specific campus.
+      if (p.campusId) {
+        // match it against the user's campus, if they have a campus
+        return !!campusId && p.campusId === campusId;
+      }
+      // If not, return true.
+      return true;
+    });
+
+    // Suggested followers is a list of mixed emails strings and objects with an email key.
+    const suggestedEmails = suggestedFollowersForCampus.map((p) =>
+      p.email ? p.email : p
+    );
+
+    // TODO: add code that hides users who you haven't followed before.
+    return this.model.findAll({
+      where: { email: { [Op.in]: suggestedEmails }, id: { [Op.ne]: id } },
+    });
   };
 }
