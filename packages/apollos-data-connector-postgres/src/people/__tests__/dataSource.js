@@ -165,7 +165,7 @@ describe('Apollos Postgres People DataSource', () => {
       email: 'nick@offer.man',
     });
     ApollosConfig.loadJs({
-      SUGGESTED_FOLLOWERS: [
+      SUGGESTED_FOLLOWS: [
         'nick@offer.man',
         {
           email: 'vin@wil.com',
@@ -232,7 +232,7 @@ describe('Apollos Postgres People DataSource', () => {
       email: 'nick@offer.man',
     });
     ApollosConfig.loadJs({
-      SUGGESTED_FOLLOWERS: [
+      SUGGESTED_FOLLOWS: [
         'nick@offer.man',
         {
           email: 'vin@wil.com',
@@ -272,7 +272,7 @@ describe('Apollos Postgres People DataSource', () => {
       email: 'me@me.com',
     });
     ApollosConfig.loadJs({
-      SUGGESTED_FOLLOWERS: ['me@me.com'],
+      SUGGESTED_FOLLOWS: ['me@me.com'],
     });
 
     const suggestedFollowers = await peopleDataSource.getStaticSuggestedFollowsFor(
