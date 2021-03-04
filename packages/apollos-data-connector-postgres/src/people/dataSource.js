@@ -36,8 +36,6 @@ export default class Person extends PostgresDataSource {
     return person.id;
   }
 
-  buildFindOneQuery = () => {};
-
   // fields is an array of objects matching the pattern
   // [{ field: String, value: String }]
   updateProfile = async (fields) => {

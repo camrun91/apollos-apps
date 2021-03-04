@@ -31,7 +31,7 @@ describe('Apollos Postgres People DataSource', () => {
     await createModel();
     await createCampusModel();
     await setupCampusModel();
-    await await sync();
+    await sync();
 
     peopleDataSource = new PeopleDataSource();
     peopleDataSource.initialize({ context });
