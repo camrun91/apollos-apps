@@ -1,7 +1,12 @@
+import ApollosConfig from '@apollosproject/config';
 import { parseGlobalId } from '@apollosproject/server-core';
 import { sequelize, sync } from '../../postgres/index';
-import { createModel, FollowState } from '../model';
+import { createModel, FollowState, setupModel } from '../model';
 import { createModel as createPeopleModel } from '../../people/model';
+import {
+  createModel as createCampusModel,
+  setupModel as setupCampusModel,
+} from '../../campus/model';
 import FollowDataSource from '../dataSource';
 
 // Current user by default
@@ -17,23 +22,43 @@ let currentPersonId = 1;
 const context = {
   dataSources: {
     Auth: {
-      getCurrentPerson: () => ({ id: currentPersonId }),
+      getCurrentPerson: () => ({
+        id: currentPersonId,
+      }),
     },
     Person: {
-      resolveId: (id) => (id === 1 ? uuid1 : uuid2),
+      resolveId: (id) => id,
+      whereCurrentPerson: ({ id }) => ({ id }),
     },
   },
 };
 
+let person1;
+let person2;
 describe('Apollos Postgres FollowRequest DataSource', () => {
+  let followDataSource;
   beforeEach(async () => {
     try {
       await createModel();
       await createPeopleModel();
+      await createCampusModel();
+      await setupModel();
+      await setupCampusModel();
       await sync({ force: true });
+      followDataSource = new FollowDataSource();
+      followDataSource.initialize({ context });
     } catch (e) {
       console.error(e);
     }
+    person1 = await sequelize.models.people.create({
+      originId: '11',
+      originType: 'rock',
+    });
+    person2 = await sequelize.models.people.create({
+      originId: '22',
+      originType: 'rock',
+    });
+    currentPersonId = person1.id;
   });
   afterEach(async () => {
     await sequelize.drop({});
@@ -46,12 +71,12 @@ describe('Apollos Postgres FollowRequest DataSource', () => {
     requestFollowDataSource.initialize({ context });
 
     await requestFollowDataSource.requestFollow({
-      followedPersonId: PersonId2,
+      followedPersonId: `Person:${person2.id}`,
     });
 
     const follows = await requestFollowDataSource.model.findAll({
       where: {
-        followedPersonId: parseGlobalId(PersonId2).id,
+        followedPersonId: person2.id,
       },
     });
 
@@ -65,17 +90,17 @@ describe('Apollos Postgres FollowRequest DataSource', () => {
     requestFollowDataSource.initialize({ context });
 
     await requestFollowDataSource.requestFollow({
-      followedPersonId: PersonId2,
+      followedPersonId: `Person:${person2.id}`,
     });
 
     // Send another request
     await requestFollowDataSource.requestFollow({
-      followedPersonId: PersonId2,
+      followedPersonId: `Person:${person2.id}`,
     });
 
     const follows = await requestFollowDataSource.model.findAll({
       where: {
-        followedPersonId: parseGlobalId(PersonId2).id,
+        followedPersonId: person2.id,
       },
     });
 
@@ -89,25 +114,25 @@ describe('Apollos Postgres FollowRequest DataSource', () => {
     requestFollowDataSource.initialize({ context });
 
     await requestFollowDataSource.requestFollow({
-      followedPersonId: PersonId2,
+      followedPersonId: `Person:${person2.id}`,
     });
 
     // Find and deny the request
     let existingRequest = await requestFollowDataSource.model.findOne({
       where: {
-        followedPersonId: parseGlobalId(PersonId2).id,
+        followedPersonId: person2.id,
       },
     });
 
-    currentPersonId = 2;
+    currentPersonId = person2.id;
 
     const ignoreResult = await requestFollowDataSource.ignoreFollowRequest({
-      requestPersonId: personId1,
+      requestPersonId: `Person:${person1.id}`,
     });
 
     existingRequest = await requestFollowDataSource.model.findOne({
       where: {
-        followedPersonId: parseGlobalId(PersonId2).id,
+        followedPersonId: person2.id,
       },
     });
 
@@ -121,25 +146,25 @@ describe('Apollos Postgres FollowRequest DataSource', () => {
     requestFollowDataSource.initialize({ context });
 
     await requestFollowDataSource.requestFollow({
-      followedPersonId: PersonId2,
+      followedPersonId: `Person:${person2.id}`,
     });
 
     // Find and accept the request
     let existingRequest = await requestFollowDataSource.model.findOne({
       where: {
-        followedPersonId: parseGlobalId(PersonId2).id,
+        followedPersonId: person2.id,
       },
     });
 
-    currentPersonId = 2;
+    currentPersonId = person2.id;
 
     const acceptResult = await requestFollowDataSource.acceptFollowRequest({
-      requestPersonId: personId1,
+      requestPersonId: `Person:${person1.id}`,
     });
 
     existingRequest = await requestFollowDataSource.model.findOne({
       where: {
-        followedPersonId: parseGlobalId(PersonId2).id,
+        followedPersonId: person2.id,
       },
     });
 
@@ -153,32 +178,32 @@ describe('Apollos Postgres FollowRequest DataSource', () => {
     requestFollowDataSource.initialize({ context });
 
     await requestFollowDataSource.requestFollow({
-      followedPersonId: PersonId2,
+      followedPersonId: `Person:${person2.id}`,
     });
 
     // Find and accept the request
     await requestFollowDataSource.model.findOne({
       where: {
-        followedPersonId: parseGlobalId(PersonId2).id,
+        followedPersonId: person2.id,
       },
     });
 
-    currentPersonId = 2;
+    currentPersonId = person2.id;
 
     await requestFollowDataSource.acceptFollowRequest({
-      requestPersonId: personId1,
+      requestPersonId: `Person:${person1.id}`,
     });
 
-    currentPersonId = 1;
+    currentPersonId = person1.id;
 
     // Send another request
     await requestFollowDataSource.requestFollow({
-      followedPersonId: PersonId2,
+      followedPersonId: `Person:${person2.id}`,
     });
 
     const follows = await requestFollowDataSource.model.findAll({
       where: {
-        followedPersonId: parseGlobalId(PersonId2).id,
+        followedPersonId: person2.id,
       },
     });
 
@@ -192,36 +217,243 @@ describe('Apollos Postgres FollowRequest DataSource', () => {
     requestFollowDataSource.initialize({ context });
 
     await requestFollowDataSource.requestFollow({
-      followedPersonId: PersonId2,
+      followedPersonId: `Person:${person2.id}`,
     });
 
     // Find and deny the request
     await requestFollowDataSource.model.findOne({
       where: {
-        followedPersonId: parseGlobalId(PersonId2).id,
+        followedPersonId: person2.id,
       },
     });
 
-    currentPersonId = 2;
+    currentPersonId = person2.id;
 
     await requestFollowDataSource.ignoreFollowRequest({
-      requestPersonId: personId1,
+      requestPersonId: `Person:${person1.id}`,
     });
 
-    currentPersonId = 1;
+    currentPersonId = person1.id;
 
     // Send another request
     await requestFollowDataSource.requestFollow({
-      followedPersonId: PersonId2,
+      followedPersonId: `Person:${person2.id}`,
     });
 
     const follows = await requestFollowDataSource.model.findAll({
       where: {
-        followedPersonId: parseGlobalId(PersonId2).id,
+        followedPersonId: person2.id,
       },
     });
 
     expect(follows.length).toBe(1);
     expect(follows[0].state).toBe(FollowState.REQUESTED);
+  });
+
+  it("should get a user's list of sugggested people to follow", async () => {
+    // Lengthy setup :g
+    const mainCampus = await sequelize.models.campus.create({
+      name: 'Main Campus',
+      originId: '1',
+      originType: 'rock',
+    });
+    const satCampus = await sequelize.models.campus.create({
+      name: 'Satilite Campus',
+      originId: '2',
+      originType: 'rock',
+    });
+    await sequelize.models.people.create({
+      originId: '1',
+      originType: 'rock',
+      firstName: 'Jim',
+      lastName: 'Bob',
+      email: 'jim@bob.com',
+      campusId: satCampus.id,
+    });
+    await sequelize.models.people.create({
+      originId: '2',
+      originType: 'rock',
+      firstName: 'Vincent',
+      lastName: 'Wilson',
+      email: 'vin@wil.com',
+      campusId: mainCampus.id,
+    });
+    await sequelize.models.people.create({
+      originId: '3',
+      originType: 'rock',
+      firstName: 'Nick',
+      lastName: 'Offerman',
+      email: 'nick@offer.man',
+    });
+    ApollosConfig.loadJs({
+      SUGGESTED_FOLLOWS: [
+        'nick@offer.man',
+        {
+          email: 'vin@wil.com',
+          campusId: mainCampus.id,
+        },
+        {
+          email: 'jim@bob.com',
+          campusId: satCampus.id,
+        },
+      ],
+    });
+
+    const me = await sequelize.models.people.create({
+      originId: '4',
+      originType: 'rock',
+      firstName: 'Me',
+      lastName: 'Myself',
+      campusId: satCampus.id,
+    });
+
+    const suggestedFollowers = await followDataSource.getStaticSuggestedFollowsFor(
+      me
+    );
+
+    expect(suggestedFollowers.map(({ email }) => email)).toEqual([
+      'jim@bob.com',
+      'nick@offer.man',
+    ]);
+  });
+
+  it("should get a user's list of sugggested people to follow if they have no campus", async () => {
+    // Lengthy setup :g
+    const mainCampus = await sequelize.models.campus.create({
+      name: 'Main Campus',
+      originId: '1',
+      originType: 'rock',
+    });
+    const satCampus = await sequelize.models.campus.create({
+      name: 'Satilite Campus',
+      originId: '2',
+      originType: 'rock',
+    });
+    await sequelize.models.people.create({
+      originId: '1',
+      originType: 'rock',
+      firstName: 'Jim',
+      lastName: 'Bob',
+      email: 'jim@bob.com',
+      campusId: satCampus.id,
+    });
+    await sequelize.models.people.create({
+      originId: '2',
+      originType: 'rock',
+      firstName: 'Vincent',
+      lastName: 'Wilson',
+      email: 'vin@wil.com',
+      campusId: mainCampus.id,
+    });
+    await sequelize.models.people.create({
+      originId: '3',
+      originType: 'rock',
+      firstName: 'Nick',
+      lastName: 'Offerman',
+      email: 'nick@offer.man',
+    });
+    ApollosConfig.loadJs({
+      SUGGESTED_FOLLOWS: [
+        'nick@offer.man',
+        {
+          email: 'vin@wil.com',
+          campusId: mainCampus.id,
+        },
+        {
+          email: 'jim@bob.com',
+          campusId: satCampus.id,
+        },
+      ],
+    });
+
+    const me = await sequelize.models.people.create({
+      originId: '4',
+      originType: 'rock',
+      firstName: 'Me',
+      lastName: 'Myself',
+      campusId: null,
+    });
+
+    const suggestedFollowers = await followDataSource.getStaticSuggestedFollowsFor(
+      me
+    );
+
+    expect(suggestedFollowers.map(({ email }) => email)).toEqual([
+      'nick@offer.man',
+    ]);
+  });
+
+  it('should not suggest a user follows themselves', async () => {
+    const me = await sequelize.models.people.create({
+      originId: '4',
+      originType: 'rock',
+      firstName: 'Me',
+      lastName: 'Myself',
+      email: 'me@me.com',
+    });
+    ApollosConfig.loadJs({
+      SUGGESTED_FOLLOWS: ['me@me.com'],
+    });
+
+    currentPersonId = me.id;
+
+    const suggestedFollowers = await followDataSource.getStaticSuggestedFollowsFor(
+      me
+    );
+
+    expect(suggestedFollowers.map(({ email }) => email)).toEqual([]);
+  });
+  it('should throw an error when passing a non-uuid to getStaticSuggestedFollowsFor', async () => {
+    const invalidCampus = followDataSource.getStaticSuggestedFollowsFor({
+      campusId: 1,
+    });
+    await expect(invalidCampus).rejects.toMatchSnapshot();
+
+    const invalidId = followDataSource.getStaticSuggestedFollowsFor({ id: 1 });
+    await expect(invalidId).rejects.toMatchSnapshot();
+  });
+
+  it('should not suggest a user follows someone they already follow', async () => {
+    const me = await sequelize.models.people.create({
+      originId: '4',
+      originType: 'rock',
+      firstName: 'Me',
+      lastName: 'Myself',
+      email: 'me@me.com',
+    });
+    const followedAlready = await sequelize.models.people.create({
+      originId: '5',
+      originType: 'rock',
+      firstName: 'Me',
+      lastName: 'Myself',
+      email: 'followed@already.com',
+    });
+
+    await sequelize.models.follows.create({
+      requestPersonId: me.id,
+      followedPersonId: followedAlready.id,
+      state: 'ACCEPTED',
+    });
+
+    ApollosConfig.loadJs({
+      SUGGESTED_FOLLOWS: ['followed@already.com'],
+    });
+
+    currentPersonId = me.id;
+
+    const suggestedFollowers = await followDataSource.getStaticSuggestedFollowsFor(
+      me
+    );
+
+    expect(suggestedFollowers).toEqual([]);
+  });
+  it('should throw an error when passing a non-uuid to getStaticSuggestedFollowsFor', async () => {
+    const invalidCampus = followDataSource.getStaticSuggestedFollowsFor({
+      campusId: 1,
+    });
+    await expect(invalidCampus).rejects.toMatchSnapshot();
+
+    const invalidId = followDataSource.getStaticSuggestedFollowsFor({ id: 1 });
+    await expect(invalidId).rejects.toMatchSnapshot();
   });
 });
