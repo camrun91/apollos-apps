@@ -107,7 +107,6 @@ class Follow extends PostgresDataSource {
   };
 
   getStaticSuggestedFollowsFor = async ({ campusId, id } = {}) => {
-    const { Person } = this.context.dataSources;
     assertUuid(campusId, 'getStaticSuggestedFollowsFor');
     assertUuid(id, 'getStaticSuggestedFollowsFor');
 

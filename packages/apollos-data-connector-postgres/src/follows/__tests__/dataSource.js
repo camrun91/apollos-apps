@@ -1,5 +1,4 @@
 import ApollosConfig from '@apollosproject/config';
-import { parseGlobalId } from '@apollosproject/server-core';
 import { sequelize, sync } from '../../postgres/index';
 import { createModel, FollowState, setupModel } from '../model';
 import { createModel as createPeopleModel } from '../../people/model';
@@ -8,14 +7,6 @@ import {
   setupModel as setupCampusModel,
 } from '../../campus/model';
 import FollowDataSource from '../dataSource';
-
-// Current user by default
-const uuid1 = '82182626-4331-4506-a87b-490cb9ffae2e';
-const personId1 = `Person:${uuid1}`;
-
-// Followed user by default
-const uuid2 = '70bfd529-cbf0-4fdf-b6e6-415278d3f5cb';
-const PersonId2 = `Person:${uuid2}`;
 
 let currentPersonId = 1;
 
