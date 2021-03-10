@@ -10,12 +10,7 @@ class Follow extends PostgresDataSource {
   modelName = 'follows';
 
   async requestFollow({ followedPersonId }) {
-    const { Auth, Person } = this.context.dataSources;
-    const currentPerson = await Auth.getCurrentPerson();
-
-    if (!currentPerson) throw new AuthenticationError('Invalid Credentials');
-
-    const requestPersonId = await Person.resolveId(currentPerson.id);
+    const requestPersonId = await this.getCurrentPersonId();
 
     const { id } = parseGlobalId(followedPersonId);
 
@@ -54,9 +49,7 @@ class Follow extends PostgresDataSource {
   }
 
   async acceptFollowRequest({ requestPersonId }) {
-    const { Auth, Person } = this.context.dataSources;
-    const currentPerson = await Auth.getCurrentPerson();
-    const currentPersonId = await Person.resolveId(currentPerson.id);
+    const currentPersonId = await this.getCurrentPersonId();
 
     const { id } = parseGlobalId(requestPersonId);
 
@@ -77,9 +70,7 @@ class Follow extends PostgresDataSource {
   }
 
   async ignoreFollowRequest({ requestPersonId }) {
-    const { Auth, Person } = this.context.dataSources;
-    const currentPerson = await Auth.getCurrentPerson();
-    const currentPersonId = await Person.resolveId(currentPerson.id);
+    const currentPersonId = await this.getCurrentPersonId();
 
     const { id } = parseGlobalId(requestPersonId);
 
@@ -147,6 +138,30 @@ class Follow extends PostgresDataSource {
       ],
     });
   };
+
+  async followRequests() {
+    const currentPersonId = await this.getCurrentPersonId();
+
+    const currentPerson = await this.sequelize.models.people.findOne({
+      where: {
+        id: currentPersonId,
+      },
+    });
+
+    return currentPerson.getFollowers({
+      joinTableAttributes: ['state'],
+      through: { where: { state: { [Op.or]: [FollowState.REQUESTED, null] } } },
+    });
+  }
+
+  async getCurrentPersonId() {
+    const { Auth, Person } = this.context.dataSources;
+    const currentPerson = await Auth.getCurrentPerson();
+
+    if (!currentPerson) throw new AuthenticationError('Invalid Credentials');
+
+    return Person.resolveId(currentPerson.id);
+  }
 }
 
 export { Follow as default };

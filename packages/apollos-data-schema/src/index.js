@@ -1007,6 +1007,10 @@ export const followSchema = gql`
     acceptFollowRequest(requestPersonId: ID!): Follow
   }
 
+  extend type Query {
+    followRequests: [Person] @cacheControl(maxAge: 0)
+  }
+
   enum FollowState {
     REQUESTED
     DECLINED
