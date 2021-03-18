@@ -2,13 +2,7 @@
 
 import React from 'react';
 import { storiesOf } from '@apollosproject/ui-storybook';
-import {
-  View,
-  FlatList,
-  Text,
-  ScrollView,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { View, FlatList, Text, ScrollView } from 'react-native';
 import { times } from 'lodash';
 
 import Comment from '../Comment';
