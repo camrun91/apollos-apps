@@ -80,6 +80,7 @@ export ThemeProvider, {
   withThemeMixin,
   ThemeConsumer,
   named,
+  useTheme,
 } from './theme';
 export ThumbnailCard from './ThumbnailCard';
 export TileImage from './TileImage';
