@@ -242,7 +242,7 @@ PODS:
     - React-cxxreact (= 0.63.2)
     - React-jsi (= 0.63.2)
   - React-jsinspector (0.63.2)
-  - react-native-apollos-player (2.1.1):
+  - react-native-apollos-player (2.3.1):
     - React
   - react-native-config (0.11.7):
     - React
@@ -343,12 +343,41 @@ PODS:
     - React-Core
   - RNDeviceInfo (4.0.1):
     - React
-  - RNGestureHandler (1.9.0):
+  - RNGestureHandler (1.10.3):
     - React-Core
   - RNInAppBrowser (3.3.4):
     - React
   - RNPermissions (2.0.5):
     - React
+  - RNReanimated (2.0.0):
+    - DoubleConversion
+    - FBLazyVector
+    - FBReactNativeSpec
+    - Folly
+    - glog
+    - RCTRequired
+    - RCTTypeSafety
+    - React
+    - React-callinvoker
+    - React-Core
+    - React-Core/DevSupport
+    - React-Core/RCTWebSocket
+    - React-CoreModules
+    - React-cxxreact
+    - React-jsi
+    - React-jsiexecutor
+    - React-jsinspector
+    - React-RCTActionSheet
+    - React-RCTAnimation
+    - React-RCTBlob
+    - React-RCTImage
+    - React-RCTLinking
+    - React-RCTNetwork
+    - React-RCTSettings
+    - React-RCTText
+    - React-RCTVibration
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNScreens (2.9.0):
     - React
   - RNSVG (9.13.6):
@@ -427,6 +456,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNInAppBrowser (from `../node_modules/react-native-inappbrowser-reborn`)
   - RNPermissions (from `../node_modules/react-native-permissions`)
+  - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -545,6 +575,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-inappbrowser-reborn"
   RNPermissions:
     :path: "../node_modules/react-native-permissions"
+  RNReanimated:
+    :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNSVG:
@@ -583,7 +615,7 @@ SPEC CHECKSUMS:
   React-jsi: 54245e1d5f4b690dec614a73a3795964eeef13a8
   React-jsiexecutor: 8ca588cc921e70590820ce72b8789b02c67cce38
   React-jsinspector: b14e62ebe7a66e9231e9581279909f2fc3db6606
-  react-native-apollos-player: 445b845c71b60f4843048bb79806f7de67c3953b
+  react-native-apollos-player: 2baeeec9a5ac6b8ea50c46be3221b24e2907dc80
   react-native-config: 55548054279d92e0e4566ea15a8b9b81028ec342
   react-native-geolocation: c956aeb136625c23e0dce0467664af2c437888c9
   react-native-image-picker: e6e06d4315e3c85bad17e4b2002cd29f11d202c8
@@ -611,9 +643,10 @@ SPEC CHECKSUMS:
   RNCPicker: ddfab9d47eb505a76694a673a49e36cfe8c197cb
   RNDateTimePicker: 120f8d08b19dd50c0308d30a07c1982e4618e9ad
   RNDeviceInfo: 687c1b2ab6d86ff1ca1208783320cd144138c7f2
-  RNGestureHandler: 9b7e605a741412e20e13c512738a31bd1611759b
+  RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNInAppBrowser: 9936b2e23ab7ed9b6ac938eb1c4a656b95292e11
   RNPermissions: c40561e25ae1d4ca4ad987bde1026f9294a89f74
+  RNReanimated: 5231286440b796e09df3bfa5c1b12b02bfe07664
   RNScreens: c526239bbe0e957b988dacc8d75ac94ec9cb19da
   RNSVG: 8ba35cbeb385a52fd960fd28db9d7d18b4c2974f
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598

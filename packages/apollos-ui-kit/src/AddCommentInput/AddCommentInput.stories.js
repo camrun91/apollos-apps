@@ -58,27 +58,25 @@ storiesOf('ui-kit/AddCommentInput', module)
     </ThemeMixin>
   ))
   .add('with content and comments', () => (
-    <KeyboardAvoidingView behavior={'padding'} style={{ flex: 1 }}>
-      <ScrollView>
-        {times(30, () => (
-          <Text>{'----------------'}</Text>
-        ))}
-        <FlatList
-          renderItem={({ item }) =>
-            item.__typename === 'Comment' ? (
-              <Comment {...item} />
-            ) : (
-              <AddCommentInput
-                onSubmit={() => {}}
-                profile={{
-                  image: { uri: 'https://picsum.photos/200' },
-                  nickName: 'Jeff Bridges',
-                }}
-              />
-            )
-          }
-          data={fakeData}
-        />
-      </ScrollView>
-    </KeyboardAvoidingView>
+    <ScrollView>
+      {times(30, () => (
+        <Text>{'----------------'}</Text>
+      ))}
+      <FlatList
+        renderItem={({ item }) =>
+          item.__typename === 'Comment' ? (
+            <Comment {...item} />
+          ) : (
+            <AddCommentInput
+              onSubmit={() => {}}
+              profile={{
+                image: { uri: 'https://picsum.photos/200' },
+                nickName: 'Jeff Bridges',
+              }}
+            />
+          )
+        }
+        data={fakeData}
+      />
+    </ScrollView>
   ));
