@@ -30,6 +30,7 @@ storiesOf('ui-kit/AddCommentInput', module)
   .add('default', () => (
     <View style={{ justifyContent: 'flex-end', flex: 1 }}>
       <AddCommentInput
+        showInlinePrompt
         profile={{
           image: { uri: 'https://picsum.photos/200' },
           nickName: 'Jeff Bridges',
@@ -42,6 +43,7 @@ storiesOf('ui-kit/AddCommentInput', module)
     <ThemeMixin mixin={{ type: 'dark' }}>
       <BackgroundView style={{ justifyContent: 'flex-end', flex: 1 }}>
         <AddCommentInput
+          showInlinePrompt
           profile={{
             image: { uri: 'https://picsum.photos/200' },
             nickName: 'Jeff Bridges',
@@ -62,6 +64,7 @@ storiesOf('ui-kit/AddCommentInput', module)
             <Comment {...item} />
           ) : (
             <AddCommentInput
+              showInlinePrompt
               onSubmit={() => {}}
               profile={{
                 image: { uri: 'https://picsum.photos/200' },

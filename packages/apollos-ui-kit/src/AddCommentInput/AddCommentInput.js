@@ -71,7 +71,7 @@ const ModalBackgroundView = styled(({ theme }) => ({
   borderTopLeftRadius: theme.sizing.baseUnit,
   borderTopRightRadius: theme.sizing.baseUnit,
   backgroundColor: theme.colors.background.paper,
-  ...Platform.select(theme.shadows.default),
+  ...Platform.select({ ios: theme.shadows.default.ios }),
 }))(View);
 
 const NextButton = styled(
@@ -102,7 +102,7 @@ const CommentInputContainer = styled(
     paddingHorizontal: theme.sizing.baseUnit,
   }),
   'ui-kit.AddCommentInput.CommentInputContainer'
-)(KeyboardAvoidingView);
+)(Platform.OS === 'android' ? View : KeyboardAvoidingView);
 
 const UserData = styled(
   () => ({
@@ -243,13 +243,6 @@ const AddCommentInput = ({
     bottomSheetModalRef.current?.expand();
   }, []);
 
-  // const wrapperStyle = useRef({
-  //   marginVertical: 0,
-  //   paddingVertical: 0,
-  //   flex: 1,
-  //   backgroundColor: 'salmon',
-  // }).current;
-
   return (
     <>
       <BottomSheetModal
@@ -262,13 +255,18 @@ const AddCommentInput = ({
         topInset={insets.top}
         bottomInset={insets.bottom}
         handleHeight={handleHeight}
+        enableContentPanningGesture
+        enableHandlePanningGesture
         // todo: re-enable when working keyboardBehavior={'interactive'}
 
         // this functional component below fixes dark mode compat...think it
         // has something to do with the component not re-rendering properly
         backgroundComponent={(props) => <ModalBackgroundView {...props} />} // eslint-disable-line react/jsx-props-no-spreading
       >
-        <FlexedSafeAreaView edges={['right', 'bottom', 'left']}>
+        <FlexedSafeAreaView
+          style={{ minHeight: '100%' }}
+          edges={['right', 'bottom', 'left']}
+        >
           <CommentInputContainer
             keyboardVerticalOffset={handleHeight + insets.top}
             behavior="padding"
