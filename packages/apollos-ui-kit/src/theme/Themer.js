@@ -34,8 +34,8 @@ const Themer = ({ theme: themeInput, ...props }) => {
   return (
     <ThemeContext.Provider
       // this allows us to overwrite another provider somewhere up the chain.
-      // <Themer defaultTheme={theme}> can be used at the top level and then
-      // further down the tree <Themer customTheme={theme}> can be called to further
+      // <Themer theme={theme}> can be used at the top level and then
+      // further down the tree <Themer theme={theme}> can be called to further
       // customize the the theme
       value={createTheme(merge({}, theme, stripNullLeaves(themeInput)))}
       // prop spreading shouldn't be necessary, currently we are passing through
