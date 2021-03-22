@@ -1,7 +1,8 @@
 import { nest } from 'recompose';
 
+
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider, Themer } from './theme';
 import { LayoutProvider } from './LayoutContext';
 
-// TODO: deprecate ThemeProvider
-export default nest(ThemeProvider, LayoutProvider, Themer);
+export default nest(LayoutProvider, ThemeProvider, BottomSheetModalProvider);
