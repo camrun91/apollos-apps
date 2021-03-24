@@ -9,8 +9,7 @@ import { withIsLoading } from '../isLoading';
 import Button from '../Button';
 
 import FollowListItem from './FollowListItem';
-import FollowListSearch from './FollowListSearch';
-import FollowListSearchModal from './FollowListSearch/FollowListSearchModal';
+import FollowListSearch, { FollowListSearchModal } from './FollowListSearch';
 
 const HeaderView = styled(
   ({ theme }) => ({

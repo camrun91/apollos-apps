@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal, { ModalHeader } from '../../Modal';
-import FollowListSearch from '.';
+import FollowListSearch from './FollowListSearch';
 
 const FollowListSearchModal = ({
   onSearch,
