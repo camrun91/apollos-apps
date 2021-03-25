@@ -1,8 +1,12 @@
 /* eslint-disable react/display-name */
 import React, { useMemo } from 'react';
-import { Animated, View } from 'react-native';
+import { View, SectionList } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedScrollHandler,
+} from 'react-native-reanimated';
 import ConnectedImage from '../ConnectedImage';
-import StretchyView from '../StretchyView';
+import StretchyView from '../StretchyView/ReanimatedStretchyView';
 import ContentTitles from '../ContentTitles';
 import { BodyText, Paragraph } from '../typography';
 import PaddedView from '../PaddedView';
@@ -10,7 +14,7 @@ import styled from '../styled';
 
 import SectionHeader from './SectionHeader';
 
-const { SectionList } = Animated;
+const AnimatedSectionList = Animated.createAnimatedComponent(SectionList);
 
 const makeData = (key) => ({
   key,
@@ -50,6 +54,17 @@ const FEATURES = [
   {
     key: 'content',
     title: 'Title',
+    renderSectionHeader: () => (
+      <PaperView>
+        <ContentTitles
+          featured
+          title="Title"
+          summary="Summary"
+          onPressLike={() => {}}
+          onPressShare={() => {}}
+        />
+      </PaperView>
+    ),
     data: [makeData('content-1')],
   },
   {
@@ -61,7 +76,7 @@ const FEATURES = [
 
 const StyledSectionList = styled(({ theme }) => ({
   backgroundColor: theme.colors.background.screen,
-}))(SectionList);
+}))(AnimatedSectionList);
 
 const PaperView = styled(({ theme }) => ({
   backgroundColor: theme.colors.background.paper,
@@ -97,15 +112,6 @@ const ContentSectionList = () => {
                   maintainAspectRatio
                 />
               </Stretchy>
-              <PaperView>
-                <ContentTitles
-                  featured
-                  title="Title"
-                  summary="Summary"
-                  onPressLike={() => {}}
-                  onPressShare={() => {}}
-                />
-              </PaperView>
             </>
           }
           sections={FEATURES}

@@ -14,10 +14,13 @@ const Container = styled(
   'ui-kit.ContentSectionList.SectionHeader.Container'
 )(PaddedView);
 
-const SectionHeader = ({ section }) => (
-  <Container>
-    <H4>{section.title}</H4>
-  </Container>
-);
+const SectionHeader = ({ section, ...other }) =>
+  console.log({ section, ...other }) || section.renderSectionHeader ? (
+    section.renderSectionHeader()
+  ) : (
+    <Container>
+      <H4>{section.title}</H4>
+    </Container>
+  );
 
 export default SectionHeader;
