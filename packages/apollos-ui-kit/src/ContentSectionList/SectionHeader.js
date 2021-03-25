@@ -1,0 +1,23 @@
+import React from 'react';
+
+import { H4 } from '../typography';
+import PaddedView from '../PaddedView';
+import styled from '../styled';
+
+const Container = styled(
+  ({ theme }) => ({
+    backgroundColor: theme.colors.background.paper,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  }),
+  'ui-kit.ContentSectionList.SectionHeader.Container'
+)(PaddedView);
+
+const SectionHeader = ({ section }) => (
+  <Container>
+    <H4>{section.title}</H4>
+  </Container>
+);
+
+export default SectionHeader;
