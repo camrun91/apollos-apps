@@ -77,7 +77,7 @@ const ContentTitles = ({
 ContentTitles.propTypes = {
   title: PropTypes.string,
   summary: PropTypes.string,
-  featured: PropTypes.string,
+  featured: PropTypes.bool,
   micro: PropTypes.string,
   onPressLike: PropTypes.func,
   onPressShare: PropTypes.func,

@@ -10,7 +10,6 @@ const AppProviders = (props) => (
       <Providers
         themeInput={customTheme}
         iconInput={customIcons}
-        
       >
         <BackgroundView {...props} />
       </Providers>
