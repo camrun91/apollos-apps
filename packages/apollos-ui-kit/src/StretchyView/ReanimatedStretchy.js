@@ -1,21 +1,13 @@
 // experimental
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
-  interpolateNode,
   useDerivedValue,
 } from 'react-native-reanimated';
+import PropTypes from 'prop-types';
 
-const Stretchy = ({
-  children,
-  stretchyKey = 'stretchy',
-  stretchOn = 'top',
-  background = false,
-  scrollY,
-  style,
-  ...otherProps
-}) => {
+const Stretchy = ({ children, stretchOn = 'top', scrollY, style }) => {
   const layoutHeight = useSharedValue(0);
 
   const handleLayout = useCallback(
@@ -53,6 +45,9 @@ const Stretchy = ({
 
     if (stretchOn === 'bottom') {
       // todo
+      console.warn(
+        'ReanimatedStretchy does not currently support bottom stretchies'
+      );
     }
 
     return 1;
@@ -69,6 +64,15 @@ const Stretchy = ({
       {children}
     </Animated.View>
   );
+};
+
+Stretchy.propTypes = {
+  scrollY: PropTypes.shape({
+    value: PropTypes.number,
+  }),
+  children: PropTypes.node,
+  stretchOn: PropTypes.oneOf(['top', 'bottom']),
+  style: PropTypes.any, // eslint-disable-line
 };
 
 export default Stretchy;
