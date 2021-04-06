@@ -102,6 +102,7 @@ describe('Apollos Postgres FollowRequest DataSource', () => {
     });
     expect(notificationMock.mock.calls[0][0].data).toEqual({
       requestPersonId: person1.apollosId,
+      url: 'apolloschurchapp://nav/Tabs?screen=Connect',
     });
     expect(notificationMock.mock.calls[0][0].buttons).toMatchSnapshot();
     expect(notificationMock.mock.calls[0][0].content).toMatchSnapshot();
@@ -576,6 +577,29 @@ describe('Apollos Postgres FollowRequest DataSource', () => {
 
     expect(follows.length).toBe(1);
     expect(follows[0].state).toBe(FollowState.ACCEPTED);
+  });
+
+  it('should not send push notifications to auto accepting requests ', async () => {
+    const followDataSource = new FollowDataSource();
+
+    followDataSource.initialize({ context });
+
+    const nick = await sequelize.models.people.create({
+      originId: '3',
+      originType: 'rock',
+      firstName: 'Nick',
+      lastName: 'Offerman',
+      email: 'nick@offer.man',
+    });
+    ApollosConfig.loadJs({
+      SUGGESTED_FOLLOWS: ['nick@offer.man'],
+    });
+
+    await followDataSource.requestFollow({
+      followedPersonId: `Person:${nick.id}`,
+    });
+
+    expect(notificationMock.mock.calls.length).toBe(0);
   });
 
   it('should return list of users requesting to follow the current user', async () => {

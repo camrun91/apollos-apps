@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.0](https://github.com/apollosproject/apollos-apps/compare/v2.9.0...v2.10.0) (2021-04-06)
+
+**Note:** Version bump only for package @apollosproject/ui-onboarding
+
+
+
+
+
+## [2.9.0](https://github.com/apollosproject/apollos-apps/compare/v2.8.0...v2.9.0) (2021-03-30)
+
+**Note:** Version bump only for package @apollosproject/ui-onboarding
+
+
+
+
+
+## [2.8.0](https://github.com/apollosproject/apollos-apps/compare/v2.7.0...v2.8.0) (2021-03-29)
+
+**Note:** Version bump only for package @apollosproject/ui-onboarding
+
+
+
+
+
+## [2.7.0](https://github.com/apollosproject/apollos-apps/compare/v2.6.0...v2.7.0) (2021-03-25)
+
+**Note:** Version bump only for package @apollosproject/ui-onboarding
+
+
+
+
+
+## [2.6.0](https://github.com/apollosproject/apollos-apps/compare/v2.5.0...v2.6.0) (2021-03-24)
+
+
+### Features
+
+* Onboard only seen slides ([#1827](https://github.com/apollosproject/apollos-apps/issues/1827)) ([199edb8](https://github.com/apollosproject/apollos-apps/commit/199edb8b3a83ab053964c640aa9d477ef3a4c991))
+
+
+
 ## [2.5.0](https://github.com/apollosproject/apollos-apps/compare/v2.4.0...v2.5.0) (2021-03-22)
 
 
