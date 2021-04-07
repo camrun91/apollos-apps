@@ -7,6 +7,7 @@ import {
 } from 'react-native-reanimated';
 import PropTypes from 'prop-types';
 
+import FlexedView from '../FlexedView';
 import Stretchy from './ReanimatedStretchy';
 
 const StretchyView = ({ children, scrollY: scrollYProp }) => {
@@ -24,13 +25,13 @@ const StretchyView = ({ children, scrollY: scrollYProp }) => {
   );
 
   return (
-    <View style={StyleSheet.absoluteFill}>
+    <FlexedView>
       {children({
         scrollEventThrottle: 16,
         onScroll,
         Stretchy: renderStretchy,
       })}
-    </View>
+    </FlexedView>
   );
 };
 

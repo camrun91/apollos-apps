@@ -25,6 +25,9 @@ const ContentNodeConnected = ({
   nodeId,
   onPressAnchor,
   ImageWrapperComponent,
+  showCoverImage,
+  showTitle,
+  showContent,
 }) => {
   if (!nodeId) return <HTMLView isLoading />;
   return (
@@ -39,7 +42,7 @@ const ContentNodeConnected = ({
         error,
       }) => {
         if (!htmlContent && error) return <ErrorCard error={error} />;
-        const coverImageSources = coverImage?.sources || [];
+        const coverImageSources = (showCoverImage && coverImage?.sources) || [];
         return (
           <>
             {coverImageSources.length || loading ? (
@@ -53,15 +56,19 @@ const ContentNodeConnected = ({
 
             {/* fixes text/navigation spacing by adding vertical padding if we dont have an image */}
             <PaddedView vertical={!coverImageSources.length}>
-              <H2 padded isLoading={!title && loading}>
-                {title}
-              </H2>
-              <HtmlComponent
-                isLoading={!htmlContent && loading}
-                onPressAnchor={onPressAnchor}
-              >
-                {htmlContent}
-              </HtmlComponent>
+              {showTitle && (
+                <H2 padded isLoading={!title && loading}>
+                  {title}
+                </H2>
+              )}
+              {showContent && (
+                <HtmlComponent
+                  isLoading={!htmlContent && loading}
+                  onPressAnchor={onPressAnchor}
+                >
+                  {htmlContent}
+                </HtmlComponent>
+              )}
             </PaddedView>
           </>
         );
@@ -75,12 +82,18 @@ ContentNodeConnected.propTypes = {
   HtmlComponent: ComponentPropType,
   ImageWrapperComponent: ComponentPropType,
   onPressAnchor: PropTypes.func,
+  showCoverImage: PropTypes.bool,
+  showTitle: PropTypes.bool,
+  showContent: PropTypes.bool,
 };
 
 ContentNodeConnected.defaultProps = {
   HtmlComponent: HTMLView,
   ImageWrapperComponent: View,
   onPressAnchor: safeOpenUrl,
+  showCoverImage: true,
+  showTitle: true,
+  showContent: true,
 };
 
 export default named('ui-connected.ContentNodeConnected')(ContentNodeConnected);

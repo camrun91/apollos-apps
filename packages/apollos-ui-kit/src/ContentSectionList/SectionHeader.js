@@ -25,7 +25,7 @@ const Title = styled({
 export const DownArrow = withTheme(({ theme, isContracted }) => ({
   name: 'arrow-down',
   size: theme.sizing.baseUnit * 0.75,
-  fill: theme.colors.neutral.gray,
+  fill: theme.colors.background.paper,
   style: {
     transform: isContracted ? [{ rotate: '-90deg' }] : [],
   },

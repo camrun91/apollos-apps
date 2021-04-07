@@ -39,6 +39,7 @@ const ContentSectionList = ({
   onPressShare,
   isLiked,
   sections = [],
+  ...props
 }) => {
   const scrollY = useSharedValue(0);
   const headerYOffset = useSharedValue(0);
@@ -134,6 +135,10 @@ const ContentSectionList = ({
         height: isContracted ? 0 : undefined,
         opacity: isContracted ? 0 : 1,
       };
+      if (result === null) {
+        return null;
+      }
+
       return (
         <>
           {sections[0] === section && index === 0 ? (
@@ -168,6 +173,7 @@ const ContentSectionList = ({
           renderItem={renderItem}
           onScroll={onScroll}
           scrollEventThrottle={16}
+          {...props}
         />
       )}
     </StretchyView>
