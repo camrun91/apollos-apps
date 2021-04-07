@@ -306,6 +306,7 @@ export const scriptureSchema = gql`
 
     html: String
     reference: String
+    book: String
     copyright: String
     version: String
   }
@@ -1051,7 +1052,19 @@ export const commentSchema = gql`
       visibility: CommentVisibility
     ): Comment
 
+    updateComment(
+      commentId: ID!
+      text: String
+      visibility: CommentVisibility
+    ): Comment
+
+    deleteComment(commentId: ID!): Boolean
+
     flagComment(commentId: ID!): Comment
+
+    likeComment(commentId: ID!): Comment
+
+    unlikeComment(commentId: ID!): Comment
   }
 
   type CommentListFeature implements Feature & Node {
@@ -1076,12 +1089,14 @@ export const commentSchema = gql`
     FOLLOWERS
   }
 
-  type Comment implements Node {
+  type Comment implements Node & LikableNode {
     id: ID!
 
     person: Person
     text: String
     visibility: CommentVisibility
+    isLiked: Boolean @cacheControl(maxAge: 0)
+    likedCount: Int
   }
 `;
 

@@ -57,5 +57,3 @@ FollowListSearch.defaultProps = {
   onSearch: () => {},
   FollowListComponent: FollowList,
 };
-
-export default FollowListSearch;

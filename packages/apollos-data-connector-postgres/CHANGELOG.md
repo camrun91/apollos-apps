@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.0](https://github.com/apollosproject/apollos-apps/compare/v2.9.0...v2.10.0) (2021-04-06)
+
+
+### Features
+
+* Comment update and delete ([#1855](https://github.com/apollosproject/apollos-apps/issues/1855)) ([6968b6c](https://github.com/apollosproject/apollos-apps/commit/6968b6cae059adc4b810c18d2ed9e217166c48cb))
+
+
+
+## [2.9.0](https://github.com/apollosproject/apollos-apps/compare/v2.8.0...v2.9.0) (2021-03-30)
+
+**Note:** Version bump only for package @apollosproject/data-connector-postgres
+
+
+
+
+
+## [2.8.0](https://github.com/apollosproject/apollos-apps/compare/v2.7.0...v2.8.0) (2021-03-29)
+
+
+### Bug Fixes
+
+* Map gender to a postgres compatible value ([#1836](https://github.com/apollosproject/apollos-apps/issues/1836)) ([183da8b](https://github.com/apollosproject/apollos-apps/commit/183da8bfafa7f810d77cd470f8f74ae8dcd688e2))
+
+
+
+## [2.7.0](https://github.com/apollosproject/apollos-apps/compare/v2.6.0...v2.7.0) (2021-03-25)
+
+
+### Features
+
+* Liking comments ([#1829](https://github.com/apollosproject/apollos-apps/issues/1829)) ([4590af7](https://github.com/apollosproject/apollos-apps/commit/4590af7c4299d3e7e0643b25385d82cfc7891ada))
+
+
+
+## [2.6.0](https://github.com/apollosproject/apollos-apps/compare/v2.5.0...v2.6.0) (2021-03-24)
+
+
+### Bug Fixes
+
+* Don't search non-apollosUsers and trim whitespace ([#1820](https://github.com/apollosproject/apollos-apps/issues/1820)) ([3599340](https://github.com/apollosproject/apollos-apps/commit/35993404922e8d9ae3bdfe275a6f2488f1ae2c8b))
+
+
+
 ## [2.5.0](https://github.com/apollosproject/apollos-apps/compare/v2.4.0...v2.5.0) (2021-03-22)
 
 
