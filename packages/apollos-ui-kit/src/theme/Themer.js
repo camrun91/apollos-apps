@@ -1,4 +1,5 @@
 import React, { createContext, useContext } from 'react';
+import { useColorScheme } from 'react-native';
 import PropTypes from 'prop-types';
 import { merge, isPlainObject } from 'lodash';
 import defaultTheme from './defaultTheme';
@@ -31,13 +32,17 @@ const stripNullLeaves = (obj, cb) => {
 
 const Themer = ({ theme: themeInput, ...props }) => {
   const theme = useTheme();
+  const type = useColorScheme();
+
   return (
     <ThemeContext.Provider
       // this allows us to overwrite another provider somewhere up the chain.
       // <Themer theme={theme}> can be used at the top level and then
       // further down the tree <Themer theme={theme}> can be called to further
       // customize the the theme
-      value={createTheme(merge({}, theme, stripNullLeaves(themeInput)))}
+      value={createTheme(
+        merge({}, theme, stripNullLeaves({ type, ...themeInput }))
+      )}
       // prop spreading shouldn't be necessary, currently we are passing through
       // the one signal key on the app template, need to find a way around
       {...props}

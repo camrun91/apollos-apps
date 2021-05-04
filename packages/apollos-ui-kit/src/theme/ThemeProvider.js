@@ -37,8 +37,13 @@ export class ThemeProvider extends PureComponent {
 // useColorScheme returns string 'dark' when user is in dark mode
 export const ThemeProviderWithApperance = ({ themeInput = {}, ...props }) => {
   const themeType = useColorScheme();
+  const newThemeSystemProp = props.theme || {};
   return (
-    <ThemeProvider themeInput={{ type: themeType, ...themeInput }} {...props} />
+    <ThemeProvider
+      // this insures that the old deprecated components will receive the new theme if passed
+      themeInput={{ type: themeType, ...themeInput, ...newThemeSystemProp }}
+      {...props}
+    />
   );
 };
 
