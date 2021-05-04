@@ -1,19 +1,23 @@
 import { get, uniq } from 'lodash';
 import moment from 'moment-timezone';
 import natural from 'natural';
-import sanitizeHtmlNode from 'sanitize-html';
 import Hypher from 'hypher';
 import english from 'hyphenation.en-us';
+import sanitizeHtml from 'sanitize-html';
 
 import RockApolloDataSource, {
   parseKeyValueAttribute,
 } from '@apollosproject/rock-apollo-data-source';
 import ApollosConfig from '@apollosproject/config';
-import { createGlobalId, parseGlobalId } from '@apollosproject/server-core';
+import {
+  createGlobalId,
+  parseGlobalId,
+  generateAppLink,
+} from '@apollosproject/server-core';
 
 import { createImageUrlFromGuid } from '../utils';
 
-const { APP, ROCK, ROCK_MAPPINGS, ROCK_CONSTANTS } = ApollosConfig;
+const { ROCK, ROCK_MAPPINGS, ROCK_CONSTANTS } = ApollosConfig;
 
 export default class ContentItem extends RockApolloDataSource {
   resource = 'ContentChannelItems';
@@ -238,7 +242,7 @@ export default class ContentItem extends RockApolloDataSource {
 
     const tokenizer = new natural.SentenceTokenizer();
     const tokens = tokenizer.tokenize(
-      sanitizeHtmlNode(content, {
+      sanitizeHtml(content, {
         allowedTags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
         allowedAttributes: [],
         exclusiveFilter: (frame) => frame.tag.match(/^(h1|h2|h3|h4|h5|h6)$/),
@@ -250,23 +254,54 @@ export default class ContentItem extends RockApolloDataSource {
       : tokens[0];
   };
 
-  getShareUrl = async ({ contentId, channelId }) => {
-    const contentChannel = await this.context.dataSources.ContentChannel.getFromId(
-      channelId
-    );
+  createHTMLContent = (content) =>
+    sanitizeHtml(content || '', {
+      allowedTags: [
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+        'h6',
+        'blockquote',
+        'p',
+        'a',
+        'ul',
+        'ol',
+        'li',
+        'b',
+        'i',
+        'strong',
+        'em',
+        'br',
+        'caption',
+        'img',
+        'div',
+      ],
+      allowedAttributes: {
+        // these don't do anything in an app but will affect content on a website
+        '*': ['style', 'class'],
+        a: ['href', 'target'],
+        img: ['src'],
+      },
+      transformTags: {
+        img: (tagName, { src }) => {
+          return {
+            tagName,
+            attribs: {
+              // adds Rock URL in the case of local image references in the CMS
+              src: src.startsWith('http') ? src : `${ROCK.URL || ''}${src}`,
+            },
+          };
+        },
+      },
+    });
 
-    if (!contentChannel.itemUrl) return APP.ROOT_API_URL;
-
-    const slug = await this.request('ContentChannelItemSlugs')
-      .filter(`ContentChannelItemId eq ${contentId}`)
-      .cache({ ttl: 60 })
-      .first();
-
-    return [
-      APP.ROOT_API_URL,
-      contentChannel.itemUrl.replace(/^\//, ''),
-      slug ? slug.slug : '',
-    ].join('/');
+  getShareUrl = async (content) => {
+    const __typename = this.resolveType(content);
+    return generateAppLink('universal', 'content', {
+      contentID: createGlobalId(content.id, __typename),
+    });
   };
 
   getSermonFeed() {

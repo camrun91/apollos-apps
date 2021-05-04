@@ -60,12 +60,16 @@ export {
 const AuthStack = createNativeStackNavigator();
 const IdentityStack = createNativeStackNavigator();
 
-const AuthNavigator = (props) => (
-  <AuthStack.Navigator
-    initialRouteName="AuthIdentity"
-    headerMode="none"
-    {...props}
-  >
+const AuthNavigator = ({
+  alternateLoginText,
+  authTitleText,
+  confirmationPromptText,
+  confirmationTitleText,
+  forgotPasswordURL,
+  emailRequired,
+  passwordPromptText,
+}) => (
+  <AuthStack.Navigator initialRouteName="AuthIdentity" headerMode="none">
     <AuthStack.Screen name="Identity">
       {() => (
         <IdentityStack.Navigator
@@ -74,10 +78,12 @@ const AuthNavigator = (props) => (
           <IdentityStack.Screen
             name="AuthSMSPhoneEntryConnected"
             component={AuthSMSPhoneEntryConnected}
+            initialParams={{ alternateLoginText, authTitleText }}
           />
           <IdentityStack.Screen
             name="AuthEmailEntryConnected"
             component={AuthEmailEntryConnected}
+            initialParams={{ alternateLoginText, authTitleText }}
           />
         </IdentityStack.Navigator>
       )}
@@ -86,19 +92,23 @@ const AuthNavigator = (props) => (
       name="AuthSMSVerificationConnected"
       options={{ headerShown: true }}
       component={AuthSMSVerificationConnected}
+      initialParams={{ confirmationTitleText, confirmationPromptText }}
     />
     <AuthStack.Screen
       name="AuthPasswordEntryConnected"
       options={{ headerShown: true }}
       component={AuthPasswordEntryConnected}
+      initialParams={{ forgotPasswordURL, passwordPromptText, emailRequired }}
     />
     <AuthStack.Screen
       name="AuthProfileEntryConnected"
       component={AuthProfileEntryConnected}
+      initialParams={{ emailRequired }}
     />
     <AuthStack.Screen
       name="AuthProfileDetailsEntryConnected"
       component={AuthProfileDetailsEntryConnected}
+      initialParams={{ emailRequired }}
     />
 
     {/* Redirects */}
@@ -136,20 +146,14 @@ const ThemedAuthNavigator = withTheme(({ theme, ...props }) => ({
   },
 }))(AuthNavigator);
 
-ThemedAuthNavigator.propTypes = {
-  screenProps: PropTypes.shape({
-    alternateLoginText: PropTypes.node,
-    authTitleText: PropTypes.string,
-    confirmationTitleText: PropTypes.string,
-    confirmationPromptText: PropTypes.string,
-    onFinishAuth: PropTypes.func,
-    passwordPromptText: PropTypes.string,
-    smsPolicyInfo: PropTypes.node,
-    smsPromptText: PropTypes.string,
-    emailRequired: PropTypes.bool,
-    handleForgotPassword: PropTypes.func,
-  }),
-  BackgroundComponent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+AuthNavigator.propTypes = {
+  alternateLoginText: PropTypes.string,
+  authTitleText: PropTypes.string,
+  confirmationTitleText: PropTypes.string,
+  confirmationPromptText: PropTypes.string,
+  passwordPromptText: PropTypes.string,
+  emailRequired: PropTypes.bool,
+  forgotPasswordURL: PropTypes.string,
 };
 
 const Auth = (props) => <ThemedAuthNavigator {...props} />;

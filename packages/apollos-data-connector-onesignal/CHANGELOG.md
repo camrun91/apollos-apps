@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.13.1](https://github.com/apollosproject/apollos-apps/compare/v2.13.0...v2.13.1) (2021-04-28)
+
+**Note:** Version bump only for package @apollosproject/data-connector-onesignal
+
+
+
+
+
+## [2.13.0](https://github.com/apollosproject/apollos-apps/compare/v2.12.0...v2.13.0) (2021-04-23)
+
+**Note:** Version bump only for package @apollosproject/data-connector-onesignal
+
+
+
+
+
+## [2.12.0](https://github.com/apollosproject/apollos-apps/compare/v2.11.0...v2.12.0) (2021-04-22)
+
+**Note:** Version bump only for package @apollosproject/data-connector-onesignal
+
+
+
+
+
+## [2.11.0](https://github.com/apollosproject/apollos-apps/compare/v2.10.0...v2.11.0) (2021-04-12)
+
+
+### Bug Fixes
+
+* Onesignal Api change, make sure external_user_ids are strings ([#1862](https://github.com/apollosproject/apollos-apps/issues/1862)) ([e97d739](https://github.com/apollosproject/apollos-apps/commit/e97d73939d848e353f08db9db50f8667d78511f1))
+
+
+
 ## [2.10.0](https://github.com/apollosproject/apollos-apps/compare/v2.9.0...v2.10.0) (2021-04-06)
 
 **Note:** Version bump only for package @apollosproject/data-connector-onesignal

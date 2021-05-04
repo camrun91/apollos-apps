@@ -8,9 +8,10 @@ import { LoginConsumer } from '../LoginProvider';
 import PasswordEntry from './PasswordEntry';
 
 const PasswordEntryConnected = ({
-  handleForgotPassword,
-  screenProps,
   navigation,
+  route: {
+    params: { forgotPasswordURL },
+  },
 }) => (
   <LoginConsumer>
     {({ handleSubmitLogin, newUser }) => (
@@ -44,13 +45,12 @@ const PasswordEntryConnected = ({
       >
         {(formikBag) => (
           <PasswordEntry
-            {...screenProps}
             {...formikBag}
             errors={formikBag.touched.password && formikBag.errors}
             isLoading={formikBag.isSubmitting}
             onPressNext={formikBag.handleSubmit}
             onPressBack={navigation.goBack}
-            handleForgotPassword={handleForgotPassword}
+            forgotPasswordURL={forgotPasswordURL}
             newUser={newUser}
           />
         )}
@@ -61,9 +61,10 @@ const PasswordEntryConnected = ({
 
 PasswordEntryConnected.propTypes = {
   navigation: PropTypes.shape({ goBack: PropTypes.func.isRequired }).isRequired,
+  route: PropTypes.shape({
+    params: PropTypes.shape({ forgotPasswordURL: PropTypes.string }),
+  }),
   emailRequired: PropTypes.bool,
-  handleForgotPassword: PropTypes.func,
-  screenProps: PropTypes.shape({}),
 };
 
 PasswordEntryConnected.defaultProps = {
