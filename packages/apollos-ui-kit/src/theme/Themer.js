@@ -30,9 +30,14 @@ const stripNullLeaves = (obj, cb) => {
   return out;
 };
 
-const Themer = ({ theme: themeInput, ...props }) => {
-  const theme = useTheme();
+const Themer = ({ theme, ...props }) => {
+  const existingTheme = useTheme();
   const type = useColorScheme();
+
+  console.log(
+    'new theme',
+    createTheme(merge({}, existingTheme, stripNullLeaves({ type, ...theme })))
+  );
 
   return (
     <ThemeContext.Provider
@@ -41,7 +46,7 @@ const Themer = ({ theme: themeInput, ...props }) => {
       // further down the tree <Themer theme={theme}> can be called to further
       // customize the the theme
       value={createTheme(
-        merge({}, theme, stripNullLeaves({ type, ...themeInput }))
+        merge({}, existingTheme, stripNullLeaves({ type, ...theme }))
       )}
       // prop spreading shouldn't be necessary, currently we are passing through
       // the one signal key on the app template, need to find a way around

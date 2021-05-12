@@ -3,8 +3,7 @@ import renderer from 'react-test-renderer';
 import { View } from 'react-native';
 
 import Providers from '../Providers';
-
-import withTheme, { named } from './withTheme';
+import { withTheme, named } from './OLD_theme';
 
 describe('the styled HOC', () => {
   it('provides a theme', () => {
