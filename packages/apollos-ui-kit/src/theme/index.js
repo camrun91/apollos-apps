@@ -1,7 +1,4 @@
 /* Deprecated */
-// export { default as ThemeProvider } from './ThemeProvider';
-// export { default as withTheme } from './withTheme';
-// export { withThemeMixin } from './mixins';
 export {
   ThemeProvider,
   withTheme,
@@ -12,4 +9,4 @@ export {
 } from './OLD_theme';
 /* ---------- */
 
-export { default as Themer, useTheme, Theme } from './Themer';
+export { default as Themer, useTheme, Theme, useIcons } from './Themer';

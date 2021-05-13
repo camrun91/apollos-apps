@@ -4,12 +4,13 @@ import mergeStyles from '../styled/mergeStyles';
 import Themer, { useTheme } from './Themer';
 import createTheme from './createTheme';
 
-export const ThemeProvider = ({ themeInput, ...props }) => (
-  <Themer theme={createTheme(themeInput)} {...props} />
+export const ThemeProvider = ({ themeInput, iconInput, ...props }) => (
+  <Themer theme={createTheme(themeInput)} icons={iconInput} {...props} />
 );
 
 ThemeProvider.propTypes = {
   themeInput: PropTypes.shape({}),
+  iconInput: PropTypes.shape({}),
 };
 
 export const withTheme = (

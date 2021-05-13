@@ -3,16 +3,20 @@ import { useColorScheme } from 'react-native';
 import PropTypes from 'prop-types';
 import { merge, isPlainObject } from 'lodash';
 import createTheme from './createTheme';
+import * as coreIcons from './icons';
 
 const ThemeContext = createContext();
 const useTheme = () => useContext(ThemeContext);
+
+const IconContext = createContext();
+const useIcons = () => useContext(IconContext);
 
 // for backward compatibility with class based components
 const Theme = ThemeContext.Consumer;
 
 // This function deeply strips out values in an object that are null or undefined.
-// In other words, turns { bla: { foo: 'orange', bar: null }, baz: null }
-// into { bla: { foo: 'orange' } }
+// In other words, turns { bla: { foo: 'dark', bar: null }, baz: null }
+// into { bla: { foo: 'dark' } }
 const stripNullLeaves = (obj, cb) => {
   const out = {};
 
@@ -29,32 +33,39 @@ const stripNullLeaves = (obj, cb) => {
   return out;
 };
 
-const Themer = ({ theme, ...props }) => {
-  let existingTheme = useTheme();
+const Themer = ({ theme: customTheme, icons: customIcons, ...props }) => {
+  let theme = useTheme();
   const type = useColorScheme();
-  if (!existingTheme) existingTheme = createTheme({ type });
+  if (!theme) theme = createTheme({ type });
+
+  let icons = useIcons();
+  if (!icons) icons = coreIcons;
 
   return (
-    <ThemeContext.Provider
-      // this allows us to overwrite another provider somewhere up the chain.
-      // <Themer theme={theme}> can be used at the top level and then
-      // further down the tree <Themer theme={theme}> can be called to further
-      // customize the the theme
-      value={merge({}, existingTheme, stripNullLeaves({ type, ...theme }))}
-      // prop spreading shouldn't be necessary, currently we are passing through
-      // the one signal key on the app template, need to find a way around
-      {...props}
-    />
+    <IconContext.Provider value={{ ...icons, ...customIcons }}>
+      <ThemeContext.Provider
+        // this allows us to overwrite another provider somewhere up the chain.
+        // <Themer theme={theme}> can be used at the top level and then
+        // further down the tree <Themer theme={theme}> can be called to further
+        // customize the the theme
+        value={merge({}, theme, stripNullLeaves({ type, ...customTheme }))}
+        // prop spreading shouldn't be necessary, currently we are passing through
+        // the one signal key on the app template, need to find a way around
+        {...props}
+      />
+    </IconContext.Provider>
   );
 };
 
 Themer.propTypes = {
   theme: PropTypes.shape({}),
+  icons: PropTypes.shape({}),
 };
 
 Themer.defaultProps = {
   theme: {},
+  icons: {},
 };
 
-export { useTheme, Theme };
+export { useTheme, Theme, useIcons };
 export default Themer;
