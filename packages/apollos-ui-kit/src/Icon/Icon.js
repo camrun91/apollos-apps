@@ -6,7 +6,7 @@ import { flow, camelCase, upperFirst, kebabCase } from 'lodash';
 import { getIsLoading } from '../isLoading';
 import Placeholder from '../Placeholder';
 
-import { useIcons } from '../theme';
+import { useIcons, useTheme } from '../theme';
 
 const pascalCase = (string) => flow(camelCase, upperFirst)(string);
 
@@ -19,7 +19,8 @@ const pascalCase = (string) => flow(camelCase, upperFirst)(string);
 
 const enhance = compose(pure, getIsLoading);
 
-const Icon = ({ name, size, isLoading = false, ...otherProps }) => {
+const Icon = ({ name, size, fill, isLoading = false, ...otherProps }) => {
+  const theme = useTheme();
   const Icons = useIcons();
   const kebabNames = Object.keys(Icons).map(kebabCase);
   if (!kebabNames.includes(name))
@@ -31,7 +32,11 @@ const Icon = ({ name, size, isLoading = false, ...otherProps }) => {
   const IconComponent = Icons[pascalCase(name)];
   return (
     <Placeholder.Media size={size} hasRadius onReady={!isLoading}>
-      <IconComponent size={size} {...otherProps} />
+      <IconComponent
+        size={size}
+        fill={fill || theme.colors.text.primary}
+        {...otherProps}
+      />
     </Placeholder.Media>
   );
 };

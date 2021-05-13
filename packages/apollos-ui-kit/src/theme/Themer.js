@@ -2,8 +2,8 @@ import React, { createContext, useContext } from 'react';
 import { useColorScheme } from 'react-native';
 import PropTypes from 'prop-types';
 import { merge, isPlainObject } from 'lodash';
-import createTheme from './createTheme';
 import * as coreIcons from './icons';
+import createTheme from './createTheme';
 
 const ThemeContext = createContext();
 const useTheme = () => useContext(ThemeContext);
