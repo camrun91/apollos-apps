@@ -6,7 +6,6 @@ import { flow, camelCase, upperFirst, kebabCase } from 'lodash';
 import { getIsLoading } from '../isLoading';
 import Placeholder from '../Placeholder';
 
-import * as uikitIcons from '../theme/icons';
 import { useIcons } from '../theme';
 
 const pascalCase = (string) => flow(camelCase, upperFirst)(string);
@@ -20,8 +19,15 @@ const pascalCase = (string) => flow(camelCase, upperFirst)(string);
 
 const enhance = compose(pure, getIsLoading);
 
-const Icon = ({ name, size, iconInput, isLoading = false, ...otherProps }) => {
+const Icon = ({ name, size, isLoading = false, ...otherProps }) => {
   const Icons = useIcons();
+  const kebabNames = Object.keys(Icons).map(kebabCase);
+  if (!kebabNames.includes(name))
+    console.warn(
+      `Invalid prop "name" of value \`${name}\` supplied to <Icon />, expected one of ${JSON.stringify(
+        kebabNames
+      )}`
+    );
   const IconComponent = Icons[pascalCase(name)];
   return (
     <Placeholder.Media size={size} hasRadius onReady={!isLoading}>
@@ -29,31 +35,11 @@ const Icon = ({ name, size, iconInput, isLoading = false, ...otherProps }) => {
     </Placeholder.Media>
   );
 };
-// eslint-disable-next-line consistent-return
-export const namePropValidator = (props, propName, componentName) => {
-  const icons = Object.keys({ ...uikitIcons, ...props.iconInput }).map(
-    kebabCase
-  );
-
-  if (!icons.includes(props.name)) {
-    // eslint-disable-next-line no-console
-    return new Error(
-      `Invalid prop \`${propName}\` of value \`${
-        props.name
-      }\` supplied to \`${componentName}\` expected one of ${JSON.stringify(
-        icons
-      )}`
-    );
-  }
-};
 
 // PropType checking needs to occur after the `isLoading`` and `iconInput` have been loaded in.
 // Those props are added via the call to `enhance`
 Icon.propTypes = {
-  iconInput: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.func, PropTypes.node, PropTypes.object])
-  ),
-  name: namePropValidator,
+  name: PropTypes.string,
   size: PropTypes.number,
   fill: PropTypes.string,
   isLoading: PropTypes.bool,
