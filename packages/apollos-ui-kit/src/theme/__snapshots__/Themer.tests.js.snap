@@ -6,6 +6,12 @@ exports[`Themer has a backwards compatible consumer for class components 1`] = `
 </Text>
 `;
 
+exports[`Themer should allow for overrides 1`] = `
+<View
+  prop="hello"
+/>
+`;
+
 exports[`Themer should allow for updating the theme provider 1`] = `
 <Text>
   red

@@ -67,5 +67,15 @@ Themer.defaultProps = {
   icons: {},
 };
 
-export { useTheme, Theme, useIcons };
+// TODO maybe make this a hook?
+// usePropOverrides(name) returns the props?
+const named = (name) => (Component) => (props) => {
+  const theme = useTheme();
+  const override = theme?.overrides[name] || {};
+  const overrideProps =
+    typeof override === 'function' ? override(props) : override;
+  return <Component {...props} {...overrideProps} />;
+};
+
+export { useTheme, Theme, useIcons, named };
 export default Themer;

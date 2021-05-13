@@ -34,9 +34,6 @@ export const withTheme = (
   );
 };
 
-// TODO make named not rely on withTheme
-export const named = (name) => withTheme(() => ({}), name);
-
 /* eslint-disable-next-line */
 export const withThemeMixin = (input) => (Component) => (props) => {
   const theme = useTheme();
