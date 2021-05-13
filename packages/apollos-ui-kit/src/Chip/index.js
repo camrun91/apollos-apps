@@ -40,18 +40,17 @@ const TitleText = styled(
 )(H6);
 
 const StyledButton = styled(
-  ({ theme, chipList }) =>
-    console.log('chipList in styled function', chipList) || {
-      alignItems: 'center',
-      paddingHorizontal: theme.sizing.baseUnit * 0.75, // 12px
-      height: theme.sizing.baseUnit * 2, // 32px
-      ...(chipList
-        ? {
-            marginRight: theme.sizing.baseUnit / 2,
-            marginBottom: theme.sizing.baseUnit / 2,
-          }
-        : {}),
-    },
+  ({ theme, chipList }) => ({
+    alignItems: 'center',
+    paddingHorizontal: theme.sizing.baseUnit * 0.75, // 12px
+    height: theme.sizing.baseUnit * 2, // 32px
+    ...(chipList
+      ? {
+          marginRight: theme.sizing.baseUnit / 2,
+          marginBottom: theme.sizing.baseUnit / 2,
+        }
+      : {}),
+  }),
   'ui-kit.Chip.StyledButton'
 )(Button);
 
@@ -67,7 +66,6 @@ const Chip = enhance(
     chipList = false,
     ...buttonProps
   }) => {
-    console.log('buttonProps', buttonProps);
     // TODO remove deprecated props
     if (icon)
       console.warn(
