@@ -43,7 +43,7 @@ export const withThemeMixin = (input) => (Component) => (props) => {
     typeof input === 'function' ? input({ ...props, theme }) : input;
   return (
     <Themer theme={createTheme(newTheme)}>
-      <Component />
+      <Component {...props} />
     </Themer>
   );
 };
