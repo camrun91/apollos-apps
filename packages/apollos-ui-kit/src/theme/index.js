@@ -1,7 +1,12 @@
 /* Deprecated */
-export { ThemeProvider, withTheme, named } from './OLD_theme';
-export { ThemeMixin, withThemeMixin } from './mixins';
-export { default as ThemeConsumer } from './ThemeConsumer';
+export {
+  ThemeProvider,
+  withTheme,
+  named,
+  withThemeMixin,
+  ThemeMixin,
+  ThemeConsumer,
+} from './OLD_theme';
 /* ---------- */
 
 export { default as Themer, useTheme, Theme } from './Themer';

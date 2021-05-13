@@ -5,8 +5,7 @@ import FlexedView from '../FlexedView';
 import { H3, H6, BodyText } from '../typography';
 
 import styled from '../styled';
-import { withThemeMixin } from './mixins';
-import { ThemeProvider } from '.';
+import { withThemeMixin, ThemeProvider } from '.';
 
 const StyledH3 = styled(({ theme: { colors: { primary } } }) => ({
   color: primary,

@@ -59,10 +59,7 @@ const createTheme = ({
   merge(theme, getDynamicThemePart(otherThemeDefaults, theme));
 
   // mixin other theme inputs (that might depend on base theme)
-  console.log('theme before merge', theme);
-  console.log('other', other);
   merge(theme, getDynamicThemePart(other, theme));
-  console.log('theme after merge with other', theme);
   return theme;
 };
 
