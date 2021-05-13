@@ -31,8 +31,8 @@ const stripNullLeaves = (obj, cb) => {
 
 const Themer = ({ theme, ...props }) => {
   let existingTheme = useTheme();
-  if (!existingTheme) existingTheme = createTheme({});
   const type = useColorScheme();
+  if (!existingTheme) existingTheme = createTheme({ type });
 
   return (
     <ThemeContext.Provider
