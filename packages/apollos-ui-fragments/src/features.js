@@ -236,6 +236,21 @@ const ACTION_BAR_FEATURE_FRAGMENT = gql`
   }
 `;
 
+const ACTION_TABLE_FEATURE_FRAGMENT = gql`
+  fragment ActionTableFeatureFragment on ActionTableFeature {
+    id
+    title
+    actions {
+      id
+      title
+      action
+      relatedNode {
+        ...RelatedFeatureNodeFragment
+      }
+    }
+  }
+`;
+
 const ADD_COMMENT_FEATURE_FRAGMENT = gql`
   fragment AddCommentFeatureFragment on AddCommentFeature {
     id
@@ -406,6 +421,7 @@ export {
   FEATURES_FRAGMENT,
   ACTION_LIST_FEATURE_FRAGMENT,
   ACTION_BAR_FEATURE_FRAGMENT,
+  ACTION_TABLE_FEATURE_FRAGMENT,
   ADD_COMMENT_FEATURE_FRAGMENT,
   COMMENT_LIST_FEATURE_FRAGMENT,
   HERO_LIST_FEATURE_FRAGMENT,
