@@ -14,16 +14,17 @@ const createTestDB = async (client, name) => {
 };
 
 export default async ({ maxWorkers }) => {
+  // connect to the default service so we can create the test DBs
   const client = new Client({
     host: 'localhost',
     database: 'postgres',
   });
-  try {
-    await client.connect();
-  } catch (e) {
-    console.error('Failed to connect to local postgres instance');
-    console.error(e);
-  }
+  // not sure why this is necessary,
+  // client seems disconnect for some reason
+  // after sitting "idle" or something
+  // https://github.com/brianc/node-postgres/issues/1611
+  client.on('error', (e) => console.error(e));
+  await client.connect();
 
   let count = 1;
 
