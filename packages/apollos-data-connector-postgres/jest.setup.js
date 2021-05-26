@@ -14,6 +14,8 @@ const createTestDB = async (client, name) => {
 };
 
 export default async ({ maxWorkers }) => {
+  // not crazy about this. connects to the default DB which is the user name. Maybe there's another way to create
+  // a test DB without needed to connect to an existing one?
   const client = new Client();
   await client.connect();
 
