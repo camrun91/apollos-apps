@@ -19,11 +19,6 @@ export default async ({ maxWorkers }) => {
     host: 'localhost',
     database: 'postgres',
   });
-  // not sure why this is necessary,
-  // client seems disconnect for some reason
-  // after sitting "idle" or something
-  // https://github.com/brianc/node-postgres/issues/1611
-  client.on('error', (e) => console.error(e));
   await client.connect();
 
   let count = 1;
