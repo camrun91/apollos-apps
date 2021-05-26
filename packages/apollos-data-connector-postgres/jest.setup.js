@@ -18,7 +18,12 @@ export default async ({ maxWorkers }) => {
     host: 'localhost',
     database: 'postgres',
   });
-  await client.connect();
+  try {
+    await client.connect();
+  } catch (e) {
+    console.error('Failed to connect to local postgres instance');
+    console.error(e);
+  }
 
   let count = 1;
 
