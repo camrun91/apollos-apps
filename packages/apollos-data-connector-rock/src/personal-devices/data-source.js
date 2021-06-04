@@ -1,5 +1,4 @@
 import RockApolloDataSource from '@apollosproject/rock-apollo-data-source';
-import ApollosConfig from '@apollosproject/config';
 
 export default class PersonalDevices extends RockApolloDataSource {
   resource = 'PersonalDevices';
@@ -17,13 +16,12 @@ export default class PersonalDevices extends RockApolloDataSource {
     // if we already have a device, shortcut the function;
     const currentUser = await this.context.dataSources.Auth.getCurrentPerson();
 
-    
     if (existing) return currentUser;
 
-    //Get the Rock instance's personal device type value id
+    // Get the Rock instance's personal device type value id
     const personalDeviceTypeDefinedValue = await this.request('DefinedValues')
-    .filter(`Description eq 'Personal Device Type Mobile'`)
-    .first()
+      .filter(`Description eq 'Personal Device Type Mobile'`)
+      .first();
 
     await this.post('/PersonalDevices', {
       PersonAliasId: currentUser.primaryAliasId,
