@@ -4,6 +4,8 @@ export default class PersonalDevices extends RockApolloDataSource {
   resource = 'PersonalDevices';
 
   async addPersonalDevice({ pushId }) {
+    const { Cache } = this.context.dataSources;
+
     if (!pushId) {
       throw new Error(
         'You must supply a `pushId` to the addPersonalDevice function'
@@ -18,15 +20,37 @@ export default class PersonalDevices extends RockApolloDataSource {
 
     if (existing) return currentUser;
 
-    // Get the Rock instance's personal device type value id
-    const personalDeviceTypeDefinedValue = await this.request('DefinedValues')
-      .filter(`Description eq 'Personal Device Type Mobile'`)
-      .first();
+    let PersonalDeviceTypeValueId;
+
+    // Get the Rock instance's personal device type value id from cache
+    const cachedRockpersonalDeviceTypeDefinedValue = await Cache.get({
+      key: 'RockPersonalDeviceTypeId',
+    });
+
+    if (cachedRockpersonalDeviceTypeDefinedValue) {
+      PersonalDeviceTypeValueId = cachedRockpersonalDeviceTypeDefinedValue;
+    } else {
+      // If it's not in the cache, get it from Rock
+      PersonalDeviceTypeValueId = await this.request('DefinedValues')
+        .filter(`Description eq 'Personal Device Type Mobile'`)
+        .first();
+
+      if (PersonalDeviceTypeValueId?.id) {
+        console.log('Cache Set')
+        await Cache.set({
+          key: 'RockPersonalDeviceTypeId',
+          data: PersonalDeviceTypeValueId.id,
+        });
+        PersonalDeviceTypeValueId = PersonalDeviceTypeValueId.id;
+      } else {
+        PersonalDeviceTypeValueId = 671;
+      }
+    }
 
     await this.post('/PersonalDevices', {
       PersonAliasId: currentUser.primaryAliasId,
       DeviceRegistrationId: pushId,
-      PersonalDeviceTypeValueId: personalDeviceTypeDefinedValue?.id || 671,
+      PersonalDeviceTypeValueId,
       NotificationsEnabled: 1,
       IsActive: 1,
     });
