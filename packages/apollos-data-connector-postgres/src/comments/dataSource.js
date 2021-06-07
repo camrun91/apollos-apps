@@ -1,5 +1,6 @@
 import { Op } from 'sequelize';
 import { parseGlobalId } from '@apollosproject/server-core';
+import ApollosConfig from '@apollosproject/config';
 import { PostgresDataSource } from '../postgres';
 import { Visibility } from './model';
 
@@ -30,7 +31,31 @@ class CommentDataSource extends PostgresDataSource {
       );
     }
 
+    await this.sendNotificationForComment({ comment, parentId });
+
     return comment;
+  }
+
+  async sendNotificationForComment({ comment, parentId }) {
+    const commentCreator = await comment.getPerson();
+
+    const followers = await commentCreator.getFollowers();
+
+    await Promise.all(
+      followers.map(async (person) => {
+        return this.context.dataSources.Notification.createAndSend({
+          title: "New journal from someone you're following",
+          body: `${commentCreator.firstName} ${commentCreator.lastName} has just done a bit of journaling. Check it out!`,
+          personId: person.id,
+          type: 'COMMENT',
+          data: {
+            data: {
+              url: `${ApollosConfig?.APP?.DEEP_LINK_HOST}://app-link/content/${parentId}`,
+            },
+          },
+        });
+      })
+    );
   }
 
   async updateComment({ commentId, text, visibility }) {
