@@ -105,7 +105,7 @@ describe('Apollos Postgres Comments DatSource', () => {
       expect(comments.length).toBe(1);
     });
 
-    it.only('should send notifications about your comment to your followers', async () => {
+    it('should send notifications about your comment to your followers', async () => {
       const commentDataSource = new CommentDataSource();
 
       commentDataSource.initialize({ context });
