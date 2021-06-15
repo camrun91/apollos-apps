@@ -69,12 +69,24 @@ Themer.defaultProps = {
 
 // TODO maybe make this a hook?
 // usePropOverrides(name) returns the props?
-const named = (name) => (Component) => (props) => {
+function NamedWithTheme({ name, Component, initialProps }) {
   const theme = useTheme();
-  const override = theme?.overrides[name] || {};
+  const override = theme?.overrides?.[name] || {};
   const overrideProps =
-    typeof override === 'function' ? override(props) : override;
-  return <Component {...props} {...overrideProps} />;
+    typeof override === 'function' ? override(initialProps) : override;
+  return <Component {...initialProps} {...overrideProps} />;
+}
+
+NamedWithTheme.propTypes = {
+  name: PropTypes.string.isRequired,
+  Component: PropTypes.shape({}),
+  initialProps: PropTypes.shape({}),
+};
+
+const named = (name) => (Component) => (props) => {
+  return (
+    <NamedWithTheme name={name} Component={Component} initialProps={props} />
+  );
 };
 
 export { useTheme, Theme, useIcons, named };
