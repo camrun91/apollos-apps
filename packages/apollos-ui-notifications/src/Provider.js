@@ -36,6 +36,12 @@ class NotificationsInit extends Component {
       writeQuery: PropTypes.func,
       onClearStore: PropTypes.func,
     }).isRequired,
+    actionMap: PropTypes.shape({}),
+    handleExternalLink: PropTypes.func,
+  };
+
+  static defaultProps = {
+    actionMap: {},
   };
 
   static navigationOptions = {};
@@ -73,6 +79,13 @@ class NotificationsInit extends Component {
 
   navigate = (rawUrl) => {
     if (!rawUrl) return;
+    // this is the long term solution
+    if (this.props.handleExternalLink) {
+      this.props.handleExternalLink(rawUrl);
+      return;
+    }
+    // TODO, leave in for backwards compatibility but long term,
+    // should use the prop above
     const url = URL.parse(rawUrl);
     const route = url.pathname.substring(1);
     const cleanedRoute = route.includes('/app-link/')
@@ -96,7 +109,14 @@ class NotificationsInit extends Component {
     // apolloschurchapp://SomethingElse/Connect
     // apolloschurchapp://SomethingElse/ContentSingle?itemId=SomeItemId:blablalba
     const url = get(openResult, 'notification.payload.additionalData.url');
-    if (url) {
+    if (
+      openResult?.action?.actionID &&
+      this.props.actionMap[openResult.action.actionID]
+    ) {
+      this.props.actionMap[openResult.action.actionID](
+        openResult.notification.payload.additionalData
+      );
+    } else if (url) {
       this.navigate(url);
     }
   };

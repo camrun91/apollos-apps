@@ -64,6 +64,7 @@ const CommentText = styled(
 const Comment = ({
   profile,
   commentText,
+  isLiked,
   subtitle,
   onPressLike,
   onPressActionMenu,
@@ -71,7 +72,7 @@ const Comment = ({
   return (
     <CommentContainer>
       <HeaderContainer>
-        <CommentAvatar source={profile.photo} />
+        <CommentAvatar profile={profile} />
         <HeaderTextContainer>
           <H4>{profile.nickName}</H4>
           <Subtitle>{subtitle}</Subtitle>
@@ -79,7 +80,9 @@ const Comment = ({
         {onPressActionMenu && <ActionMenu onPress={onPressActionMenu} />}
       </HeaderContainer>
       <CommentText>{commentText}</CommentText>
-      {onPressLike && <CommentLikeButton onPress={onPressLike} />}
+      {onPressLike && (
+        <CommentLikeButton isLiked={isLiked} onPress={onPressLike} />
+      )}
     </CommentContainer>
   );
 };
@@ -87,12 +90,15 @@ const Comment = ({
 Comment.propTypes = {
   profile: PropTypes.shape({
     photo: PropTypes.shape({ uri: PropTypes.string }),
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
     nickName: PropTypes.string,
   }),
   subtitle: PropTypes.string,
   commentText: PropTypes.string,
   onPressActionMenu: PropTypes.func,
   onPressLike: PropTypes.func,
+  isLiked: PropTypes.bool,
 };
 
 export default Comment;

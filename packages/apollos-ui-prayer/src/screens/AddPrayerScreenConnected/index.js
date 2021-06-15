@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/client';
 import PropTypes from 'prop-types';
 
+import { named } from '@apollosproject/ui-kit';
 import { AnalyticsContext } from '@apollosproject/ui-analytics';
 
 import PrayerCard from '../../PrayerCard';
@@ -23,6 +24,8 @@ export const GET_USER_PHOTO = gql`
     currentUser {
       id
       profile {
+        firstName
+        lastName
         id
         photo {
           uri
@@ -40,10 +43,11 @@ const AddPrayerScreenConnected = ({
   swipeForward,
   avatars = [],
   AddedPrayerComponent = ConfirmationDialogScreen,
-  ...screenProps
+  ...props
 }) => {
   const { data: userData } = useQuery(GET_USER_PHOTO);
   const photo = userData?.currentUser?.profile?.photo;
+  const profile = userData?.currentUser?.profile;
 
   const { track } = useContext(AnalyticsContext);
 
@@ -69,10 +73,10 @@ const AddPrayerScreenConnected = ({
             : () => addPrayer({ variables: { prayer } })
         }
         isLoading={loading}
-        {...screenProps}
+        {...props}
       >
         <PrayerCardComponent
-          avatar={photo || null}
+          profile={profile}
           title={title}
           onPrayerChangeText={setPrayer}
           completed={completed}
@@ -100,4 +104,6 @@ AddPrayerScreenConnected.propTypes = {
   AddedPrayerComponent: PropTypes.func,
 };
 
-export default AddPrayerScreenConnected;
+export default named('ui-prayer.AddPrayerScreenConnected')(
+  AddPrayerScreenConnected
+);

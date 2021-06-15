@@ -1,5 +1,3 @@
-/* eslint-disable prefer-template */
-
 import { get } from 'lodash';
 import moment from 'moment-timezone';
 import {
@@ -8,14 +6,13 @@ import {
 } from '@apollosproject/server-core';
 import ApollosConfig from '@apollosproject/config';
 
-import sanitizeHtml from '../sanitize-html';
-
 const { ROCK, ROCK_MAPPINGS } = ApollosConfig;
 
 export const defaultContentItemResolvers = {
   id: ({ id }, args, context, { parentType }) =>
     createGlobalId(id, parentType.name),
-  htmlContent: ({ content }) => sanitizeHtml(content),
+  htmlContent: ({ content }, _, { dataSources }) =>
+    dataSources.ContentItem.createHTMLContent(content),
   childContentItemsConnection: async ({ id }, args, { dataSources }) =>
     dataSources.ContentItem.paginate({
       cursor: await dataSources.ContentItem.getCursorByParentContentItemId(id),
@@ -60,10 +57,7 @@ export const defaultContentItemResolvers = {
   theme: () => null, // todo: integrate themes from Rock
 
   sharing: (root, args, { dataSources: { ContentItem } }) => ({
-    url: ContentItem.getShareUrl({
-      contentId: root.id,
-      channelId: root.contentChannelId,
-    }),
+    url: ContentItem.getShareUrl(root),
     title: 'Share via ...',
     message: `${root.title} - ${ContentItem.createSummary(root)}`,
   }),

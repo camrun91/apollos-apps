@@ -25,9 +25,9 @@ const ProfileDetailsEntry = (props) => (
     >
       {props.genderList.map((gender) => [
         <RadioButton
-          key={gender}
-          value={gender}
-          label={() => <RadioLabel>{gender}</RadioLabel>}
+          key={gender.field || gender}
+          value={gender.field || gender}
+          label={() => <RadioLabel>{gender.label || gender}</RadioLabel>}
           underline={false}
         />,
       ])}
@@ -36,17 +36,7 @@ const ProfileDetailsEntry = (props) => (
     <DatePicker
       type={'DateInput'}
       placeholder={'Select a date...'}
-      value={
-        // If we have either a birthdate or a default date
-        get(props.values, 'birthdate') || props.defaultDate
-          ? // Pass it along to the datepicker
-            moment(
-              get(props.values, 'birthDate', props.defaultDate) ||
-                props.defaultDate
-            ).toDate()
-          : // Otherwise pass null. The datepicker has sane defaults
-            null
-      }
+      value={props.values?.birthDate}
       error={get(props.touched, 'birthDate') && get(props.errors, 'birthDate')}
       displayValue={
         // only show a birthday if we have one.
@@ -78,9 +68,15 @@ ProfileDetailsEntry.propTypes = {
     phone: PropTypes.string,
     birthDate: PropTypes.instanceOf(Date),
   }),
-  BackgroundComponent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-  onPressBack: PropTypes.func.isRequired,
-  genderList: PropTypes.arrayOf(PropTypes.string),
+  genderList: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        field: PropTypes.string,
+        label: PropTypes.string,
+      }),
+    ])
+  ),
   defaultDate: PropTypes.instanceOf(Date),
 };
 
@@ -88,7 +84,11 @@ ProfileDetailsEntry.defaultProps = {
   title: "This one's easy.",
   prompt:
     'Help us understand who you are so we can connect you with the best ministries and events.',
-  genderList: ['Male', 'Female', 'Prefer not to reply'],
+  genderList: [
+    'Male',
+    'Female',
+    { label: 'Prefer not to reply', field: 'Unknown' },
+  ],
 };
 
 ProfileDetailsEntry.LegalText = LegalText;

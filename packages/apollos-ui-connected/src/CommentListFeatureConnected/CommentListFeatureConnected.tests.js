@@ -10,6 +10,7 @@ import CommentListFeatureConnected from './CommentListFeatureConnected';
 const fakeData = times(10, (i) => ({
   id: `Comment:${i}`,
   __typename: 'Comment',
+  isLiked: !(i % 2),
   person: {
     __typename: 'Person',
     id: `Person:${i}`,
@@ -18,6 +19,8 @@ const fakeData = times(10, (i) => ({
       __typename: 'ImageMediaSource',
     },
     nickName: 'Albert Flores',
+    firstName: 'Albert',
+    lastName: 'Flores',
     campus: {
       id: 'Campus:123',
       __typename: 'Campus',

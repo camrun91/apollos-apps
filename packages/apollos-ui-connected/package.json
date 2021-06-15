@@ -1,7 +1,10 @@
 {
   "name": "@apollosproject/ui-connected",
   "repository": "git://github.com/apollosproject/apollos-apps.git",
-  "version": "2.1.1",
+  "engines": {
+    "node": ">=12"
+  },
+  "version": "2.20.0",
   "main": "src/index.js",
   "files": [
     "src/**",
@@ -35,6 +38,7 @@
       "<rootDir>/src/"
     ],
     "setupFiles": [
+      "../apollos-ui-test-utils/src/mocks/reanimated.js",
       "../../node_modules/react-native-gesture-handler/jestSetup.js",
       "./jest.setup.js"
     ]
@@ -43,7 +47,7 @@
     "@apollosproject/config": "*",
     "@apollosproject/ui-analytics": "*",
     "@apollosproject/ui-auth": "*",
-    "@apollosproject/ui-fragments": "*",
+    "@apollosproject/ui-fragments": "^2.18.0",
     "@apollosproject/ui-htmlview": "*",
     "@apollosproject/ui-kit": "*",
     "@apollosproject/ui-media-player": "*",
@@ -66,11 +70,11 @@
   },
   "devDependencies": {
     "@apollo/client": "3.3.0-rc.2",
-    "@apollosproject/ui-test-utils": "^2.1.1",
+    "@apollosproject/ui-test-utils": "^2.20.0",
     "@react-native-community/async-storage": "^1.5.1",
     "@react-navigation/compat": "^5.1.28",
-    "@react-navigation/native": "^5.6.1",
-    "@react-navigation/stack": "^5.6.2",
+    "@react-navigation/native": "^5.9.3",
+    "@react-navigation/stack": "^5.14.3",
     "jest": "^25.1.0",
     "prop-types": "15.6.1",
     "react": "16.13.1",
@@ -79,7 +83,7 @@
     "react-native-image-picker": "^3.1.4",
     "react-native-inappbrowser-reborn": "3.3.4",
     "react-native-permissions": "2.0.5",
-    "react-native-webview": "^7.0.0",
+    "react-native-webview": "^11.0.0",
     "react-test-renderer": "16.13.1",
     "waait": "1.0.2"
   },

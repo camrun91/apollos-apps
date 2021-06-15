@@ -1,7 +1,10 @@
 {
   "name": "@apollosproject/ui-prayer",
   "repository": "git://github.com/apollosproject/apollos-apps.git",
-  "version": "2.1.1",
+  "engines": {
+    "node": ">=12"
+  },
+  "version": "2.20.0",
   "main": "src/index.js",
   "files": [
     "src/**",
@@ -48,6 +51,7 @@
       "node_modules/@storybook/"
     ],
     "setupFiles": [
+      "../apollos-ui-test-utils/src/mocks/reanimated.js",
       "../../node_modules/react-native-gesture-handler/jestSetup.js",
       "./jest.setup.js"
     ]
@@ -55,7 +59,7 @@
   "dependencies": {
     "formik": "1.5.1",
     "graphql-tag": "2.9.2",
-    "lodash": "4.17.19",
+    "lodash": "4.17.21",
     "react-is": "^16.9.0",
     "react-native-swiper": "^1.6.0",
     "yup": "0.26.6"

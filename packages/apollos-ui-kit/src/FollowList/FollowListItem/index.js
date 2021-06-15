@@ -38,44 +38,51 @@ const StyledButton = styled(
 )(Button);
 
 const FollowListItem = ({
-  imageSource,
   name,
-  request,
-  requested,
-  confirmed,
+  followRequested,
+  confirmedFollower,
+  requestingFollow,
+  confirmedFollowing,
   onHide,
   onConfirm,
   onFollow,
+  profile,
 }) => {
   return (
     <Cell>
-      <FollowListImage source={imageSource} />
+      <FollowListImage profile={profile} />
       <TextContainer>
         {name ? <H5 numberOfLines={1}>{name}</H5> : null}
       </TextContainer>
-      {request && !confirmed && (
-        <StyledButton pill={false} type="default" onPress={onHide}>
-          <H6>Hide</H6>
-        </StyledButton>
-      )}
-      {request && (
+      {followRequested &&
+        !confirmedFollower && ( // If a user is requesting to follow you.
+          <StyledButton pill={false} type="default" onPress={onHide}>
+            <H6>Hide</H6>
+          </StyledButton>
+        )}
+      {followRequested && ( // If a user is requesting to follow you.
         <StyledButton
-          disabled={confirmed}
+          disabled={confirmedFollower}
           pill={false}
           type="primary"
           onPress={onConfirm}
         >
-          <H6>{confirmed ? 'Confirmed!' : 'Confirm'}</H6>
+          <H6>{confirmedFollower ? 'Confirmed!' : 'Confirm'}</H6>
         </StyledButton>
       )}
-      {!request && (
+      {!confirmedFollowing && ( // if you are requesting to follow a user.
         <StyledButton
-          disabled={requested}
+          disabled={requestingFollow}
           pill={false}
           type="primary"
           onPress={onFollow}
         >
-          <H6>{requested ? 'Requested' : 'Follow'}</H6>
+          <H6>{requestingFollow ? 'Requested' : 'Follow'}</H6>
+        </StyledButton>
+      )}
+      {confirmedFollowing && (
+        <StyledButton disabled pill={false} type="default">
+          <H6>Following</H6>
         </StyledButton>
       )}
     </Cell>
@@ -83,11 +90,16 @@ const FollowListItem = ({
 };
 
 FollowListItem.propTypes = {
-  imageSource: ImageSourceType.isRequired,
+  profile: PropTypes.shape({
+    imageSource: ImageSourceType,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+  }),
   name: PropTypes.string,
-  request: PropTypes.bool,
-  requested: PropTypes.bool,
-  confirmed: PropTypes.bool,
+  followRequested: PropTypes.bool,
+  confirmedFollower: PropTypes.bool,
+  requestingFollow: PropTypes.bool,
+  confirmedFollowing: PropTypes.bool,
   onHide: PropTypes.func,
   onConfirm: PropTypes.func,
   onFollow: PropTypes.func,

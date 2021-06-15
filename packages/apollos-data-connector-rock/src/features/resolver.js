@@ -26,8 +26,11 @@ export default {
   CardListItem: {
     coverImage: ({ image }) => image,
     title: ({ title }, { hyphenated }, { dataSources: { ContentItem } }) =>
-      hyphenated ? ContentItem.createHyphenatedString({ text: title }) : title,
+      title && hyphenated
+        ? ContentItem.createHyphenatedString({ text: title })
+        : title,
     hasAction: (root, args, { dataSources: { ContentItem } }) =>
+      root.attributes &&
       !!get(ContentItem.getVideos(root.relatedNode), '[0].sources[0]', null),
     labelText: ({ subtitle }) => subtitle,
     id: ({ id }) => createGlobalId(id, 'CardListItem'),
@@ -52,7 +55,7 @@ export default {
   },
   Query: {
     userFeedFeatures: async (root, args, { dataSources: { Feature } }) =>
-      console.warn('userFeedFeatures is deprecated. Use homeFeedFeatures.') ||
+      console.warn('userFeedFeatures is deprecated. Use tabFeedFeatures.') ||
       Feature.getHomeFeedFeatures(),
   },
   ActionListFeature: {
@@ -60,6 +63,9 @@ export default {
   },
   ActionBarFeature: {
     id: ({ id }) => createGlobalId(id, 'ActionBarFeature'),
+  },
+  ActionTableFeature: {
+    id: ({ id }) => createGlobalId(id, 'ActionTableFeature'),
   },
   HeroListFeature: {
     id: ({ id }) => createGlobalId(id, 'HeroListFeature'),
@@ -75,5 +81,8 @@ export default {
   },
   VerticalPrayerListFeature: {
     id: ({ id }) => createGlobalId(id, 'VerticalPrayerListFeature'),
+  },
+  ButtonFeature: {
+    id: ({ id }) => createGlobalId(id, 'ButtonFeature'),
   },
 };

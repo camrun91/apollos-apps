@@ -1,6 +1,9 @@
 import React, { useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
-import { NotificationsConsumer } from '@apollosproject/ui-notifications';
+import {
+  PushContext,
+  requestPermissions,
+} from '@apollosproject/ui-notifications';
 
 import AskNotifications from './AskNotifications';
 
@@ -35,7 +38,7 @@ const AskNotificationsWithStatus = ({
   return (
     <Component
       isLoading={status.loading}
-      onPressButton={() => onRequestPushPermissions(status.checkPermissions)}
+      onPressButton={() => requestPermissions(status.updatePermissionStatus)}
       buttonDisabled={status.hasPushPermission}
       buttonText={getButtonText({
         hasPrompted: status.hasPrompted,
@@ -55,9 +58,9 @@ const AskNotificationsWithStatus = ({
 
 // eslint-disable-next-line react/display-name
 const AskNotificationsConnected = memo((props) => (
-  <NotificationsConsumer>
+  <PushContext.Consumer>
     {(status) => <AskNotificationsWithStatus {...props} status={status} />}
-  </NotificationsConsumer>
+  </PushContext.Consumer>
 ));
 
 AskNotificationsWithStatus.propTypes = {
@@ -74,6 +77,7 @@ AskNotificationsWithStatus.propTypes = {
     hasPrompted: PropTypes.bool,
     hasPushPermission: PropTypes.bool,
     checkPermissions: PropTypes.func,
+    updatePermissionStatus: PropTypes.func,
     loading: PropTypes.bool,
   }),
 };
