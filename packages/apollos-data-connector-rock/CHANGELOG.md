@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.20.0](https://github.com/apollosproject/apollos-apps/compare/v2.19.0...v2.20.0) (2021-06-14)
+
+
+### Bug Fixes
+
+* turns off automerging new people ([#1989](https://github.com/apollosproject/apollos-apps/issues/1989)) ([cb5f8f1](https://github.com/apollosproject/apollos-apps/commit/cb5f8f1c0b24f1b215b2bb5eb6f9a8e16d728ce2))
+
+
+
+## [2.19.0](https://github.com/apollosproject/apollos-apps/compare/v2.18.1...v2.19.0) (2021-06-07)
+
+**Note:** Version bump only for package @apollosproject/data-connector-rock
+
+
+
+
+
+### [2.18.1](https://github.com/apollosproject/apollos-apps/compare/v2.18.0...v2.18.1) (2021-06-01)
+
+
+### Bug Fixes
+
+* VerticalPrayerList not working when using Postgres ([#1970](https://github.com/apollosproject/apollos-apps/issues/1970)) ([02e82d2](https://github.com/apollosproject/apollos-apps/commit/02e82d2997360c2dd23dae4b3a37c8dcb544140a))
+
+
+
+## [2.18.0](https://github.com/apollosproject/apollos-apps/compare/v2.17.0...v2.18.0) (2021-05-27)
+
+
+### Features
+
+* get comment feature from parents ([#1960](https://github.com/apollosproject/apollos-apps/issues/1960)) ([5edd840](https://github.com/apollosproject/apollos-apps/commit/5edd840786180956124f75903daf000da9d82ce1))
+
+
+
+## [2.17.0](https://github.com/apollosproject/apollos-apps/compare/v2.16.0...v2.17.0) (2021-05-24)
+
+**Note:** Version bump only for package @apollosproject/data-connector-rock
+
+
+
+
+
+## [2.16.0](https://github.com/apollosproject/apollos-apps/compare/v2.15.0...v2.16.0) (2021-05-20)
+
+**Note:** Version bump only for package @apollosproject/data-connector-rock
+
+
+
+
+
+## [2.15.0](https://github.com/apollosproject/apollos-apps/compare/v2.14.0...v2.15.0) (2021-05-19)
+
+
+### Features
+
+* add link table feature ([#1941](https://github.com/apollosproject/apollos-apps/issues/1941)) ([f038a87](https://github.com/apollosproject/apollos-apps/commit/f038a8789615a77f135801557de6eb06ef3825b5))
+
+
+
 ## [2.14.0](https://github.com/apollosproject/apollos-apps/compare/v2.13.1...v2.14.0) (2021-05-14)
 
 

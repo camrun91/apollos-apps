@@ -1,10 +1,17 @@
+# if we have more than zero arguments
+if [ $# -ne 0 ]; then
+    # call yarn in ApollosApi and pass in the arguments
+    cd ApollosApi
+    yarn "$@"
+    exit
+fi
+
+yarn
+
 rm -rf ApollosApi
 
 mkdir -p ApollosApi
 mkdir -p tmp
-
-echo $1
-BRANCH=$1
 
 cd tmp
 git clone git@github.com:ApollosProject/apollos-templates.git
@@ -22,9 +29,16 @@ cd ..
 
 shopt -s dotglob
 mv apollos-templates/apollos-church-api/* ../ApollosApi
+cp apollos-templates/yarn.lock ../ApollosApi
 
 cd ..
 
 node scripts/swap-package-json-to-links.js ./ApollosApi
 
 rm -rf tmp
+
+cd ApollosApi
+
+yarn
+
+yarn start:dev
