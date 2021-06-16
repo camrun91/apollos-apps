@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/ApollosProject/apollos-apps/compare/v1.8.0-beta.0...v1.8.0) (2021-06-16)
+
+
+### Bug Fixes
+
+* Fixes Avatar Cloud with Empty Avatar ([#1679](https://github.com/ApollosProject/apollos-apps/issues/1679)) ([a9a80b8](https://github.com/ApollosProject/apollos-apps/commit/a9a80b8))
+* Fixes Horizontal Feature Loading States ([#1673](https://github.com/ApollosProject/apollos-apps/issues/1673)) ([aff2f26](https://github.com/ApollosProject/apollos-apps/commit/aff2f26))
+* Spaces being lost in HTMLView ([#1687](https://github.com/ApollosProject/apollos-apps/issues/1687)) ([5eabd45](https://github.com/ApollosProject/apollos-apps/commit/5eabd45))
+* turns off automerging people ([#1992](https://github.com/ApollosProject/apollos-apps/issues/1992)) ([c69b10b](https://github.com/ApollosProject/apollos-apps/commit/c69b10b))
+
+
+
+
+
 # [1.8.0-beta.0](https://github.com/ApollosProject/apollos-apps/compare/v1.7.0...v1.8.0-beta.0) (2021-01-06)
 
 

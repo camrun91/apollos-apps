@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/apollosproject/apollos-apps/compare/v1.8.0-beta.0...v1.8.0) (2021-06-16)
+
+
+### Bug Fixes
+
+* Fixes Avatar Cloud with Empty Avatar ([#1679](https://github.com/apollosproject/apollos-apps/issues/1679)) ([a9a80b8](https://github.com/apollosproject/apollos-apps/commit/a9a80b8))
+
+
+
+
+
 # [1.8.0-beta.0](https://github.com/apollosproject/apollos-apps/compare/v1.7.0...v1.8.0-beta.0) (2021-01-06)
 
 **Note:** Version bump only for package @apollosproject/ui-prayer

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/apollosproject/apollos-apps/compare/v1.8.0-beta.0...v1.8.0) (2021-06-16)
+
+
+### Bug Fixes
+
+* Fixes Horizontal Feature Loading States ([#1673](https://github.com/apollosproject/apollos-apps/issues/1673)) ([aff2f26](https://github.com/apollosproject/apollos-apps/commit/aff2f26))
+* Spaces being lost in HTMLView ([#1687](https://github.com/apollosproject/apollos-apps/issues/1687)) ([5eabd45](https://github.com/apollosproject/apollos-apps/commit/5eabd45))
+
+
+
+
+
 # [1.8.0-beta.0](https://github.com/apollosproject/apollos-apps/compare/v1.7.0...v1.8.0-beta.0) (2021-01-06)
 
 
