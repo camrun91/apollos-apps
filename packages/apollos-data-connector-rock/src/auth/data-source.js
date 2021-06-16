@@ -140,13 +140,17 @@ export default class AuthDataSource extends RockApolloDataSource {
 
   createUserProfile = async ({ email, ...otherFields }) => {
     try {
-      return await this.post('/People', {
+      const id = await this.post('/People', {
         Gender: 0, // Required by Rock. Listed first so it can be overridden by otherFields
-        ...otherFields,
-        Email: email,
         IsSystem: false, // Required by Rock
       });
+      await this.patch(`/People/${id}`, {
+        ...otherFields,
+        Email: email,
+      });
+      return id;
     } catch (err) {
+      console.error(err);
       throw new Error('Unable to create profile!');
     }
   };
