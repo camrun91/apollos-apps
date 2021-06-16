@@ -2,6 +2,23 @@
 
 exports[`The Onboarding Slide component should render a loading indicator 1`] = `
 Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <RCTScrollView
     contentContainerStyle={
       Object {
@@ -38,19 +55,16 @@ Array [
     }
     vertical={false}
   >
-    <RCTSafeAreaView
-      emulateUnlessSupported={true}
-      forceInset={
-        Object {
-          "bottom": "always",
-          "top": "never",
-        }
+    <View
+      edges={
+        Array [
+          "bottom",
+        ]
       }
     >
       <View
         accessible={true}
-        clickable={true}
-        isTVSelectable={true}
+        focusable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -93,13 +107,30 @@ Array [
           />
         </View>
       </View>
-    </RCTSafeAreaView>
+    </View>
   </View>,
 ]
 `;
 
 exports[`The Onboarding Slide component should render both slide navigation buttons 1`] = `
 Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <RCTScrollView
     contentContainerStyle={
       Object {
@@ -136,19 +167,16 @@ Array [
     }
     vertical={false}
   >
-    <RCTSafeAreaView
-      emulateUnlessSupported={true}
-      forceInset={
-        Object {
-          "bottom": "always",
-          "top": "never",
-        }
+    <View
+      edges={
+        Array [
+          "bottom",
+        ]
       }
     >
       <View
         accessible={true}
-        clickable={true}
-        isTVSelectable={true}
+        focusable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -328,35 +356,71 @@ Array [
       >
         Skip
       </Text>
-    </RCTSafeAreaView>
+    </View>
   </View>,
 ]
 `;
 
 exports[`The Onboarding Slide component should render children 1`] = `
-<RCTScrollView
-  contentContainerStyle={
-    Object {
-      "minHeight": "100%",
+Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
     }
-  }
-  overScrollMode="auto"
-  style={
-    Object {
-      "flex": 1,
+  />,
+  <RCTScrollView
+    contentContainerStyle={
+      Object {
+        "minHeight": "100%",
+      }
     }
-  }
->
-  <View>
-    <Text>
-      Boom
-    </Text>
-  </View>
-</RCTScrollView>
+    overScrollMode="auto"
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <View>
+      <Text>
+        Boom
+      </Text>
+    </View>
+  </RCTScrollView>,
+]
 `;
 
 exports[`The Onboarding Slide component should render onboarding next button navigation 1`] = `
 Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <RCTScrollView
     contentContainerStyle={
       Object {
@@ -393,19 +457,16 @@ Array [
     }
     vertical={false}
   >
-    <RCTSafeAreaView
-      emulateUnlessSupported={true}
-      forceInset={
-        Object {
-          "bottom": "always",
-          "top": "never",
-        }
+    <View
+      edges={
+        Array [
+          "bottom",
+        ]
       }
     >
       <View
         accessible={true}
-        clickable={true}
-        isTVSelectable={true}
+        focusable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -572,13 +633,30 @@ Array [
           </RNSVGSvgView>
         </View>
       </View>
-    </RCTSafeAreaView>
+    </View>
   </View>,
 ]
 `;
 
 exports[`The Onboarding Slide component should render onboarding skip button navigation 1`] = `
 Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <RCTScrollView
     contentContainerStyle={
       Object {
@@ -615,13 +693,11 @@ Array [
     }
     vertical={false}
   >
-    <RCTSafeAreaView
-      emulateUnlessSupported={true}
-      forceInset={
-        Object {
-          "bottom": "always",
-          "top": "never",
-        }
+    <View
+      edges={
+        Array [
+          "bottom",
+        ]
       }
     >
       <Text
@@ -637,13 +713,30 @@ Array [
       >
         Skip
       </Text>
-    </RCTSafeAreaView>
+    </View>
   </View>,
 ]
 `;
 
 exports[`The Onboarding Slide component should render onboarding skip button with custom text 1`] = `
 Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <RCTScrollView
     contentContainerStyle={
       Object {
@@ -680,13 +773,11 @@ Array [
     }
     vertical={false}
   >
-    <RCTSafeAreaView
-      emulateUnlessSupported={true}
-      forceInset={
-        Object {
-          "bottom": "always",
-          "top": "never",
-        }
+    <View
+      edges={
+        Array [
+          "bottom",
+        ]
       }
     >
       <Text
@@ -702,13 +793,30 @@ Array [
       >
         Custom skip button text
       </Text>
-    </RCTSafeAreaView>
+    </View>
   </View>,
 ]
 `;
 
 exports[`The Onboarding Slide component should render primary navigation button with a custom icon 1`] = `
 Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <RCTScrollView
     contentContainerStyle={
       Object {
@@ -745,19 +853,16 @@ Array [
     }
     vertical={false}
   >
-    <RCTSafeAreaView
-      emulateUnlessSupported={true}
-      forceInset={
-        Object {
-          "bottom": "always",
-          "top": "never",
-        }
+    <View
+      edges={
+        Array [
+          "bottom",
+        ]
       }
     >
       <View
         accessible={true}
-        clickable={true}
-        isTVSelectable={true}
+        focusable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -924,13 +1029,30 @@ Array [
           </RNSVGSvgView>
         </View>
       </View>
-    </RCTSafeAreaView>
+    </View>
   </View>,
 ]
 `;
 
 exports[`The Onboarding Slide component should render primary navigation button with custom text 1`] = `
 Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <RCTScrollView
     contentContainerStyle={
       Object {
@@ -967,19 +1089,16 @@ Array [
     }
     vertical={false}
   >
-    <RCTSafeAreaView
-      emulateUnlessSupported={true}
-      forceInset={
-        Object {
-          "bottom": "always",
-          "top": "never",
-        }
+    <View
+      edges={
+        Array [
+          "bottom",
+        ]
       }
     >
       <View
         accessible={true}
-        clickable={true}
-        isTVSelectable={true}
+        focusable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1146,13 +1265,30 @@ Array [
           </RNSVGSvgView>
         </View>
       </View>
-    </RCTSafeAreaView>
+    </View>
   </View>,
 ]
 `;
 
 exports[`The Onboarding Slide component should render primary navigation button without a custom icon 1`] = `
 Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <RCTScrollView
     contentContainerStyle={
       Object {
@@ -1189,19 +1325,16 @@ Array [
     }
     vertical={false}
   >
-    <RCTSafeAreaView
-      emulateUnlessSupported={true}
-      forceInset={
-        Object {
-          "bottom": "always",
-          "top": "never",
-        }
+    <View
+      edges={
+        Array [
+          "bottom",
+        ]
       }
     >
       <View
         accessible={true}
-        clickable={true}
-        isTVSelectable={true}
+        focusable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1250,7 +1383,7 @@ Array [
           </Text>
         </View>
       </View>
-    </RCTSafeAreaView>
+    </View>
   </View>,
 ]
 `;

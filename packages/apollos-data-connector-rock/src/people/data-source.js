@@ -1,8 +1,7 @@
 import { AuthenticationError, UserInputError } from 'apollo-server';
-import { camelCase, mapKeys, get } from 'lodash';
+import { camelCase, mapKeys } from 'lodash';
 import RockApolloDataSource from '@apollosproject/rock-apollo-data-source';
 import moment from 'moment';
-import ApollosConfig from '@apollosproject/config';
 import { fieldsAsObject } from '../utils';
 
 const RockGenderMap = {
@@ -11,14 +10,45 @@ const RockGenderMap = {
   Female: 2,
 };
 
+export const mapApollosFieldsToRock = (fields) => {
+  const profileFields = { ...fields };
+
+  if (profileFields.Gender) {
+    if (!Object.keys(RockGenderMap).includes(profileFields.Gender)) {
+      throw new UserInputError(
+        'Rock gender must be either Unknown, Male, or Female'
+      );
+    }
+    profileFields.Gender = RockGenderMap[profileFields.Gender];
+  }
+
+  let rockUpdateFields = { ...profileFields };
+
+  if (profileFields.BirthDate) {
+    delete rockUpdateFields.BirthDate;
+    const birthDate = moment(profileFields.BirthDate);
+
+    if (!birthDate.isValid()) {
+      throw new UserInputError('BirthDate must be a valid date');
+    }
+
+    rockUpdateFields = {
+      ...rockUpdateFields,
+      // months in moment are 0 indexed
+      BirthMonth: birthDate.month() + 1,
+      BirthDay: birthDate.date(),
+      BirthYear: birthDate.year(),
+    };
+  }
+
+  return rockUpdateFields;
+};
+
 export default class Person extends RockApolloDataSource {
   resource = 'People';
 
   getFromId = (id) =>
-    this.request()
-      .filter(`Id eq ${id}`)
-      .expand('Photo')
-      .first();
+    this.request().filter(`Id eq ${id}`).expand('Photo').first();
 
   getFromAliasId = async (id) => {
     // Fetch the PersonAlias, selecting only the PersonId.
@@ -35,31 +65,18 @@ export default class Person extends RockApolloDataSource {
     return null;
   };
 
-  // Gets a collection of all dataviews a user is in
-  // Returns an array of dataview guids
-  getPersonas = async ({ categoryId }) => {
-    const {
-      dataSources: { RockConstants, Auth },
-    } = this.context;
-
-    // Get current user
-    const { id } = await Auth.getCurrentPerson();
-
-    // Get the entity type ID of the Person model
-    const personEntityTypeId = await RockConstants.modelType('Person');
-
-    // Rely on custom code without the plugin.
-    // Use plugin, if the user has set USE_PLUGIN to true.
-    // In general, you should ALWAYS use the plugin if possible.
-    const endpoint = get(ApollosConfig, 'ROCK.USE_PLUGIN', false)
-      ? 'Apollos/GetPersistedDataViewsForEntity'
-      : 'DataViews/GetPersistedDataViewsForEntity';
-
-    // Return a list of all dataviews by GUID a user is a memeber
-    return this.request(endpoint)
-      .find(`${personEntityTypeId.id}/${id}?categoryId=${categoryId}`)
-      .select('Guid')
-      .get();
+  create = async (profile) => {
+    const rockUpdateFields = this.mapApollosFieldsToRock(profile);
+    // auto-merge functionality is compromised
+    // we are creating a new user and patching them with profile details
+    const id = await this.post('/People', {
+      Gender: 0, // required by Rock. Listed first so it can be overridden.
+      IsSystem: false, // required by rock
+    });
+    await this.patch(`/People/${id}`, {
+      ...rockUpdateFields,
+    });
+    return id;
   };
 
   mapGender = ({ gender }) => {
@@ -74,37 +91,7 @@ export default class Person extends RockApolloDataSource {
   };
 
   mapApollosFieldsToRock = (fields) => {
-    const profileFields = { ...fields };
-
-    if (profileFields.Gender) {
-      if (!Object.keys(RockGenderMap).includes(profileFields.Gender)) {
-        throw new UserInputError(
-          'Rock gender must be either Unknown, Male, or Female'
-        );
-      }
-      profileFields.Gender = RockGenderMap[profileFields.Gender];
-    }
-
-    let rockUpdateFields = { ...profileFields };
-
-    if (profileFields.BirthDate) {
-      delete rockUpdateFields.BirthDate;
-      const birthDate = moment(profileFields.BirthDate);
-
-      if (!birthDate.isValid()) {
-        throw new UserInputError('BirthDate must be a valid date');
-      }
-
-      rockUpdateFields = {
-        ...rockUpdateFields,
-        // months in moment are 0 indexed
-        BirthMonth: birthDate.month() + 1,
-        BirthDay: birthDate.date(),
-        BirthYear: birthDate.year(),
-      };
-    }
-
-    return rockUpdateFields;
+    return mapApollosFieldsToRock(fields);
   };
 
   // fields is an array of objects matching the pattern

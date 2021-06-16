@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 
 const TEXT_FEATURE_FRAGMENT = gql`
   fragment TextFeatureFragment on TextFeature {
+    title
     body
     id
     sharing {
@@ -25,6 +26,7 @@ const PRAYER_LIST_FEATURE_FRAGMENT = gql`
         id
         nickName
         firstName
+        lastName
         photo {
           uri
         }
@@ -33,6 +35,28 @@ const PRAYER_LIST_FEATURE_FRAGMENT = gql`
   }
 `;
 
+const VERTICAL_PRAYER_LIST_FEATURE_FRAGMENT = gql`
+  fragment VerticalPrayerListFeatureFragment on VerticalPrayerListFeature {
+    id
+    title
+    subtitle
+    prayers {
+      __typename
+      id
+      text
+      isPrayed
+      requestor {
+        id
+        firstName
+        nickName
+        lastName
+        photo {
+          uri
+        }
+      }
+    }
+  }
+`;
 const LITE_FEATURES_FRAGMENT = gql`
   fragment LiteFeaturesFragment on Feature {
     id
@@ -59,7 +83,13 @@ const LITE_FEATURES_FRAGMENT = gql`
       subtitle
       isCard
     }
+    ... on VerticalPrayerListFeature {
+      title
+      subtitle
+    }
     ... on TextFeature {
+      # The whole fragment is currently included b/c these nodes don't fetch their own content.
+      title
       body
       sharing {
         message
@@ -67,6 +97,7 @@ const LITE_FEATURES_FRAGMENT = gql`
     }
     ... on ScriptureFeature {
       # The whole fragment is currently included b/c these nodes don't fetch their own content.
+      title
       sharing {
         message
       }
@@ -83,6 +114,19 @@ const LITE_FEATURES_FRAGMENT = gql`
       linkText
       title
       url
+    }
+    ... on ButtonFeature {
+      # The whole fragment is currently included b/c these nodes don't fetch their own content.
+      action {
+        title
+        action
+        relatedNode {
+          id
+          ... on Url {
+            url
+          }
+        }
+      }
     }
   }
 `;
@@ -188,6 +232,50 @@ const ACTION_BAR_FEATURE_FRAGMENT = gql`
       relatedNode {
         ...RelatedFeatureNodeFragment
       }
+    }
+  }
+`;
+
+const ADD_COMMENT_FEATURE_FRAGMENT = gql`
+  fragment AddCommentFeatureFragment on AddCommentFeature {
+    id
+
+    addPrompt
+    initialPrompt
+
+    relatedNode {
+      id
+      __typename
+    }
+  }
+`;
+
+const COMMENT_FRAGMENT = gql`
+  fragment CommentFragment on Comment {
+    id
+    text
+    isLiked
+    person {
+      id
+      nickName
+      firstName
+      lastName
+      photo {
+        uri
+      }
+      campus {
+        id
+        name
+      }
+    }
+  }
+`;
+
+const COMMENT_LIST_FEATURE_FRAGMENT = gql`
+  fragment CommentListFeatureFragment on CommentListFeature {
+    id
+    comments {
+      ...CommentFragment
     }
   }
 `;
@@ -311,6 +399,9 @@ const RELATED_NODE_FRAGMENT = gql`
     ... on ContentChannel {
       name
     }
+    ... on Message {
+      message
+    }
   }
 `;
 
@@ -321,6 +412,9 @@ export {
   FEATURES_FRAGMENT,
   ACTION_LIST_FEATURE_FRAGMENT,
   ACTION_BAR_FEATURE_FRAGMENT,
+  ADD_COMMENT_FEATURE_FRAGMENT,
+  COMMENT_FRAGMENT,
+  COMMENT_LIST_FEATURE_FRAGMENT,
   HERO_LIST_FEATURE_FRAGMENT,
   HORIZONTAL_CARD_LIST_FEATURE_FRAGMENT,
   VERTICAL_CARD_LIST_FEATURE_FRAGMENT,
@@ -328,6 +422,7 @@ export {
   LITE_FEATURES_FRAGMENT,
   WEBVIEW_FEATURE_FRAGMENT,
   PRAYER_LIST_FEATURE_FRAGMENT,
+  VERTICAL_PRAYER_LIST_FEATURE_FRAGMENT,
   RELATED_NODE_FRAGMENT,
   NODE_FEATURES_FRAGMENT,
 };

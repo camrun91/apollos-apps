@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Query } from 'react-apollo';
+import { Query } from '@apollo/client/react/components';
 import { get } from 'lodash';
 
 import { BackgroundView, FeedView } from '@apollosproject/ui-kit';
@@ -12,14 +12,13 @@ import GET_LIKED_CONTENT from './getLikedContent';
 
 /** A FeedView wrapped in a query to pull content data. */
 class LikedContentFeedConnected extends PureComponent {
-  /** Function for React Navigation to set information in the header. */
-  static navigationOptions = (props) => ({
-    title: 'Your Likes',
-    headerStyle: [{ backgroundColor: props.screenProps.headerBackgroundColor }],
-  });
-
   static propTypes = {
     Component: PropTypes.oneOfType([
+      PropTypes.node,
+      PropTypes.func,
+      PropTypes.object, // type check for React fragments
+    ]),
+    ContentCardComponent: PropTypes.oneOfType([
       PropTypes.node,
       PropTypes.func,
       PropTypes.object, // type check for React fragments
@@ -28,13 +27,13 @@ class LikedContentFeedConnected extends PureComponent {
      * items in the feed.
      */
     navigation: PropTypes.shape({
-      getParam: PropTypes.func,
       navigate: PropTypes.func,
     }),
   };
 
   static defaultProps = {
     Component: FeedView,
+    ContentCardComponent: ContentCardConnected,
   };
 
   /** Function that is called when a card in the feed is pressed.
@@ -58,7 +57,7 @@ class LikedContentFeedConnected extends PureComponent {
     });
 
   render() {
-    const { Component } = this.props;
+    const { Component, ContentCardComponent } = this.props;
 
     return (
       <BackgroundView>
@@ -69,7 +68,7 @@ class LikedContentFeedConnected extends PureComponent {
         >
           {({ loading, error, data, refetch, fetchMore, variables }) => (
             <Component
-              ListItemComponent={ContentCardConnected}
+              ListItemComponent={ContentCardComponent}
               content={this.getContent(data)}
               isLoading={loading}
               error={error}

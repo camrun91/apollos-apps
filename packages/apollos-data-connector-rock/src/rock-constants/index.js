@@ -28,9 +28,7 @@ class RockConstants extends RockApolloDataSource {
       .join(' and ');
 
     // Look for objects matching that filter.
-    const object = await this.request(model)
-      .filter(filter)
-      .first();
+    const object = await this.request(model).filter(filter).first();
 
     // if we have one
     if (object) {
@@ -61,9 +59,9 @@ class RockConstants extends RockApolloDataSource {
       objectAttributes: {
         Name: componentName,
         // https://www.rockrms.com/ReleaseNotes#v11.0-core
-        ...(ApollosConfig?.ROCK?.VERSION >= 11.0
-          ? { InteractionChannelId: channelId }
-          : { ChannelId: channelId }),
+        ...(ApollosConfig?.ROCK?.VERSION < 11.0
+          ? { ChannelId: channelId }
+          : { InteractionChannelId: channelId }),
         EntityId: entityId,
       },
     });
@@ -78,7 +76,7 @@ class RockConstants extends RockApolloDataSource {
         IsActive: true,
         ComponentEntityTypeId: entityTypeId,
         ChannelTypeMediumValueId:
-          ROCK_MAPPINGS.INTERACTIONS.CHANNEL_MEDIUM_TYPE_ID,
+          ROCK_MAPPINGS?.INTERACTIONS?.CHANNEL_MEDIUM_TYPE_ID || 512, // 512 is mobile app
       },
     });
   }
@@ -90,7 +88,7 @@ class RockConstants extends RockApolloDataSource {
     });
     return this.createOrFindInteractionComponent({
       componentName: `${
-        ROCK_MAPPINGS.INTERACTIONS.COMPONENT_NAME
+        ROCK_MAPPINGS?.INTERACTIONS?.COMPONENT_NAME || 'Apollos App Component'
       } - ${entityId}`,
       channelId: channel.id,
       entityId: parseInt(entityId, 10),
@@ -100,7 +98,7 @@ class RockConstants extends RockApolloDataSource {
   async interactionChannel({ entityTypeId, entityTypeName }) {
     return this.createOrFindInteractionChannel({
       channelName: `${
-        ROCK_MAPPINGS.INTERACTIONS.CHANNEL_NAME
+        ROCK_MAPPINGS?.INTERACTIONS?.CHANNEL_NAME || 'Apollos App'
       } - ${entityTypeName}`,
       entityTypeId,
     });
@@ -126,7 +124,7 @@ class RockConstants extends RockApolloDataSource {
   }
 
   mapApollosNameToRockName = (name) => {
-    if (ROCK_MAPPINGS.CONTENT_ITEM[name]) {
+    if (ROCK_MAPPINGS?.CONTENT_ITEM[name]) {
       return ROCK_MAPPINGS.CONTENT_ITEM[name].EntityType;
     }
     return get(ROCK_MAPPINGS, `ENTITY_TYPES.${name}`, name);

@@ -17,7 +17,7 @@ import {
 
 import * as RockConstants from '../../rock-constants';
 // we import the root-level schema and resolver so we test the entire integration:
-import { ContentChannel, ContentItem, Sharable, Person } from '../..';
+import { ContentChannel, ContentItem, Sharable, Person, Persona } from '../..';
 
 import { generateToken } from '../../auth/token';
 
@@ -86,6 +86,7 @@ const { getSchema, getContext } = createTestHelpers({
   RockConstants,
   Person,
   Auth,
+  Persona,
   Cache: { dataSource: Cache },
 });
 // we import the root-level schema and resolver so we test the entire integration:
@@ -96,11 +97,6 @@ ApollosConfig.loadJs({
     API_TOKEN: 'some-rock-token',
     IMAGE_URL: 'https://apollosrock.newspring.cc/GetImage.ashx',
     TIMEZONE: 'America/New_York',
-  },
-  ROCK_CONSTANTS: {
-    IMAGE: 10,
-    AUDIO_FILE: 77,
-    VIDEO_FILE: 79,
   },
   ROCK_MAPPINGS: {
     FEED_CONTENT_CHANNEL_IDS: [1, 2, 3, 4, 6, 8],

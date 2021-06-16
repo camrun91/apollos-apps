@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import DeviceInfo from 'react-native-device-info';
 import { Platform } from 'react-native';
-import { ApolloConsumer } from 'react-apollo';
+import { ApolloConsumer } from '@apollo/client';
 
 import {
   TRACK as TRACK_SERVER,
@@ -141,6 +141,11 @@ const Provider = ({
     }}
   </ApolloConsumer>
 );
+
+export const useTrack = () => {
+  const ctx = useContext(AnalyticsContext);
+  return ctx.track;
+};
 
 Provider.propTypes = {
   children: PropTypes.node,

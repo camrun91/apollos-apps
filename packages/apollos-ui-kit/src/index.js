@@ -5,6 +5,7 @@ export ActivityIndicator, {
   InlineActivityIndicator,
 } from './ActivityIndicator';
 export ActionBar, { ActionBarItem } from './ActionBar';
+export AddCommentInput from './AddCommentInput';
 export Avatar, { AvatarList, AvatarCloud } from './Avatar';
 export BackgroundImageBlur from './BackgroundImageBlur';
 export BackgroundView from './BackgroundView';
@@ -27,6 +28,11 @@ export DefaultCard from './DefaultCard';
 export FeaturedCard from './FeaturedCard';
 export FeedView from './FeedView';
 export FlexedView from './FlexedView';
+export FollowList, { FollowListItem } from './FollowList';
+export {
+  FollowListSearchModal,
+  default as FollowListSearch,
+} from './FollowListSearch';
 export GradientOverlayImage from './GradientOverlayImage';
 export HighlightCard from './HighlightCard';
 export HorizontalHighlightCard from './HorizontalHighlightCard';
@@ -52,9 +58,14 @@ export MediaThumbnail, {
   MediaThumbnailIcon,
   MediaThumbnailItem,
 } from './MediaThumbnail';
-export ModalView, { ModalViewHeader } from './ModalView';
+export ModalView, {
+  ModalViewHeader,
+  ModalCloseButton,
+  ModalBackButton,
+} from './ModalView';
 export PaddedView from './PaddedView';
 export Placeholder, { withPlaceholder } from './Placeholder';
+export Comment, { CommentLikeButton, ActionMenu } from './Comment';
 export SideBySideView from './SideBySideView';
 export styled from './styled';
 export StretchyView from './StretchyView';
@@ -72,6 +83,7 @@ export ThemeProvider, {
   ThemeMixin,
   withThemeMixin,
   ThemeConsumer,
+  named,
 } from './theme';
 export ThumbnailCard from './ThumbnailCard';
 export TileImage from './TileImage';

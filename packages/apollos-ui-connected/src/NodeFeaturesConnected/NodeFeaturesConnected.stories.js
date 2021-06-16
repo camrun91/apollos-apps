@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@apollosproject/ui-storybook';
 
 import { BackgroundView, CenteredView } from '@apollosproject/ui-kit';
-import { ApolloStorybookDecorator } from '../testUtils';
+import { ApolloStorybookDecorator } from '@apollosproject/ui-test-utils';
 import NodeFeaturesConnected from './NodeFeaturesConnected';
 
 const featureFeedMock = {
@@ -18,6 +18,7 @@ const featureFeedMock = {
     {
       id: 'ScriptureFeature:123',
       __typename: 'ScriptureFeature',
+      title: 'Memory Verse',
       scriptures: [
         {
           id: 'Scripture:123',

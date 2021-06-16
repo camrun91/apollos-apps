@@ -6,8 +6,9 @@ import { getHasPrompted, getPushPermissions } from './permissionUtils';
 export const PushContext = React.createContext({
   hasPrompted: true,
   hasPushPermission: true,
-  loading: false,
-  checkPermissions: () => {},
+  loading: true,
+  checkPermissions: () => {}, // deprecated, confusing name
+  updatePermissionStatus: () => {},
 });
 
 class Provider extends PureComponent {
@@ -18,26 +19,31 @@ class Provider extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
+      loading: true,
       hasPrompted: null,
       hasPushPermission: null,
       checkPermissions: () => {},
+      updatePermissionStatus: () => {},
     };
   }
 
-  componentDidMount() {
-    getPushPermissions().then((permissionRes) => {
-      getHasPrompted().then((promptRes) => {
-        this.setState({
-          hasPrompted: promptRes,
-          hasPushPermission: permissionRes,
-          checkPermissions: this.update,
-        });
+  async componentDidMount() {
+    try {
+      const permissionRes = await getPushPermissions();
+      const promptRes = await getHasPrompted();
+      this.setState({
+        hasPrompted: promptRes,
+        hasPushPermission: permissionRes,
+        checkPermissions: this.update,
+        updatePermissionStatus: this.update,
+        loading: false,
       });
-    });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
-  update = () => {
+  update = (onUpdate = () => null) => {
     this.setState(
       {
         loading: true,
@@ -52,6 +58,7 @@ class Provider extends PureComponent {
             });
           });
         });
+        onUpdate();
       }
     );
   };
@@ -65,6 +72,7 @@ class Provider extends PureComponent {
   }
 }
 
+// TODO deprecated
 export const PushConsumer = PushContext.Consumer;
 
 export default Provider;

@@ -1,66 +1,53 @@
 import React from 'react';
-import { NativeModules } from 'react-native';
 import ApollosConfig from '@apollosproject/config';
 import FRAGMENTS from '@apollosproject/ui-fragments';
+import { Animated } from 'react-native';
 
-ApollosConfig.loadJs({ FRAGMENTS });
+import { fragmentTypes } from '@apollosproject/ui-test-utils';
 
-// We ran into an issue where SafeAreaView would break jest tests.
-jest.mock('react-native-safe-area-context', () => ({
-  SafeAreaConsumer: ({ children }) =>
-    children({ top: 0, bottom: 0, left: 0, right: 0 }),
-  SafeAreaProvider: ({ children }) => children,
-}));
+const TYPEMAP = fragmentTypes.__schema.types.reduce((acc, curr) => {
+  const { name } = curr;
+  const types = curr.possibleTypes
+    .map((type) => [type.name, name])
+    .reduce((accum, [n, t]) => {
+      accum[n] = t; // eslint-disable-line
+      return accum;
+    }, {});
+  Object.keys(types).forEach((key) => {
+    acc[key] = acc[key] ? [...acc[key], types[key]] : [types[key]];
+  });
+  return acc;
+}, {});
 
-jest.mock('Image', () => ({
-  ...require.requireActual('Image'),
-  getSize: (_, cb) => cb(500, 600),
-}));
+ApollosConfig.loadJs({ FRAGMENTS, TYPEMAP });
 
-jest.mock('Animated', () => {
-  const ActualAnimated = require.requireActual('Animated');
-  return {
-    ...ActualAnimated,
-    timing: (value, config) => ({
-      start: (callback) => {
-        value.setValue(config.toValue);
-        callback && callback();
-      },
-      stop: () => ({}),
-    }),
-    spring: (value, config) => ({
-      start: (callback) => {
-        value.setValue(config.toValue);
-        callback && callback();
-      },
-      stop: () => ({}),
-    }),
-  };
+Animated.timing = (value, config) => ({
+  start: (callback) => {
+    value.setValue(config.toValue);
+    callback && callback({ finished: true });
+  },
+  stop: () => ({}),
+});
+Animated.spring = (value, config) => ({
+  start: (callback) => {
+    value.setValue(config.toValue);
+    callback && callback({ finished: true });
+  },
+  stop: () => ({}),
 });
 
-jest.mock('@react-native-community/datetimepicker', () => 'DatePicker');
-
-NativeModules.RNGestureHandlerModule = {
-  attachGestureHandler: jest.fn(),
-  createGestureHandler: jest.fn(),
-  dropGestureHandler: jest.fn(),
-  updateGestureHandler: jest.fn(),
-  State: {},
-  Directions: {},
-};
+jest.mock('react-native-screens/native-stack', () => ({
+  createNativeStackNavigator: () => ({
+    Navigator: ({ children }) => children,
+    Screen: ({ children }) => children,
+  }),
+}));
 
 jest.mock('@apollosproject/ui-analytics', () => ({
   track: () => '',
+  useTrack: () => () => jest.fn,
   AnalyticsConsumer: ({ children }) => children({ test: jest.fn() }),
   AnalyticsProvider: ({ children }) => children,
   TrackEventWhenLoaded: () => null,
   withTrackOnPress: (Component) => (props) => <Component {...props} />,
-}));
-
-jest.mock('@apollosproject/ui-media-player', () => ({
-  MediaPlayerSpacer: ({ children }) => children,
-  MediaPlayer: () => 'MediaPlayer',
-  MediaPlayerProvider: ({ children }) => children,
-  playVideoMutation: 'mutation { playVideo }',
-  withTabBarMediaSpacer: () => ({ children }) => children,
 }));

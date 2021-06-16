@@ -9,20 +9,50 @@ export default class PrayerRequest extends RockApolloDataSource {
 
   expanded = true;
 
-  getFromId = (id) =>
-    this.request()
-      .find(id)
-      .get();
+  getFromId = (id) => this.request().find(id).get();
 
-  byDailyPrayerFeed = async ({ numberDaysSincePrayer = 3 }) => {
+  getPersonAliasId = async ({ personId }) => {
+    // This is tricky. I would prefer not to have this method here
+    // But ultimately the postgres module shouldn't have an aliasId
+    // but we depend on the alias ID from Rock. I don't want to have to keep around
+    // a RockPerson module and a PostgresPerson module long term.
+    // This problem goes away long term when we don't rely on Rock for Prayers.
+    const { Person } = this.context.dataSources;
+
+    const person = await Person.getFromId(personId);
+
+    if (person.originType && person.originType === 'rock') {
+      const { primaryAliasId } = await this.request('/People')
+        .filter(`Id eq ${person.originId}`)
+        .first();
+      return primaryAliasId;
+    }
+
+    const { primaryAliasId } = await this.request('/People')
+      .filter(`Id eq ${personId}`)
+      .first();
+    return primaryAliasId;
+  };
+
+  byDailyPrayerFeed = async ({ personId, numberDaysSincePrayer = 3 }) => {
     const {
       dataSources: { Auth },
     } = this.context;
 
-    const { primaryAliasId } = await Auth.getCurrentPerson();
+    let excludedAliasId;
+    let primaryAliasId;
+    if (!personId) {
+      excludedAliasId = (await Auth.getCurrentPerson()).primaryAliasId;
+    } else {
+      primaryAliasId = await this.getPersonAliasId({ personId });
+    }
 
     return this.request()
-      .filter(`RequestedByPersonAliasId ${'ne'} ${primaryAliasId}`) // don't show your own prayers
+      .filter(
+        `RequestedByPersonAliasId ${
+          primaryAliasId ? `eq ${primaryAliasId}` : `ne ${excludedAliasId}`
+        }`
+      ) // don't show your own prayers
       .andFilter(`IsActive eq true`) // prayers can be marked as "in-active" in Rock
       .andFilter(`IsApproved eq true`) // prayers can be moderated in Rock
       .andFilter('IsPublic eq true') // prayers can be set to private in Rock
@@ -44,6 +74,18 @@ export default class PrayerRequest extends RockApolloDataSource {
         { field: 'PrayerCount', direction: 'asc' }, // # of times prayed, ascending
         { field: 'EnteredDateTime', direction: 'asc' }, // oldest prayer first
       ]);
+  };
+
+  getRequestor = async ({ requestedByPersonAliasId }) => {
+    if (!requestedByPersonAliasId) return null;
+    const { personId } = await this.request('/PersonAlias')
+      .filter(`Id eq ${requestedByPersonAliasId}`)
+      .select('PersonId')
+      .first();
+
+    return this.context.dataSources.Person.getFromId(personId, null, {
+      originType: 'rock',
+    });
   };
 
   incrementPrayed = async (id) => {
@@ -113,16 +155,9 @@ export default class PrayerRequest extends RockApolloDataSource {
       IsActive: true,
       AllowComments: false,
       IsUrgent: false,
-      EnteredDateTime: moment()
-        .tz(ROCK.TIMEZONE)
-        .format(),
-      ApprovedOnDateTime: moment()
-        .tz(ROCK.TIMEZONE)
-        .format(),
-      ExpirationDate: moment()
-        .tz(ROCK.TIMEZONE)
-        .add(2, 'weeks')
-        .format(),
+      EnteredDateTime: moment().tz(ROCK.TIMEZONE).format(),
+      ApprovedOnDateTime: moment().tz(ROCK.TIMEZONE).format(),
+      ExpirationDate: moment().tz(ROCK.TIMEZONE).add(2, 'weeks').format(),
     });
     return this.getFromId(prayerId);
   };

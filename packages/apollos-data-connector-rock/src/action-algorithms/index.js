@@ -3,16 +3,22 @@ import RockApolloDataSource from '@apollosproject/rock-apollo-data-source';
 import ApollosConfig from '@apollosproject/config';
 
 class ActionAlgorithm extends RockApolloDataSource {
-  // Names of Action Algoritms mapping to the functions that create the actions.
+  // Names of Action Algorithms mapping to the functions that create the actions.
   ACTION_ALGORITHMS = Object.entries({
-    // We need to make sure `this` refers to the class, not the `ACTION_ALGORITHIMS` object.
+    // We need to make sure `this` refers to the class, not the `ACTION_ALGORITHMS` object.
+    CONTENT_FEED: this.contentFeedAlgorithm,
     PERSONA_FEED: this.personaFeedAlgorithm,
+    //
+    // TODO deprecate these two
     CONTENT_CHANNEL: this.contentChannelAlgorithm,
+    USER_FEED: this.userFeedAlgorithm,
+    //
+    //
     SERMON_CHILDREN: this.sermonChildrenAlgorithm,
+    LATEST_SERIES_CHILDREN: this.latestSeriesChildrenAlgorithm,
     UPCOMING_EVENTS: this.upcomingEventsAlgorithm,
     CAMPAIGN_ITEMS: this.campaignItemsAlgorithm,
     SERIES_IN_PROGRESS: this.seriesInProgressAlgorithm,
-    USER_FEED: this.userFeedAlgorithm,
     DAILY_PRAYER: this.dailyPrayerAlgorithm,
   }).reduce((accum, [key, value]) => {
     // convenciance code to make sure all methods are bound to the Features dataSource
@@ -60,11 +66,16 @@ class ActionAlgorithm extends RockApolloDataSource {
     );
   }
 
-  async dailyPrayerAlgorithm({ limit = 10, numberDaysSincePrayer } = {}) {
+  async dailyPrayerAlgorithm({
+    limit = 10,
+    numberDaysSincePrayer,
+    personId,
+  } = {}) {
     const { PrayerRequest, Feature } = this.context.dataSources;
     Feature.setCacheHint({ maxAge: 0, scope: 'PRIVATE' });
     const cursor = await PrayerRequest.byDailyPrayerFeed({
       numberDaysSincePrayer,
+      personId,
     });
     return cursor.top(limit).get();
   }
@@ -74,9 +85,7 @@ class ActionAlgorithm extends RockApolloDataSource {
     const { Event } = this.context.dataSources;
 
     // Get the first three persona items.
-    const events = await Event.findRecent()
-      .top(3)
-      .get();
+    const events = await Event.findRecent().top(3).get();
     // Map them into specific actions.
     return events.map((event, i) => ({
       id: `${event.id}${i}`,
@@ -110,8 +119,10 @@ class ActionAlgorithm extends RockApolloDataSource {
     }));
   }
 
+  // TODO deprecate, use CONTENT_FEED
   // Gets a configurable amount of content items from a specific content channel.
   async contentChannelAlgorithm({ contentChannelId, limit = null } = {}) {
+    console.warn('CONTENT_CHANNEL algorithm is deprecated, use CONTENT_FEED');
     if (contentChannelId == null) {
       throw new Error(
         `contentChannelId is a required argument for the CONTENT_CHANNEL ActionList algorithm.
@@ -146,9 +157,34 @@ Make sure you structure your algorithm entry as \`{ type: 'CONTENT_CHANNEL', aru
       return [];
     }
 
-    const cursor = (await ContentItem.getCursorByParentContentItemId(
-      sermon.id
-    )).expand('ContentChannel');
+    const cursor = (
+      await ContentItem.getCursorByParentContentItemId(sermon.id)
+    ).expand('ContentChannel');
+    const items = limit ? await cursor.top(limit).get() : await cursor.get();
+
+    return items.map((item, i) => ({
+      id: `${item.id}${i}`,
+      title: item.title,
+      subtitle: get(item, 'contentChannel.name'),
+      relatedNode: { ...item, __type: ContentItem.resolveType(item) },
+      image: ContentItem.getCoverImage(item),
+      action: 'READ_CONTENT',
+      summary: ContentItem.createSummary(item),
+    }));
+  }
+
+  async latestSeriesChildrenAlgorithm({ limit = null, channelId } = {}) {
+    const { ContentItem } = this.context.dataSources;
+
+    if (!channelId) return console.warn('Must provide channelId') || [];
+    const series = await ContentItem.byContentChannelId(channelId)
+      .andFilter(ContentItem.LIVE_CONTENT())
+      .first();
+    if (!series) return [];
+
+    const cursor = (
+      await ContentItem.getCursorByParentContentItemId(series.id)
+    ).expand('ContentChannel');
     const items = limit ? await cursor.top(limit).get() : await cursor.get();
 
     return items.map((item, i) => ({
@@ -163,11 +199,11 @@ Make sure you structure your algorithm entry as \`{ type: 'CONTENT_CHANNEL', aru
   }
 
   // Gets a configurable amount of content items from each of the configured campaigns
-  async campaignItemsAlgorithm({ limit = 1 } = {}) {
+  async campaignItemsAlgorithm({ channelIds = [], limit = 1 } = {}) {
     const { ContentItem } = this.context.dataSources;
 
     const channels = await ContentItem.byContentChannelIds(
-      ApollosConfig.ROCK_MAPPINGS.CAMPAIGN_CHANNEL_IDS
+      channelIds || ApollosConfig.ROCK_MAPPINGS.CAMPAIGN_CHANNEL_IDS
     ).get();
 
     const items = flatten(
@@ -201,11 +237,12 @@ Make sure you structure your algorithm entry as \`{ type: 'CONTENT_CHANNEL', aru
     }));
   }
 
-  async userFeedAlgorithm({ limit = 20 } = {}) {
+  async contentFeedAlgorithm({ channelIds = [], limit = 20, skip = 0 } = {}) {
     const { ContentItem } = this.context.dataSources;
 
-    const items = await ContentItem.byUserFeed()
+    const items = await ContentItem.byContentChannelIds(channelIds)
       .top(limit)
+      .skip(skip)
       .get();
 
     return items.map((item, i) => ({
@@ -219,16 +256,12 @@ Make sure you structure your algorithm entry as \`{ type: 'CONTENT_CHANNEL', aru
     }));
   }
 
-  async seriesInProgressAlgorithm({ limit = 3, channelIds = [] } = {}) {
-    const { ContentItem, Feature } = this.context.dataSources;
-    Feature.setCacheHint({ maxAge: 0, scope: 'PRIVATE' });
+  // TODO deprecate, use CONTENT_FEED instead
+  async userFeedAlgorithm({ limit = 20 } = {}) {
+    console.warn('USER_FEED algorithm is deprecated, use CONTENT_FEED');
+    const { ContentItem } = this.context.dataSources;
 
-    const items = await (await ContentItem.getSeriesWithUserProgress({
-      channelIds,
-    }))
-      .expand('ContentChannel')
-      .top(limit)
-      .get();
+    const items = await ContentItem.byUserFeed().top(limit).get();
 
     return items.map((item, i) => ({
       id: `${item.id}${i}`,
@@ -239,6 +272,45 @@ Make sure you structure your algorithm entry as \`{ type: 'CONTENT_CHANNEL', aru
       action: 'READ_CONTENT',
       summary: ContentItem.createSummary(item),
     }));
+  }
+
+  async seriesInProgressAlgorithm({
+    limit = 3,
+    channelIds = [],
+    emptyMessage = 'All caught up!',
+  } = {}) {
+    const { ContentItem, Feature } = this.context.dataSources;
+    Feature.setCacheHint({ maxAge: 0, scope: 'PRIVATE' });
+
+    const items = await (
+      await ContentItem.getSeriesWithUserProgress({
+        channelIds,
+      })
+    )
+      .expand('ContentChannel')
+      .top(limit)
+      .get();
+
+    return items.length
+      ? items.map((item, i) => ({
+          id: `${item.id}${i}`,
+          title: item.title,
+          subtitle: get(item, 'contentChannel.name'),
+          relatedNode: { ...item, __type: ContentItem.resolveType(item) },
+          image: ContentItem.getCoverImage(item),
+          action: 'READ_CONTENT',
+          summary: ContentItem.createSummary(item),
+        }))
+      : [
+          {
+            id: 'EmptyCard',
+            relatedNode: {
+              // __type: 'Message',
+              __typename: 'Message',
+              message: emptyMessage,
+            },
+          },
+        ];
   }
 }
 

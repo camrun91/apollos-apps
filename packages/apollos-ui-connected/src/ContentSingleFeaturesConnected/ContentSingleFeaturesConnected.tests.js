@@ -1,5 +1,6 @@
 import React from 'react';
-import { Providers, renderWithApolloData } from '../testUtils';
+import { Providers, renderWithApolloData } from '@apollosproject/ui-test-utils';
+import { MockedProvider } from '@apollo/client/testing';
 
 import GET_CONTENT_ITEM_FEATURES from './getContentItemFeatures';
 
@@ -27,27 +28,17 @@ const mock = {
           },
           {
             id: 'TextFeature:1',
+            title: 'title',
             body: 'this is another, text feature',
             sharing: {
               message: 'this is another, text feature',
               __typename: 'SharableFeature',
             },
-            scriptures: [
-              {
-                id: 'Scripture:2',
-                html:
-                  '<p class="p"><span data-number="16" class="v">16</span><span class="wj">¶ For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.</span> </p>',
-                reference: 'Matthew 4:10',
-                copyright:
-                  'PUBLIC DOMAIN except in the United Kingdom, where a Crown Copyright applies to printing the KJV. See http://www.cambridge.org/about-us/who-we-are/queens-printers-patent',
-                version: 'KJV',
-                __typename: 'Scripture',
-              },
-            ],
             __typename: 'TextFeature',
           },
           {
             id: 'ScriptureFeature:3',
+            title: 'title',
             body: 'this is another, scripture feature',
             sharing: {
               message:
@@ -70,6 +61,7 @@ const mock = {
           },
           {
             id: 'ScriptureFeature:4',
+            title: 'title',
             body: 'this is another, scripture feature',
             sharing: {
               message:
@@ -99,15 +91,16 @@ const mock = {
 describe('ContentSingleFeaturesConnected', () => {
   it('should render', async () => {
     const tree = await renderWithApolloData(
-      <Providers mocks={[mock]}>
+      <Providers MockedProvider={MockedProvider} mocks={[mock]}>
         <ContentSingleFeaturesConnected contentId={'WeekendContentItem:1'} />
       </Providers>
     );
+    await new Promise((res) => setTimeout(res, 1));
     expect(tree).toMatchSnapshot();
   });
   it('should render with nodeId', async () => {
     const tree = await renderWithApolloData(
-      <Providers mocks={[mock]}>
+      <Providers MockedProvider={MockedProvider} mocks={[mock]}>
         <ContentSingleFeaturesConnected nodeId={'WeekendContentItem:1'} />
       </Providers>
     );

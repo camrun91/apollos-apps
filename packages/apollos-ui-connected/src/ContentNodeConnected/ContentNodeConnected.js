@@ -1,26 +1,18 @@
 import React from 'react';
 import { View } from 'react-native';
 import PropTypes from 'prop-types';
-import { Query } from 'react-apollo';
+import { Query } from '@apollo/client/react/components';
 import HTMLView from '@apollosproject/ui-htmlview';
 import {
   ErrorCard,
   PaddedView,
   H2,
   GradientOverlayImage,
-  styled,
+  named,
 } from '@apollosproject/ui-kit';
 
-import MediaControlsConnected from '../MediaControlsConnected';
 import safeOpenUrl from '../safeOpenUrl';
 import GET_CONTENT_ITEM_CONTENT from './getContentNode';
-
-const StyledMediaControlsConnected = styled(
-  ({ theme }) => ({
-    marginTop: -(theme.sizing.baseUnit * 2.5),
-  }),
-  'ui-connected.ContentNodeConnected.MediaControlsConnected'
-)(MediaControlsConnected);
 
 const ComponentPropType = PropTypes.oneOfType([
   PropTypes.node,
@@ -28,12 +20,35 @@ const ComponentPropType = PropTypes.oneOfType([
   PropTypes.object, // type check for React fragments
 ]);
 
+const DefaultHeader = ({ isLoading, node }) => (
+  <H2 padded isLoading={isLoading}>
+    {node?.title}
+  </H2>
+);
+
+DefaultHeader.propTypes = {
+  node: PropTypes.shape({ title: PropTypes.string }),
+  isLoading: PropTypes.bool,
+};
+
+const DefaultHTML = ({ isLoading, onPressAnchor, node }) => (
+  <HTMLView isLoading={isLoading} onPressAnchor={onPressAnchor}>
+    {node?.htmlContent}
+  </HTMLView>
+);
+
+DefaultHTML.propTypes = {
+  node: PropTypes.shape({ htmlContent: PropTypes.string }),
+  onPressAnchor: PropTypes.func,
+  isLoading: PropTypes.bool,
+};
+
 const ContentNodeConnected = ({
+  HeaderComponent,
   HtmlComponent,
   nodeId,
   onPressAnchor,
   ImageWrapperComponent,
-  MediaControlsComponent,
 }) => {
   if (!nodeId) return <HTMLView isLoading />;
   return (
@@ -42,13 +57,10 @@ const ContentNodeConnected = ({
       variables={{ nodeId }}
       fetchPolicy={'cache-and-network'}
     >
-      {({
-        data: { node: { htmlContent, title, coverImage } = {} } = {},
-        loading,
-        error,
-      }) => {
-        if (!htmlContent && error) return <ErrorCard error={error} />;
-        const coverImageSources = coverImage?.sources || [];
+      {({ data: { node } = {}, loading, error }) => {
+        if (!node?.htmlContent && error) return <ErrorCard error={error} />;
+
+        const coverImageSources = node?.coverImage?.sources || [];
         return (
           <>
             {coverImageSources.length || loading ? (
@@ -59,18 +71,18 @@ const ContentNodeConnected = ({
                 />
               </ImageWrapperComponent>
             ) : null}
-            <MediaControlsComponent nodeId={nodeId} />
+
             {/* fixes text/navigation spacing by adding vertical padding if we dont have an image */}
             <PaddedView vertical={!coverImageSources.length}>
-              <H2 padded isLoading={!title && loading}>
-                {title}
-              </H2>
+              <HeaderComponent
+                isLoading={!node?.title && loading}
+                node={node}
+              />
               <HtmlComponent
-                isLoading={!htmlContent && loading}
+                isLoading={!node?.htmlContent && loading}
                 onPressAnchor={onPressAnchor}
-              >
-                {htmlContent}
-              </HtmlComponent>
+                node={node}
+              />
             </PaddedView>
           </>
         );
@@ -81,17 +93,17 @@ const ContentNodeConnected = ({
 
 ContentNodeConnected.propTypes = {
   nodeId: PropTypes.string.isRequired,
+  HeaderComponent: ComponentPropType,
   HtmlComponent: ComponentPropType,
   ImageWrapperComponent: ComponentPropType,
-  MediaControlsComponent: ComponentPropType,
   onPressAnchor: PropTypes.func,
 };
 
 ContentNodeConnected.defaultProps = {
-  HtmlComponent: HTMLView,
+  HeaderComponent: DefaultHeader,
+  HtmlComponent: DefaultHTML,
   ImageWrapperComponent: View,
-  MediaControlsComponent: StyledMediaControlsConnected,
   onPressAnchor: safeOpenUrl,
 };
 
-export default ContentNodeConnected;
+export default named('ui-connected.ContentNodeConnected')(ContentNodeConnected);

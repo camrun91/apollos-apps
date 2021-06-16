@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { Linking } from 'react-native';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-import { withApollo } from 'react-apollo';
+import { withApollo } from '@apollo/client/react/hoc';
 import { get } from 'lodash';
 import OneSignal from 'react-native-onesignal';
 import { resolvers, defaults } from './store';
@@ -13,6 +13,12 @@ import PushProvider from './pushProvider';
 const UPDATE_DEVICE_PUSH_ID = gql`
   mutation updateDevicePushId($pushId: String!) {
     updateDevicePushId(pushId: $pushId) @client
+  }
+`;
+
+const GET_PUSH_ID = gql`
+  query {
+    pushId @client
   }
 `;
 
@@ -27,9 +33,15 @@ class NotificationsInit extends Component {
     client: PropTypes.shape({
       mutate: PropTypes.func,
       addResolvers: PropTypes.func,
-      writeData: PropTypes.func,
+      writeQuery: PropTypes.func,
       onClearStore: PropTypes.func,
     }).isRequired,
+    actionMap: PropTypes.shape({}),
+    handleExternalLink: PropTypes.func,
+  };
+
+  static defaultProps = {
+    actionMap: {},
   };
 
   static navigationOptions = {};
@@ -38,8 +50,10 @@ class NotificationsInit extends Component {
     super(props);
     const { client } = props;
     client.addResolvers(resolvers);
-    client.writeData({ data: defaults });
-    client.onClearStore(() => client.writeData({ data: defaults }));
+    client.writeQuery({ query: GET_PUSH_ID, data: defaults });
+    client.onClearStore(() =>
+      client.writeQuery({ query: GET_PUSH_ID, data: defaults })
+    );
   }
 
   componentDidMount() {
@@ -65,6 +79,13 @@ class NotificationsInit extends Component {
 
   navigate = (rawUrl) => {
     if (!rawUrl) return;
+    // this is the long term solution
+    if (this.props.handleExternalLink) {
+      this.props.handleExternalLink(rawUrl);
+      return;
+    }
+    // TODO, leave in for backwards compatibility but long term,
+    // should use the prop above
     const url = URL.parse(rawUrl);
     const route = url.pathname.substring(1);
     const cleanedRoute = route.includes('/app-link/')
@@ -88,7 +109,14 @@ class NotificationsInit extends Component {
     // apolloschurchapp://SomethingElse/Connect
     // apolloschurchapp://SomethingElse/ContentSingle?itemId=SomeItemId:blablalba
     const url = get(openResult, 'notification.payload.additionalData.url');
-    if (url) {
+    if (
+      openResult?.action?.actionID &&
+      this.props.actionMap[openResult.action.actionID]
+    ) {
+      this.props.actionMap[openResult.action.actionID](
+        openResult.notification.payload.additionalData
+      );
+    } else if (url) {
       this.navigate(url);
     }
   };

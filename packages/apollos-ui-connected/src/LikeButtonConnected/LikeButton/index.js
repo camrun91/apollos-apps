@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Icon, withTheme } from '@apollosproject/ui-kit';
-import { ProtectedTouchable } from '@apollosproject/ui-auth';
-
-import { withNavigation } from 'react-navigation';
+import { Icon, withTheme, Touchable } from '@apollosproject/ui-kit';
 
 const LikeIcon = withTheme(
   ({ theme: { colors: { secondary } = {} } = {}, isLiked } = {}) => ({
@@ -18,9 +15,8 @@ LikeIcon.propTypes = {
   isLiked: PropTypes.bool,
 };
 
-// TODO: deprecate itemId prop
-const LikeButton = withNavigation(({ isLiked, toggleLike, nodeId, itemId }) => (
-  <ProtectedTouchable
+const LikeButton = ({ isLiked, toggleLike, nodeId, itemId }) => (
+  <Touchable
     onPress={() =>
       toggleLike({
         nodeId: nodeId || itemId,
@@ -29,11 +25,12 @@ const LikeButton = withNavigation(({ isLiked, toggleLike, nodeId, itemId }) => (
     }
   >
     <LikeIcon isLiked={isLiked} />
-  </ProtectedTouchable>
-));
+  </Touchable>
+);
 
 LikeButton.propTypes = {
   itemId: PropTypes.string,
+  nodeId: PropTypes.string,
   isLiked: PropTypes.bool,
   toggleLike: PropTypes.func,
 };

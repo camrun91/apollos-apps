@@ -149,9 +149,11 @@ you can return request.empty()
    * by date in descending order
    */
   sort = (fields = [{ field: 'Id', direction: 'desc' }]) => {
+    if (!fields.length) return this;
     delete this.query.$orderby;
     this.query.$orderby = fields
-      .map(({ field, direction }) => `${field} ${direction}`)
+      .filter(({ field, direction }) => field && direction)
+      .map(({ field, direction }) => `${field} ${direction.toLowerCase()}`)
       .join(', ');
     return this;
   };
@@ -200,11 +202,7 @@ you can return request.empty()
     // make sure to clone this.query, which gets mutated by top/skip
     cursor.query = { ...this.query };
 
-    const result = await cursor
-      .select('Id')
-      .top(null)
-      .skip(0)
-      .get();
+    const result = await cursor.select('Id').top(null).skip(0).get();
 
     return result.length;
   };

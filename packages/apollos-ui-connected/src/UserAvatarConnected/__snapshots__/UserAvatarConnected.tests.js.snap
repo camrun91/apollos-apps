@@ -12,10 +12,9 @@ exports[`UserAvatarConnected component renders UserAvatarConnected 1`] = `
   }
   themeSize={40}
 >
-  <RCTImageView
+  <Image
     fadeDuration={250}
     onLoad={[Function]}
-    resizeMode="cover"
     source={
       Array [
         Object {
@@ -32,7 +31,6 @@ exports[`UserAvatarConnected component renders UserAvatarConnected 1`] = `
         "bottom": 0,
         "height": "100%",
         "left": 0,
-        "overflow": "hidden",
         "position": "absolute",
         "right": 0,
         "top": 0,
@@ -41,5 +39,46 @@ exports[`UserAvatarConnected component renders UserAvatarConnected 1`] = `
     }
     themeSize={40}
   />
+</View>
+`;
+
+exports[`UserAvatarConnected component renders UserAvatarConnected without a photo 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "height": 40,
+      "justifyContent": "center",
+      "width": 40,
+    }
+  }
+  themeSize={40}
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#A5A5A5",
+        "borderRadius": 40,
+        "height": 40,
+        "justifyContent": "center",
+        "width": 40,
+      }
+    }
+    themeSize={40}
+  >
+    <Text
+      style={
+        Object {
+          "color": "#F8F7F4",
+          "fontFamily": "InterUI-Bold",
+          "fontSize": 20,
+        }
+      }
+      themeSize={40}
+    >
+      GC
+    </Text>
+  </View>
 </View>
 `;

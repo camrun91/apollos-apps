@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { get } from 'lodash';
 import PropTypes from 'prop-types';
-import { withNavigation } from 'react-navigation';
-import { Query } from 'react-apollo';
+import { withNavigation } from '@react-navigation/compat';
+import { Query } from '@apollo/client/react/components';
 
 import { HorizontalTileFeed, TouchableScale } from '@apollosproject/ui-kit';
 
@@ -105,7 +105,6 @@ class HorizontalFeedConnected extends Component {
         onEndReached={() =>
           !loading &&
           fetchMore({
-            query: this.props.query,
             variables: { cursor: nextCursor, ...this.props.variables },
             updateQuery: this.props.updateQuery,
           })
@@ -122,6 +121,7 @@ class HorizontalFeedConnected extends Component {
         query={this.props.query}
         variables={this.props.variables}
         fetchPolicy={'cache-and-network'}
+        notifyOnNetworkStatusChange
       >
         {this.renderFeed}
       </Query>

@@ -9,6 +9,7 @@ Install tools necessary
 - [XCode](https://developer.apple.com/xcode/)
 - [Yarn](https://yarnpkg.com/)
 - [Bundler](https://bundler.io)
+- [PostgreSQL](https://www.postgresql.org/)
 
 Install Dependencies
 
@@ -26,11 +27,25 @@ yarn storybook
 
 This will boot generate stories from the different packages and surface them in a React Native app on an iPhone Simulator
 
+For simple API deployment, you can use a copy of our api template repo. Start by running 
+
+```
+yarn api
+```
+
+You'll need to have the secret key for the .env file handy. You can pull down specific branches by running `yarn api branch-name`. Be careful not to make any changes in the `ApollosApi` folder, since that folder is wiped out on every run to `yarn api`.
+
 ### Advanced
 
 For more advanced development, you will need to use our templates repo. This will allow you to spin a local version of the API and app.
 
 #### from `apollos-apps`
+
+Get Postgres running locally
+
+```
+brew install postgresql
+```
 
 Register the packages with `linkemon`
 
@@ -56,6 +71,16 @@ yarn link-packages
 ```
 
 Run simply run `yarn start` to start up the server and app. If you need to unlink the local packages in the templates repo to test that NPM dependencies are working properly, run `yarn unlink-packages` from both the `apps` and `templates` repos.
+
+### PRs
+
+We use the [Angular Conventional Commits](https://www.npmjs.com/package/conventional-changelog-angular) preset for pull requests and commits. Squash merges should be in this form:
+
+```
+fix|feat|perf|chore: lower case title
+
+BREAKING CHANGE: line describing any breaking changes
+```
 
 ## Publish
 
@@ -83,29 +108,27 @@ Change your .npmrc file to this:
 
 Replace `TOKEN` with an access token with publish rights from your NPM settings.
 
-**_Don't commit this file!_**
-
 You can do a release three different ways:
 
-#### Canary (1.0.1-alpha.0)
+#### Canary (1.0.1-canary.0)
 
 ```
 yarn release:canary
 ```
 
-Will bump the version for any packages that have changed using an `alpha` prerelease ID. Can be installed via:
+Will publish a patch prerelease version without committing. Can be installed via:
 
 ```
 yarn add @apollosproject/package@canary
 ```
 
-#### Beta (1.1.0-beta.0 or 2.0.0-beta.0)
+#### Next (2.0.0-canary.0)
 
 ```
-yarn release:beta
+yarn release:next
 ```
 
-Installed via:
+Will publish a major prerelease version without committing. Can be installed via:
 
 ```
 yarn add @apollosproject/package@next
@@ -114,5 +137,11 @@ yarn add @apollosproject/package@next
 #### Stable
 
 ```
-yarn release
+GH_TOKEN=<personal github token> yarn release
+```
+
+Will publish a version based on the commits according to conventional commits standards. Will automatically create a Github release and push commit and tags. Can be installed via:
+
+```
+yarn add @apollosproject/package
 ```

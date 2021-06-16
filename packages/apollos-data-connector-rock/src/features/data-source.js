@@ -112,6 +112,37 @@ export default class Feature extends RockApolloDataSource {
     };
   }
 
+  async createActionTableFeature({
+    actions = [],
+    title,
+    algorithms = [],
+    ...args
+  }) {
+    const { ActionAlgorithm } = this.context.dataSources;
+
+    // Run algorithms if we have them, otherwise pull from the config
+    const compiledActions = () =>
+      actions.length
+        ? actions.map((action) => this.attachRelatedNodeId(action))
+        : ActionAlgorithm.runAlgorithms({ algorithms, args });
+
+    return {
+      // The Feature ID is based on all of the action ids, added together.
+      // This is naive, and could be improved.
+      id: this.createFeatureId({
+        args: {
+          title,
+          algorithms,
+          actions,
+        },
+      }),
+      actions: compiledActions,
+      title,
+      // Typename is required so GQL knows specifically what Feature is being created
+      __typename: 'ActionTableFeature',
+    };
+  }
+
   async createHeroListFeature({
     algorithms = [],
     heroAlgorithms = [],
@@ -269,6 +300,51 @@ export default class Feature extends RockApolloDataSource {
     };
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  createButtonFeature({ action, id }) {
+    return {
+      action,
+      id,
+      __typename: 'ButtonFeature',
+    };
+  }
+
+  createCommentListFeature({ nodeId, nodeType, flagLimit }) {
+    return {
+      id: JSON.stringify({ nodeId, nodeType, flagLimit }),
+      comments: () =>
+        this.context.dataSources.Comment.getForNode({
+          nodeId,
+          nodeType,
+          flagLimit,
+        }),
+      __typename: 'CommentListFeature',
+    };
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  createAddCommentFeature({
+    nodeId,
+    nodeType,
+    relatedNode,
+    initialPrompt,
+    addPrompt,
+  }) {
+    return {
+      id: JSON.stringify({
+        nodeId,
+        nodeType,
+        relatedNode: {
+          id: relatedNode.id,
+          __type: nodeType,
+        },
+        initialPrompt,
+        addPrompt,
+      }),
+      __typename: 'AddCommentFeature',
+    };
+  }
+
   createPrayerListFeature({
     algorithms = [],
     title,
@@ -299,6 +375,32 @@ export default class Feature extends RockApolloDataSource {
     };
   }
 
+  async createVerticalPrayerListFeature({ title, subtitle, ...args }) {
+    const { ActionAlgorithm, Auth, Person } = this.context.dataSources;
+    const { id } = await Auth.getCurrentPerson();
+
+    // maps the person id, which right now is always from rock
+    // into the correct person id. Postgres if using Postgres, and Rock if using rock.
+    const { id: personId } = await Person.getFromId(id, null, {
+      originType: 'rock',
+    });
+
+    const prayers = () =>
+      ActionAlgorithm.runAlgorithms({
+        algorithms: ['DAILY_PRAYER'],
+        args: { personId, ...args },
+      });
+    return {
+      id: this.createFeatureId({
+        args: { personId, title, subtitle },
+      }),
+      prayers,
+      title,
+      subtitle,
+      __typename: 'VerticalPrayerListFeature',
+    };
+  }
+
   async getScriptureShareMessage(ref) {
     const { Scripture } = this.context.dataSources;
     const scriptures = await Scripture.getScriptures(ref);
@@ -323,6 +425,8 @@ export default class Feature extends RockApolloDataSource {
         switch (featureConfig.type) {
           case 'ActionBar':
             return this.createActionBarFeature(finalConfig);
+          case 'ActionTable':
+            return this.createActionTableFeature(finalConfig);
           case 'VerticalCardList':
             return this.createVerticalCardListFeature(finalConfig);
           case 'HorizontalCardList':
@@ -336,6 +440,8 @@ export default class Feature extends RockApolloDataSource {
             return this.createHeroListFeature(finalConfig);
           case 'PrayerList':
             return this.createPrayerListFeature(finalConfig);
+          case 'VerticalPrayerList':
+            return this.createVerticalPrayerListFeature(finalConfig);
           case 'ActionList':
           default:
             // Action list was the default in 1.3.0 and prior.

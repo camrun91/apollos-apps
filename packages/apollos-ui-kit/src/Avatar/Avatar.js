@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View, Platform } from 'react-native';
-import { get } from 'lodash';
+import { get, compact } from 'lodash';
 import { compose, setDisplayName } from 'recompose';
 
-import ConnectedImage from '../ConnectedImage';
+import ConnectedImage, { ImageSourceType } from '../ConnectedImage';
 import styled from '../styled';
 import { withTheme } from '../theme';
 import ActivityIndicator from '../ActivityIndicator';
 import { ButtonIcon } from '../Button';
 import Icon from '../Icon';
 import TouchableScale from '../TouchableScale';
+import PlaceholderInitials from './Placeholder';
 
 const Container = styled(
   ({ themeSize }) => ({
@@ -49,8 +50,8 @@ const Image = styled(
 )(ConnectedImage);
 
 const StyledButtonIcon = styled(
-  ({ theme }) => ({
-    backgroundColor: theme.colors.background.paper,
+  ({ theme, iconBackground }) => ({
+    backgroundColor: iconBackground || theme.colors.background.paper,
     ...Platform.select(theme.shadows.default),
   }),
   'ui-kit.Avatar.Avatar.StyledButtonIcon'
@@ -95,6 +96,11 @@ const LoadingSpinnerContainer = styled(
   'ui-kit.Avatar.Avatar.LoadingSpinnerContainer'
 )(View);
 
+const initials = (...names) =>
+  compact(names)
+    .map((n) => n.substring(0, 1).toUpperCase())
+    .join('');
+
 const Avatar = ({
   themeSize,
   containerStyle,
@@ -102,13 +108,27 @@ const Avatar = ({
   isLoading,
   buttonIcon,
   iconFill,
+  iconSize,
   onPressIcon,
   notification,
+  iconButtonProps,
+  profile,
   ...imageProps
 }) => (
   <Container style={containerStyle} themeSize={themeSize}>
-    {!isLoading && source && source.uri ? (
-      <Image source={source} {...imageProps} themeSize={themeSize} />
+    {(!isLoading && source && source.uri) || // eslint-disable-line no-nested-ternary
+    (!isLoading && profile?.photo && profile?.photo?.uri) ? (
+      <Image
+        source={source || profile.photo}
+        {...imageProps}
+        themeSize={themeSize}
+      />
+    ) : profile?.firstName || profile?.lastName ? (
+      <PlaceholderInitials
+        placeholderInitials={initials(profile?.firstName, profile?.lastName)}
+        themeSize={themeSize}
+        isLoading={false}
+      />
     ) : (
       <PlaceholderIcon themeSize={themeSize} isLoading={false} />
     )}
@@ -128,6 +148,7 @@ const Avatar = ({
             size={themeSize / 5}
             fill={iconFill}
             TouchableComponent={TouchableScale}
+            {...iconButtonProps}
           />
         )}
       </ButtonIconPositioner>
@@ -143,6 +164,11 @@ Avatar.propTypes = {
   themeSize: PropTypes.number,
   notification: PropTypes.bool,
   size: PropTypes.oneOf(['small', 'medium', 'large']),
+  profile: PropTypes.shape({
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    photo: ImageSourceType,
+  }),
   ...ConnectedImage.propTypes,
 };
 

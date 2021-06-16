@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { GradientOverlayImage } from '@apollosproject/ui-kit';
 
-import { Providers } from '../../testUtils';
+import { Providers } from '@apollosproject/ui-test-utils';
 
 import AboutYou from '.';
 
@@ -11,7 +11,12 @@ let realDateNow;
 describe('The Onboarding AboutYou component', () => {
   beforeAll(() => {
     realDateNow = Date.now.bind(global.Date);
-    const dateNowStub = jest.fn(() => 1530518207007);
+    const dateNowStub = jest.fn(() => ({
+      setFullYear: () => null,
+      getFullYear: () => 2021,
+      getMonth: () => 5,
+      getDate: () => 17,
+    }));
     global.Date.now = dateNowStub;
   });
   afterAll(() => {

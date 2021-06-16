@@ -3,19 +3,21 @@ import renderer from 'react-test-renderer';
 import { Text } from 'react-native';
 
 import { PushContext } from '@apollosproject/ui-notifications';
-import { renderWithApolloData, Providers } from '../../testUtils';
+import { Providers, renderWithApolloData } from '@apollosproject/ui-test-utils';
+import { MockedProvider } from '@apollo/client/testing';
 
 import AskNotificationsConnected from './AskNotificationsConnected';
 
 describe('The Onboarding AskNotificationsConnected component', () => {
   it('should render with a user not having granted push notifications permissions', async () => {
     const component = (
-      <Providers>
+      <Providers MockedProvider={MockedProvider}>
         <PushContext.Provider
           value={{
             loading: false,
             hasPushPermission: false,
             hasPrompted: false,
+            checkPermissions: () => ({}),
           }}
         >
           <AskNotificationsConnected
@@ -31,9 +33,14 @@ describe('The Onboarding AskNotificationsConnected component', () => {
   });
   it('should render as if a user had granted push notifications permissions', async () => {
     const component = (
-      <Providers>
+      <Providers MockedProvider={MockedProvider}>
         <PushContext.Provider
-          value={{ loading: false, hasPushPermission: true, hasPrompted: true }}
+          value={{
+            loading: false,
+            hasPushPermission: true,
+            hasPrompted: true,
+            checkPermissions: () => ({}),
+          }}
         >
           <AskNotificationsConnected
             onPressPrimary={jest.fn()}
@@ -55,7 +62,7 @@ describe('The Onboarding AskNotificationsConnected component', () => {
     );
 
     const tree = await renderWithApolloData(
-      <Providers>
+      <Providers MockedProvider={MockedProvider}>
         <AskNotificationsConnected
           Component={CustomComponent}
           onPressPrimary={jest.fn()}
@@ -67,7 +74,7 @@ describe('The Onboarding AskNotificationsConnected component', () => {
   });
   it('should render with no data in the cache', () => {
     const tree = renderer.create(
-      <Providers>
+      <Providers MockedProvider={MockedProvider}>
         <AskNotificationsConnected onRequestPushPermissions={jest.fn()} />
       </Providers>
     );

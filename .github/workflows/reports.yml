@@ -1,0 +1,26 @@
+name: Codecov Report
+
+on:
+  push:
+    branches:
+      - master
+      - next
+      - v1
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node
+      uses: actions/setup-node@v2
+
+    - name: Install Dependencies
+      run: yarn
+
+    - name: Jest
+      run: ./scripts/test-all.sh
+
+    - name: Codecov
+      uses: codecov/codecov-action@v1

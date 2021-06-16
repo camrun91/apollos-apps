@@ -4,6 +4,11 @@ import ApollosConfig from '@apollosproject/config';
 
 const resolver = {
   Query: {
+    tabFeedFeatures: (root, args, { dataSources: { FeatureFeed } }) =>
+      FeatureFeed.getFeed({
+        type: 'tab',
+        args,
+      }),
     homeFeedFeatures: (root, args, { dataSources: { FeatureFeed } }) =>
       FeatureFeed.getFeed({
         type: 'apollosConfig',
@@ -19,7 +24,15 @@ const resolver = {
     featureFeed: ({ id }, args, { dataSources: { FeatureFeed } }) =>
       FeatureFeed.getFeed({ type: 'contentItem', args: { id } }),
   },
+  DevotionalContentItem: {
+    featureFeed: ({ id }, args, { dataSources: { FeatureFeed } }) =>
+      FeatureFeed.getFeed({ type: 'contentItem', args: { id } }),
+  },
   ContentSeriesContentItem: {
+    featureFeed: ({ id }, args, { dataSources: { FeatureFeed } }) =>
+      FeatureFeed.getFeed({ type: 'contentItem', args: { id } }),
+  },
+  UniversalContentItem: {
     featureFeed: ({ id }, args, { dataSources: { FeatureFeed } }) =>
       FeatureFeed.getFeed({ type: 'contentItem', args: { id } }),
   },
@@ -38,6 +51,12 @@ class FeatureFeed extends RockApolloDataSource {
     let getFeatures = () => [];
     const { Feature, ContentItem } = this.context.dataSources;
 
+    if (type === 'tab') {
+      getFeatures = () =>
+        Feature.getFeatures(ApollosConfig.TABS[args.tab] || [], args);
+    }
+
+    // TODO deprecated
     if (type === 'apollosConfig') {
       getFeatures = () =>
         Feature.getFeatures(ApollosConfig[args.section] || [], args);

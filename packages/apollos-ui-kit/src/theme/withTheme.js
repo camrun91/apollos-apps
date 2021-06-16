@@ -7,13 +7,13 @@ import { THEME_PROPS } from './createTheme';
 
 const DEFAULT_MAPPER_FN = ({ theme } = {}) => ({ theme });
 
-export default function(mapperFn = DEFAULT_MAPPER_FN, fqn) {
+export default function withTheme(mapperFn = DEFAULT_MAPPER_FN, fqn) {
   return hoistStatics(
     compose(
       getContext({
-        theme: PropTypes.shape(THEME_PROPS),
+        themeContext: PropTypes.shape(THEME_PROPS),
       }),
-      mapProps(({ theme, ...otherProps }) => {
+      mapProps(({ themeContext: theme, ...otherProps }) => {
         const themeOverridesValue = fqn
           ? get(theme, `overrides['${fqn}']`, {})
           : {};
@@ -45,3 +45,5 @@ export default function(mapperFn = DEFAULT_MAPPER_FN, fqn) {
     )
   );
 }
+
+export const named = (name) => withTheme(() => ({}), name);

@@ -1,23 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ui-auth/Password/EmailEntryConnected should render 1`] = `
-<View
-  onLayout={[Function]}
-  style={
-    Array [
-      Object {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      },
-      Object {
-        "paddingBottom": 0,
-      },
-    ]
-  }
->
+Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <BVLinearGradient
     colors={
       Array [
@@ -50,18 +51,18 @@ exports[`ui-auth/Password/EmailEntryConnected should render 1`] = `
         "top": 0,
       }
     }
-  />
+  />,
   <View
     onLayout={[Function]}
-    pointerEvents="box-none"
     style={
-      Object {
-        "height": "100%",
-        "paddingBottom": 0,
-        "paddingLeft": 0,
-        "paddingRight": 0,
-        "paddingTop": 20,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
     }
   >
     <RCTScrollView
@@ -146,8 +147,7 @@ exports[`ui-auth/Password/EmailEntryConnected should render 1`] = `
                 >
                   <View
                     accessible={true}
-                    clickable={false}
-                    isTVSelectable={true}
+                    focusable={false}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -205,8 +205,7 @@ exports[`ui-auth/Password/EmailEntryConnected should render 1`] = `
                 >
                   <View
                     accessible={true}
-                    clickable={true}
-                    isTVSelectable={true}
+                    focusable={true}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -347,13 +346,16 @@ exports[`ui-auth/Password/EmailEntryConnected should render 1`] = `
                                 rejectResponderTermination={true}
                                 returnKeyType="next"
                                 style={
-                                  Object {
-                                    "color": "#303030",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 14,
-                                    "height": 38,
-                                    "paddingVertical": 0,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#303030",
+                                      "fontFamily": "InterUI-Bold",
+                                      "fontSize": 14,
+                                      "height": 38,
+                                      "paddingVertical": 0,
+                                    },
+                                    undefined,
+                                  ]
                                 }
                                 type="email"
                                 underlineColorAndroid="transparent"
@@ -390,9 +392,9 @@ exports[`ui-auth/Password/EmailEntryConnected should render 1`] = `
                                   Object {
                                     "backgroundColor": "transparent",
                                     "color": "#A5A5A5",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 12,
-                                    "lineHeight": 18,
+                                    "fontFamily": "InterUI-Medium",
+                                    "fontSize": 14,
+                                    "lineHeight": 21,
                                     "paddingVertical": 4,
                                   }
                                 }
@@ -487,8 +489,7 @@ exports[`ui-auth/Password/EmailEntryConnected should render 1`] = `
     >
       <View
         accessible={true}
-        clickable={true}
-        isTVSelectable={true}
+        focusable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -538,6 +539,6 @@ exports[`ui-auth/Password/EmailEntryConnected should render 1`] = `
         </View>
       </View>
     </View>
-  </View>
-</View>
+  </View>,
+]
 `;

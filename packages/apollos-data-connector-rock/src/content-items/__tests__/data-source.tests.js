@@ -6,11 +6,13 @@ import { buildGetMock } from '../../test-utils';
 import ContentItemsDataSource from '../data-source';
 
 ApollosConfig.loadJs({
+  APP: {
+    UNIVERSAL_LINK_HOST: 'https://apollos.api',
+  },
   ROCK: {
     API_URL: 'https://apollosrock.newspring.cc/api',
     API_TOKEN: 'some-rock-token',
     IMAGE_URL: 'https://apollosrock.newspring.cc/GetImage.ashx',
-    SHARE_URL: 'https://apollosrock.newspring.cc',
     TIMEZONE: 'America/New_York',
     USE_PLUGIN: true,
   },
@@ -28,7 +30,9 @@ ApollosConfig.loadJs({
 const RealDate = Date;
 
 function mockDate(isoDate) {
-  global.Date = class extends RealDate {
+  global.Date = class extends (
+    RealDate
+  ) {
     constructor() {
       return new RealDate(isoDate);
     }
@@ -53,22 +57,11 @@ describe('ContentItemsModel', () => {
     expect(new ContentItemsDataSource()).toBeTruthy();
   });
 
-  it('creates a sharing URL with channel url and item slug', async () => {
+  it('creates a sharing URL', async () => {
     const dataSource = new ContentItemsDataSource();
-    dataSource.context = {
-      dataSources: {
-        ContentChannel: {
-          getFromId: jest.fn(() => ({
-            itemUrl: '/news',
-          })),
-        },
-      },
-    };
-    dataSource.get = jest.fn(() => ({ slug: 'cool-article' }));
-    const result = 'https://apollorock.newspring.cc/news/cool-article';
-    expect(
-      dataSource.getShareUrl({ contentId: 'fakeId', channelId: 'fakeChannel' })
-    ).resolves.toEqual(result);
+    dataSource.resolveType = () => 'WeekendContentItem';
+    const url = await dataSource.getShareUrl({ content: { id: 1 } });
+    expect(url).toMatchSnapshot();
   });
 
   it('filters by content channel id', () => {
@@ -295,9 +288,17 @@ describe('ContentItemsModel', () => {
       reference: 'john 3',
     }));
     dataSource.context = {
-      dataSources: { Feature: { createTextFeature, createScriptureFeature } },
+      dataSources: {
+        Feature: {
+          createTextFeature,
+          createScriptureFeature,
+        },
+      },
     };
-    const result = dataSource.getFeatures({
+    dataSource.getCursorByChildContentItemId = () => ({
+      get: () => Promise.resolve([{ attributeValues: {}, attributes: {} }]),
+    });
+    const result = await dataSource.getFeatures({
       attributeValues: {
         features: {
           id: 123,
@@ -310,6 +311,85 @@ describe('ContentItemsModel', () => {
     expect(createScriptureFeature.mock.calls).toMatchSnapshot();
   });
 
+  it('returns comment features when a contentItem has a Comments field set to true', async () => {
+    const dataSource = new ContentItemsDataSource();
+    const createCommentListFeature = jest.fn(() => ({
+      id: 'CommentListFeature:123',
+      comments: [],
+      __typename: 'CommentListFeature',
+    }));
+    const createAddCommentFeature = jest.fn(() => ({
+      id: 'AddCommentFeature:123',
+      initialPrompt: 'Write Something...',
+      addPrompt: 'What stands out to you?',
+      __typename: 'AddCommentFeature',
+    }));
+    dataSource.context = {
+      dataSources: {
+        Feature: {
+          createCommentListFeature,
+          createAddCommentFeature,
+        },
+      },
+    };
+    dataSource.getCursorByChildContentItemId = () => ({
+      get: () => Promise.resolve([{ attributeValues: {}, attributes: {} }]),
+    });
+    const result = await dataSource.getFeatures({
+      attributeValues: {
+        comments: {
+          id: 123,
+          value: 'True',
+        },
+      },
+      attributes: {},
+      id: 'ContentItem:123Test',
+    });
+    expect(result).toMatchSnapshot();
+    expect(createCommentListFeature.mock.calls).toMatchSnapshot();
+    expect(createAddCommentFeature.mock.calls).toMatchSnapshot();
+  });
+
+  it('returns comment features when a contentItem has a parent with a Comments field set to true', async () => {
+    const dataSource = new ContentItemsDataSource();
+    const createCommentListFeature = jest.fn(() => ({
+      id: 'CommentListFeature:123',
+      comments: [],
+      __typename: 'CommentListFeature',
+    }));
+    const createAddCommentFeature = jest.fn(() => ({
+      id: 'AddCommentFeature:123',
+      initialPrompt: 'Write Something...',
+      addPrompt: 'What stands out to you?',
+      __typename: 'AddCommentFeature',
+    }));
+    dataSource.context = {
+      dataSources: {
+        Feature: {
+          createCommentListFeature,
+          createAddCommentFeature,
+        },
+      },
+    };
+    dataSource.getCursorByChildContentItemId = () => ({
+      get: () =>
+        Promise.resolve([
+          {
+            attributeValues: { childrenHaveComments: { value: 'True' } },
+            attributes: {},
+          },
+        ]),
+    });
+    const result = await dataSource.getFeatures({
+      attributeValues: {},
+      attributes: {},
+      id: 'ContentItem:123Test',
+    });
+    expect(result).toMatchSnapshot();
+    expect(createCommentListFeature.mock.calls).toMatchSnapshot();
+    expect(createAddCommentFeature.mock.calls).toMatchSnapshot();
+  });
+
   it('returns a text feature when a contentItem has a TextFeature field', async () => {
     const dataSource = new ContentItemsDataSource();
     const createTextFeature = jest.fn(() => ({
@@ -317,7 +397,10 @@ describe('ContentItemsModel', () => {
       body: 'something',
     }));
     dataSource.context = { dataSources: { Feature: { createTextFeature } } };
-    const result = dataSource.getFeatures({
+    dataSource.getCursorByChildContentItemId = () => ({
+      get: () => Promise.resolve([{ attributeValues: {}, attributes: {} }]),
+    });
+    const result = await dataSource.getFeatures({
       attributeValues: { textFeature: { id: 123, value: 'something' } },
     });
     expect(result).toMatchSnapshot();
@@ -331,7 +414,10 @@ describe('ContentItemsModel', () => {
       body: 'something',
     }));
     dataSource.context = { dataSources: { Feature: { createTextFeature } } };
-    const result = dataSource.getFeatures({
+    dataSource.getCursorByChildContentItemId = () => ({
+      get: () => Promise.resolve([{ attributeValues: {}, attributes: {} }]),
+    });
+    const result = await dataSource.getFeatures({
       attributeValues: {
         textFeatures: {
           id: 123,
@@ -352,7 +438,10 @@ describe('ContentItemsModel', () => {
     dataSource.context = {
       dataSources: { Feature: { createScriptureFeature } },
     };
-    const result = dataSource.getFeatures({
+    dataSource.getCursorByChildContentItemId = () => ({
+      get: () => Promise.resolve([{ attributeValues: {}, attributes: {} }]),
+    });
+    const result = await dataSource.getFeatures({
       attributeValues: {
         scriptureFeatures: {
           id: 123,
@@ -373,7 +462,10 @@ describe('ContentItemsModel', () => {
     dataSource.context = {
       dataSources: { Feature: { createScriptureFeature } },
     };
-    const result = dataSource.getFeatures({
+    dataSource.getCursorByChildContentItemId = () => ({
+      get: () => Promise.resolve([{ attributeValues: {}, attributes: {} }]),
+    });
+    const result = await dataSource.getFeatures({
       attributeValues: {
         features: {
           id: 123,
@@ -394,7 +486,10 @@ describe('ContentItemsModel', () => {
       body: 'something',
     }));
     dataSource.context = { dataSources: { Feature: { createTextFeature } } };
-    const result = dataSource.getFeatures({
+    dataSource.getCursorByChildContentItemId = () => ({
+      get: () => Promise.resolve([{ attributeValues: {}, attributes: {} }]),
+    });
+    const result = await dataSource.getFeatures({
       attributeValues: {
         textFeatures: {
           id: 123,
@@ -417,8 +512,14 @@ describe('ContentItemsModel', () => {
       body: 'something',
     }));
     dataSource.context = { dataSources: { Feature: { createTextFeature } } };
-    const result = dataSource.getFeatures({
+    dataSource.getCursorByChildContentItemId = () => ({
+      get: () => Promise.resolve([{ attributeValues: {}, attributes: {} }]),
+    });
+    const result = await dataSource.getFeatures({
       attributeValues: { textFeature: { id: 123, value: '' } },
+    });
+    dataSource.getCursorByChildContentItemId = () => ({
+      get: () => Promise.resolve([{ attributeValues: {}, attributes: {} }]),
     });
     expect(result).toMatchSnapshot();
     expect(createTextFeature.mock.calls).toMatchSnapshot();
@@ -481,7 +582,7 @@ describe('ContentItemsModel', () => {
     const personaMock = jest.fn(() => Promise.resolve(['123', '456']));
     dataSource.context = {
       dataSources: {
-        Person: {
+        Persona: {
           getPersonas: personaMock,
         },
       },
@@ -546,7 +647,7 @@ describe('ContentItemsModel', () => {
     const personaMock = jest.fn(() => Promise.resolve([]));
     dataSource.context = {
       dataSources: {
-        Person: {
+        Persona: {
           getPersonas: personaMock,
         },
       },
@@ -572,7 +673,7 @@ describe('ContentItemsModel', () => {
     const personaMock = jest.fn(() => Promise.resolve(['123', '456']));
     dataSource.context = {
       dataSources: {
-        Person: {
+        Persona: {
           getPersonas: personaMock,
         },
       },

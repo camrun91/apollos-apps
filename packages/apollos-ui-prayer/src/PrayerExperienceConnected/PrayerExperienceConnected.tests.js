@@ -1,11 +1,15 @@
 import React from 'react';
-import wait from 'waait';
-import { Providers, renderWithApolloData } from '../testUtils';
+import { Providers, renderWithApolloData } from '@apollosproject/ui-test-utils';
+import { MockedProvider } from '@apollo/client/testing';
 
 import { PrayerDialogScreen } from '../screens';
 import { PRAY } from '../screens/PrayerScreen';
+import { GET_USER_PHOTO } from '../screens/AddPrayerScreenConnected';
 import GET_PRAYER_FEATURE from './getPrayerFeature';
 import PrayerExperienceConnected from '.';
+
+// mock this so the AvatarCloud looks the same every time
+global.Math.random = () => 0.5;
 
 jest.mock('react-native-device-info', () => ({
   getModel: jest.fn(),
@@ -15,7 +19,7 @@ jest.mock('react-native-device-info', () => ({
 }));
 
 jest.mock('@apollosproject/config', () => {
-  const gql = require.requireActual('graphql-tag');
+  const gql = jest.requireActual('graphql-tag');
   return {
     FRAGMENTS: {
       PRAYER_LIST_FEATURE_FRAGMENT: gql`
@@ -33,6 +37,7 @@ jest.mock('@apollosproject/config', () => {
               id
               nickName
               firstName
+              lastName
               photo {
                 uri
               }
@@ -44,7 +49,32 @@ jest.mock('@apollosproject/config', () => {
   };
 });
 
+jest.mock('../PrayerCard', () => 'PrayerCard');
+
 const mocks = [
+  {
+    request: {
+      query: GET_USER_PHOTO,
+    },
+    result: {
+      data: {
+        currentUser: {
+          id: 'AuthenticatedUser:1234',
+          __typename: 'AuthenticatedUser',
+          profile: {
+            id: 'Person:1234',
+            firstName: 'Bob',
+            lastName: 'Person',
+            __typename: 'Person',
+            photo: {
+              __typename: 'ImageMediaSource',
+              uri: 'https://1234.image.com',
+            },
+          },
+        },
+      },
+    },
+  },
   {
     request: {
       query: PRAY,
@@ -133,7 +163,9 @@ const mocks = [
                 id: 'Person:123',
                 nickName: 'Father',
                 firstName: 'Father',
+                lastName: 'Brown',
                 photo: {
+                  __typename: 'ImageMediaSource',
                   uri: 'https://123.image-url.com',
                 },
               },
@@ -148,7 +180,9 @@ const mocks = [
                 id: 'Person:123',
                 nickName: 'Father',
                 firstName: 'Father',
+                lastName: 'Brown',
                 photo: {
+                  __typename: 'ImageMediaSource',
                   uri: 'https://123.image-url.com',
                 },
               },
@@ -163,6 +197,7 @@ const mocks = [
                 id: 'Person:123',
                 nickName: 'Father',
                 firstName: 'Father',
+                lastName: 'Brown',
                 photo: null,
               },
             },
@@ -183,17 +218,18 @@ const mocks = [
 describe('The PrayerExperienceConnected component', () => {
   it('should render', async () => {
     const tree = await renderWithApolloData(
-      <Providers mocks={mocks}>
+      <Providers MockedProvider={MockedProvider} mocks={mocks}>
         <PrayerExperienceConnected id="PrayerListFeature:123" />
       </Providers>
     );
 
+    await new Promise((res) => setTimeout(res, 100));
     expect(tree).toMatchSnapshot();
   });
 
   it('hides onboarding', async () => {
     const tree = await renderWithApolloData(
-      <Providers mocks={mocks}>
+      <Providers MockedProvider={MockedProvider} mocks={mocks}>
         <PrayerExperienceConnected
           id="PrayerListFeature:123"
           showOnboarding={false}
@@ -201,12 +237,13 @@ describe('The PrayerExperienceConnected component', () => {
       </Providers>
     );
 
+    await new Promise((res) => setTimeout(res, 100));
     expect(tree).toMatchSnapshot();
   });
 
   it('closes onboarding when button is pressed', async () => {
     const tree = await renderWithApolloData(
-      <Providers mocks={mocks}>
+      <Providers MockedProvider={MockedProvider} mocks={mocks}>
         <PrayerExperienceConnected id="PrayerListFeature:123" />
       </Providers>
     );
@@ -214,14 +251,13 @@ describe('The PrayerExperienceConnected component', () => {
     const screen = tree.root.findByType(PrayerDialogScreen);
     screen.props.onPressPrimary();
 
-    await wait(1);
-
+    await new Promise((res) => setTimeout(res, 100));
     expect(tree).toMatchSnapshot();
   });
 
   it('prays', async () => {
     const tree = await renderWithApolloData(
-      <Providers mocks={mocks}>
+      <Providers MockedProvider={MockedProvider} mocks={mocks}>
         <PrayerExperienceConnected id="PrayerListFeature:123" />
       </Providers>
     );
@@ -232,8 +268,7 @@ describe('The PrayerExperienceConnected component', () => {
 
     screens.forEach((screen) => screen.props.onPressPrimary());
 
-    await wait(1);
-
+    await new Promise((res) => setTimeout(res, 100));
     expect(tree).toMatchSnapshot();
   });
 });

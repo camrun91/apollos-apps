@@ -2,9 +2,9 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
-import { SafeAreaView } from 'react-navigation';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { PaddedView, TextInput } from '@apollosproject/ui-kit';
+import { PaddedView, TextInput, named } from '@apollosproject/ui-kit';
 
 import Slide, { SlideContent } from '../../Slide';
 
@@ -27,7 +27,7 @@ const AskName = memo(
 
     return (
       <Slide onPressPrimary={onPressPrimary} isLoading={isLoading} {...props}>
-        <SafeAreaView forceInset={{ top: 'always', bottom: 'always' }}>
+        <SafeAreaView>
           <SlideContent title={slideTitle} description={description} icon>
             <PaddedView horizontal={false}>
               <TextInput
@@ -94,4 +94,4 @@ AskName.defaultProps = {
 
 AskName.displayName = 'AskName';
 
-export default AskName;
+export default named('ui-onboarding.AskName')(AskName);

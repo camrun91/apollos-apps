@@ -1,23 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`The Auth Entry component should render 1`] = `
-<View
-  onLayout={[Function]}
-  style={
-    Array [
-      Object {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      },
-      Object {
-        "paddingBottom": 0,
-      },
-    ]
-  }
->
+Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <BVLinearGradient
     colors={
       Array [
@@ -50,18 +51,18 @@ exports[`The Auth Entry component should render 1`] = `
         "top": 0,
       }
     }
-  />
+  />,
   <View
     onLayout={[Function]}
-    pointerEvents="box-none"
     style={
-      Object {
-        "height": "100%",
-        "paddingBottom": 0,
-        "paddingLeft": 0,
-        "paddingRight": 0,
-        "paddingTop": 20,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
     }
   >
     <RCTScrollView
@@ -110,6 +111,13 @@ exports[`The Auth Entry component should render 1`] = `
                 "borderRadius": 16,
                 "marginHorizontal": 0,
                 "marginVertical": 0,
+                "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                "shadowOffset": Object {
+                  "height": 2,
+                  "width": 0,
+                },
+                "shadowOpacity": 1,
+                "shadowRadius": 8,
               }
             }
           >
@@ -139,8 +147,7 @@ exports[`The Auth Entry component should render 1`] = `
                 >
                   <View
                     accessible={true}
-                    clickable={false}
-                    isTVSelectable={true}
+                    focusable={false}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -167,6 +174,7 @@ exports[`The Auth Entry component should render 1`] = `
                           "justifyContent": "center",
                           "overflow": "hidden",
                           "paddingHorizontal": 16,
+                          "shadowOpacity": 0,
                         }
                       }
                     >
@@ -197,6 +205,13 @@ exports[`The Auth Entry component should render 1`] = `
                     "marginHorizontal": 0,
                     "marginVertical": 0,
                     "paddingTop": 0,
+                    "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                    "shadowOffset": Object {
+                      "height": 2,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0,
+                    "shadowRadius": 8,
                   }
                 }
               >
@@ -268,13 +283,16 @@ exports[`The Auth Entry component should render 1`] = `
                                 rejectResponderTermination={true}
                                 returnKeyType="next"
                                 style={
-                                  Object {
-                                    "color": "#303030",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 14,
-                                    "height": 38,
-                                    "paddingVertical": 0,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#303030",
+                                      "fontFamily": "InterUI-Bold",
+                                      "fontSize": 14,
+                                      "height": 38,
+                                      "paddingVertical": 0,
+                                    },
+                                    undefined,
+                                  ]
                                 }
                                 underlineColorAndroid="transparent"
                               />
@@ -309,9 +327,9 @@ exports[`The Auth Entry component should render 1`] = `
                                   Object {
                                     "backgroundColor": "transparent",
                                     "color": "#A5A5A5",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 12,
-                                    "lineHeight": 18,
+                                    "fontFamily": "InterUI-Medium",
+                                    "fontSize": 14,
+                                    "lineHeight": 21,
                                     "paddingVertical": 4,
                                   }
                                 }
@@ -392,28 +410,29 @@ exports[`The Auth Entry component should render 1`] = `
         </View>
       </View>
     </RCTScrollView>
-  </View>
-</View>
+  </View>,
+]
 `;
 
 exports[`The Auth Entry component should render a custom policyInfo text 1`] = `
-<View
-  onLayout={[Function]}
-  style={
-    Array [
-      Object {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      },
-      Object {
-        "paddingBottom": 0,
-      },
-    ]
-  }
->
+Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <BVLinearGradient
     colors={
       Array [
@@ -446,18 +465,18 @@ exports[`The Auth Entry component should render a custom policyInfo text 1`] = `
         "top": 0,
       }
     }
-  />
+  />,
   <View
     onLayout={[Function]}
-    pointerEvents="box-none"
     style={
-      Object {
-        "height": "100%",
-        "paddingBottom": 0,
-        "paddingLeft": 0,
-        "paddingRight": 0,
-        "paddingTop": 20,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
     }
   >
     <RCTScrollView
@@ -506,6 +525,13 @@ exports[`The Auth Entry component should render a custom policyInfo text 1`] = `
                 "borderRadius": 16,
                 "marginHorizontal": 0,
                 "marginVertical": 0,
+                "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                "shadowOffset": Object {
+                  "height": 2,
+                  "width": 0,
+                },
+                "shadowOpacity": 1,
+                "shadowRadius": 8,
               }
             }
           >
@@ -535,8 +561,7 @@ exports[`The Auth Entry component should render a custom policyInfo text 1`] = `
                 >
                   <View
                     accessible={true}
-                    clickable={false}
-                    isTVSelectable={true}
+                    focusable={false}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -563,6 +588,7 @@ exports[`The Auth Entry component should render a custom policyInfo text 1`] = `
                           "justifyContent": "center",
                           "overflow": "hidden",
                           "paddingHorizontal": 16,
+                          "shadowOpacity": 0,
                         }
                       }
                     >
@@ -593,6 +619,13 @@ exports[`The Auth Entry component should render a custom policyInfo text 1`] = `
                     "marginHorizontal": 0,
                     "marginVertical": 0,
                     "paddingTop": 0,
+                    "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                    "shadowOffset": Object {
+                      "height": 2,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0,
+                    "shadowRadius": 8,
                   }
                 }
               >
@@ -664,13 +697,16 @@ exports[`The Auth Entry component should render a custom policyInfo text 1`] = `
                                 rejectResponderTermination={true}
                                 returnKeyType="next"
                                 style={
-                                  Object {
-                                    "color": "#303030",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 14,
-                                    "height": 38,
-                                    "paddingVertical": 0,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#303030",
+                                      "fontFamily": "InterUI-Bold",
+                                      "fontSize": 14,
+                                      "height": 38,
+                                      "paddingVertical": 0,
+                                    },
+                                    undefined,
+                                  ]
                                 }
                                 underlineColorAndroid="transparent"
                               />
@@ -705,9 +741,9 @@ exports[`The Auth Entry component should render a custom policyInfo text 1`] = `
                                   Object {
                                     "backgroundColor": "transparent",
                                     "color": "#A5A5A5",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 12,
-                                    "lineHeight": 18,
+                                    "fontFamily": "InterUI-Medium",
+                                    "fontSize": 14,
+                                    "lineHeight": 21,
                                     "paddingVertical": 4,
                                   }
                                 }
@@ -790,28 +826,29 @@ exports[`The Auth Entry component should render a custom policyInfo text 1`] = `
         </View>
       </View>
     </RCTScrollView>
-  </View>
-</View>
+  </View>,
+]
 `;
 
 exports[`The Auth Entry component should render as disabled 1`] = `
-<View
-  onLayout={[Function]}
-  style={
-    Array [
-      Object {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      },
-      Object {
-        "paddingBottom": 0,
-      },
-    ]
-  }
->
+Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <BVLinearGradient
     colors={
       Array [
@@ -844,18 +881,18 @@ exports[`The Auth Entry component should render as disabled 1`] = `
         "top": 0,
       }
     }
-  />
+  />,
   <View
     onLayout={[Function]}
-    pointerEvents="box-none"
     style={
-      Object {
-        "height": "100%",
-        "paddingBottom": 0,
-        "paddingLeft": 0,
-        "paddingRight": 0,
-        "paddingTop": 20,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
     }
   >
     <RCTScrollView
@@ -904,6 +941,13 @@ exports[`The Auth Entry component should render as disabled 1`] = `
                 "borderRadius": 16,
                 "marginHorizontal": 0,
                 "marginVertical": 0,
+                "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                "shadowOffset": Object {
+                  "height": 2,
+                  "width": 0,
+                },
+                "shadowOpacity": 1,
+                "shadowRadius": 8,
               }
             }
           >
@@ -933,8 +977,7 @@ exports[`The Auth Entry component should render as disabled 1`] = `
                 >
                   <View
                     accessible={true}
-                    clickable={false}
-                    isTVSelectable={true}
+                    focusable={false}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -961,6 +1004,7 @@ exports[`The Auth Entry component should render as disabled 1`] = `
                           "justifyContent": "center",
                           "overflow": "hidden",
                           "paddingHorizontal": 16,
+                          "shadowOpacity": 0,
                         }
                       }
                     >
@@ -991,6 +1035,13 @@ exports[`The Auth Entry component should render as disabled 1`] = `
                     "marginHorizontal": 0,
                     "marginVertical": 0,
                     "paddingTop": 0,
+                    "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                    "shadowOffset": Object {
+                      "height": 2,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0,
+                    "shadowRadius": 8,
                   }
                 }
               >
@@ -1063,13 +1114,16 @@ exports[`The Auth Entry component should render as disabled 1`] = `
                                 rejectResponderTermination={true}
                                 returnKeyType="next"
                                 style={
-                                  Object {
-                                    "color": "#303030",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 14,
-                                    "height": 38,
-                                    "paddingVertical": 0,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#303030",
+                                      "fontFamily": "InterUI-Bold",
+                                      "fontSize": 14,
+                                      "height": 38,
+                                      "paddingVertical": 0,
+                                    },
+                                    undefined,
+                                  ]
                                 }
                                 underlineColorAndroid="transparent"
                               />
@@ -1104,9 +1158,9 @@ exports[`The Auth Entry component should render as disabled 1`] = `
                                   Object {
                                     "backgroundColor": "transparent",
                                     "color": "#A5A5A5",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 12,
-                                    "lineHeight": 18,
+                                    "fontFamily": "InterUI-Medium",
+                                    "fontSize": 14,
+                                    "lineHeight": 21,
                                     "paddingVertical": 4,
                                   }
                                 }
@@ -1197,8 +1251,7 @@ exports[`The Auth Entry component should render as disabled 1`] = `
     >
       <View
         accessible={true}
-        clickable={true}
-        isTVSelectable={true}
+        focusable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1248,28 +1301,29 @@ exports[`The Auth Entry component should render as disabled 1`] = `
         </View>
       </View>
     </View>
-  </View>
-</View>
+  </View>,
+]
 `;
 
 exports[`The Auth Entry component should render in a loading state 1`] = `
-<View
-  onLayout={[Function]}
-  style={
-    Array [
-      Object {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      },
-      Object {
-        "paddingBottom": 0,
-      },
-    ]
-  }
->
+Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <BVLinearGradient
     colors={
       Array [
@@ -1302,18 +1356,18 @@ exports[`The Auth Entry component should render in a loading state 1`] = `
         "top": 0,
       }
     }
-  />
+  />,
   <View
     onLayout={[Function]}
-    pointerEvents="box-none"
     style={
-      Object {
-        "height": "100%",
-        "paddingBottom": 0,
-        "paddingLeft": 0,
-        "paddingRight": 0,
-        "paddingTop": 20,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
     }
   >
     <RCTScrollView
@@ -1362,6 +1416,13 @@ exports[`The Auth Entry component should render in a loading state 1`] = `
                 "borderRadius": 16,
                 "marginHorizontal": 0,
                 "marginVertical": 0,
+                "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                "shadowOffset": Object {
+                  "height": 2,
+                  "width": 0,
+                },
+                "shadowOpacity": 1,
+                "shadowRadius": 8,
               }
             }
           >
@@ -1391,8 +1452,7 @@ exports[`The Auth Entry component should render in a loading state 1`] = `
                 >
                   <View
                     accessible={true}
-                    clickable={false}
-                    isTVSelectable={true}
+                    focusable={false}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -1419,6 +1479,7 @@ exports[`The Auth Entry component should render in a loading state 1`] = `
                           "justifyContent": "center",
                           "overflow": "hidden",
                           "paddingHorizontal": 16,
+                          "shadowOpacity": 0,
                         }
                       }
                     >
@@ -1449,6 +1510,13 @@ exports[`The Auth Entry component should render in a loading state 1`] = `
                     "marginHorizontal": 0,
                     "marginVertical": 0,
                     "paddingTop": 0,
+                    "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                    "shadowOffset": Object {
+                      "height": 2,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0,
+                    "shadowRadius": 8,
                   }
                 }
               >
@@ -1521,13 +1589,16 @@ exports[`The Auth Entry component should render in a loading state 1`] = `
                                 rejectResponderTermination={true}
                                 returnKeyType="next"
                                 style={
-                                  Object {
-                                    "color": "#303030",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 14,
-                                    "height": 38,
-                                    "paddingVertical": 0,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#303030",
+                                      "fontFamily": "InterUI-Bold",
+                                      "fontSize": 14,
+                                      "height": 38,
+                                      "paddingVertical": 0,
+                                    },
+                                    undefined,
+                                  ]
                                 }
                                 underlineColorAndroid="transparent"
                               />
@@ -1562,9 +1633,9 @@ exports[`The Auth Entry component should render in a loading state 1`] = `
                                   Object {
                                     "backgroundColor": "transparent",
                                     "color": "#A5A5A5",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 12,
-                                    "lineHeight": 18,
+                                    "fontFamily": "InterUI-Medium",
+                                    "fontSize": 14,
+                                    "lineHeight": 21,
                                     "paddingVertical": 4,
                                   }
                                 }
@@ -1655,8 +1726,7 @@ exports[`The Auth Entry component should render in a loading state 1`] = `
     >
       <View
         accessible={true}
-        clickable={true}
-        isTVSelectable={true}
+        focusable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1700,28 +1770,29 @@ exports[`The Auth Entry component should render in a loading state 1`] = `
         </View>
       </View>
     </View>
-  </View>
-</View>
+  </View>,
+]
 `;
 
 exports[`The Auth Entry component should render in a next button 1`] = `
-<View
-  onLayout={[Function]}
-  style={
-    Array [
-      Object {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      },
-      Object {
-        "paddingBottom": 0,
-      },
-    ]
-  }
->
+Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <BVLinearGradient
     colors={
       Array [
@@ -1754,18 +1825,18 @@ exports[`The Auth Entry component should render in a next button 1`] = `
         "top": 0,
       }
     }
-  />
+  />,
   <View
     onLayout={[Function]}
-    pointerEvents="box-none"
     style={
-      Object {
-        "height": "100%",
-        "paddingBottom": 0,
-        "paddingLeft": 0,
-        "paddingRight": 0,
-        "paddingTop": 20,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
     }
   >
     <RCTScrollView
@@ -1814,6 +1885,13 @@ exports[`The Auth Entry component should render in a next button 1`] = `
                 "borderRadius": 16,
                 "marginHorizontal": 0,
                 "marginVertical": 0,
+                "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                "shadowOffset": Object {
+                  "height": 2,
+                  "width": 0,
+                },
+                "shadowOpacity": 1,
+                "shadowRadius": 8,
               }
             }
           >
@@ -1843,8 +1921,7 @@ exports[`The Auth Entry component should render in a next button 1`] = `
                 >
                   <View
                     accessible={true}
-                    clickable={false}
-                    isTVSelectable={true}
+                    focusable={false}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -1871,6 +1948,7 @@ exports[`The Auth Entry component should render in a next button 1`] = `
                           "justifyContent": "center",
                           "overflow": "hidden",
                           "paddingHorizontal": 16,
+                          "shadowOpacity": 0,
                         }
                       }
                     >
@@ -1901,6 +1979,13 @@ exports[`The Auth Entry component should render in a next button 1`] = `
                     "marginHorizontal": 0,
                     "marginVertical": 0,
                     "paddingTop": 0,
+                    "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                    "shadowOffset": Object {
+                      "height": 2,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0,
+                    "shadowRadius": 8,
                   }
                 }
               >
@@ -1973,13 +2058,16 @@ exports[`The Auth Entry component should render in a next button 1`] = `
                                 rejectResponderTermination={true}
                                 returnKeyType="next"
                                 style={
-                                  Object {
-                                    "color": "#303030",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 14,
-                                    "height": 38,
-                                    "paddingVertical": 0,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#303030",
+                                      "fontFamily": "InterUI-Bold",
+                                      "fontSize": 14,
+                                      "height": 38,
+                                      "paddingVertical": 0,
+                                    },
+                                    undefined,
+                                  ]
                                 }
                                 underlineColorAndroid="transparent"
                               />
@@ -2014,9 +2102,9 @@ exports[`The Auth Entry component should render in a next button 1`] = `
                                   Object {
                                     "backgroundColor": "transparent",
                                     "color": "#A5A5A5",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 12,
-                                    "lineHeight": 18,
+                                    "fontFamily": "InterUI-Medium",
+                                    "fontSize": 14,
+                                    "lineHeight": 21,
                                     "paddingVertical": 4,
                                   }
                                 }
@@ -2107,8 +2195,7 @@ exports[`The Auth Entry component should render in a next button 1`] = `
     >
       <View
         accessible={true}
-        clickable={true}
-        isTVSelectable={true}
+        focusable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -2158,28 +2245,29 @@ exports[`The Auth Entry component should render in a next button 1`] = `
         </View>
       </View>
     </View>
-  </View>
-</View>
+  </View>,
+]
 `;
 
 exports[`The Auth Entry component should render in an error state 1`] = `
-<View
-  onLayout={[Function]}
-  style={
-    Array [
-      Object {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      },
-      Object {
-        "paddingBottom": 0,
-      },
-    ]
-  }
->
+Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <BVLinearGradient
     colors={
       Array [
@@ -2212,18 +2300,18 @@ exports[`The Auth Entry component should render in an error state 1`] = `
         "top": 0,
       }
     }
-  />
+  />,
   <View
     onLayout={[Function]}
-    pointerEvents="box-none"
     style={
-      Object {
-        "height": "100%",
-        "paddingBottom": 0,
-        "paddingLeft": 0,
-        "paddingRight": 0,
-        "paddingTop": 20,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
     }
   >
     <RCTScrollView
@@ -2272,6 +2360,13 @@ exports[`The Auth Entry component should render in an error state 1`] = `
                 "borderRadius": 16,
                 "marginHorizontal": 0,
                 "marginVertical": 0,
+                "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                "shadowOffset": Object {
+                  "height": 2,
+                  "width": 0,
+                },
+                "shadowOpacity": 1,
+                "shadowRadius": 8,
               }
             }
           >
@@ -2301,8 +2396,7 @@ exports[`The Auth Entry component should render in an error state 1`] = `
                 >
                   <View
                     accessible={true}
-                    clickable={false}
-                    isTVSelectable={true}
+                    focusable={false}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -2329,6 +2423,7 @@ exports[`The Auth Entry component should render in an error state 1`] = `
                           "justifyContent": "center",
                           "overflow": "hidden",
                           "paddingHorizontal": 16,
+                          "shadowOpacity": 0,
                         }
                       }
                     >
@@ -2359,6 +2454,13 @@ exports[`The Auth Entry component should render in an error state 1`] = `
                     "marginHorizontal": 0,
                     "marginVertical": 0,
                     "paddingTop": 0,
+                    "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                    "shadowOffset": Object {
+                      "height": 2,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0,
+                    "shadowRadius": 8,
                   }
                 }
               >
@@ -2430,13 +2532,16 @@ exports[`The Auth Entry component should render in an error state 1`] = `
                                 rejectResponderTermination={true}
                                 returnKeyType="next"
                                 style={
-                                  Object {
-                                    "color": "#303030",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 14,
-                                    "height": 38,
-                                    "paddingVertical": 0,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#303030",
+                                      "fontFamily": "InterUI-Bold",
+                                      "fontSize": 14,
+                                      "height": 38,
+                                      "paddingVertical": 0,
+                                    },
+                                    undefined,
+                                  ]
                                 }
                                 underlineColorAndroid="transparent"
                               />
@@ -2471,9 +2576,9 @@ exports[`The Auth Entry component should render in an error state 1`] = `
                                   Object {
                                     "backgroundColor": "transparent",
                                     "color": "#A5A5A5",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 12,
-                                    "lineHeight": 18,
+                                    "fontFamily": "InterUI-Medium",
+                                    "fontSize": 14,
+                                    "lineHeight": 21,
                                     "paddingVertical": 4,
                                   }
                                 }
@@ -2554,28 +2659,29 @@ exports[`The Auth Entry component should render in an error state 1`] = `
         </View>
       </View>
     </RCTScrollView>
-  </View>
-</View>
+  </View>,
+]
 `;
 
 exports[`The Auth Entry component should render with a custom alternateLoginText 1`] = `
-<View
-  onLayout={[Function]}
-  style={
-    Array [
-      Object {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      },
-      Object {
-        "paddingBottom": 0,
-      },
-    ]
-  }
->
+Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <BVLinearGradient
     colors={
       Array [
@@ -2608,18 +2714,18 @@ exports[`The Auth Entry component should render with a custom alternateLoginText
         "top": 0,
       }
     }
-  />
+  />,
   <View
     onLayout={[Function]}
-    pointerEvents="box-none"
     style={
-      Object {
-        "height": "100%",
-        "paddingBottom": 0,
-        "paddingLeft": 0,
-        "paddingRight": 0,
-        "paddingTop": 20,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
     }
   >
     <RCTScrollView
@@ -2668,6 +2774,13 @@ exports[`The Auth Entry component should render with a custom alternateLoginText
                 "borderRadius": 16,
                 "marginHorizontal": 0,
                 "marginVertical": 0,
+                "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                "shadowOffset": Object {
+                  "height": 2,
+                  "width": 0,
+                },
+                "shadowOpacity": 1,
+                "shadowRadius": 8,
               }
             }
           >
@@ -2697,8 +2810,7 @@ exports[`The Auth Entry component should render with a custom alternateLoginText
                 >
                   <View
                     accessible={true}
-                    clickable={false}
-                    isTVSelectable={true}
+                    focusable={false}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -2725,6 +2837,7 @@ exports[`The Auth Entry component should render with a custom alternateLoginText
                           "justifyContent": "center",
                           "overflow": "hidden",
                           "paddingHorizontal": 16,
+                          "shadowOpacity": 0,
                         }
                       }
                     >
@@ -2753,8 +2866,7 @@ exports[`The Auth Entry component should render with a custom alternateLoginText
                 >
                   <View
                     accessible={true}
-                    clickable={true}
-                    isTVSelectable={true}
+                    focusable={true}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -2780,6 +2892,7 @@ exports[`The Auth Entry component should render with a custom alternateLoginText
                           "justifyContent": "center",
                           "overflow": "hidden",
                           "paddingHorizontal": 16,
+                          "shadowOpacity": 0,
                         }
                       }
                     >
@@ -2811,6 +2924,13 @@ exports[`The Auth Entry component should render with a custom alternateLoginText
                     "marginHorizontal": 0,
                     "marginVertical": 0,
                     "paddingTop": 0,
+                    "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                    "shadowOffset": Object {
+                      "height": 2,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0,
+                    "shadowRadius": 8,
                   }
                 }
               >
@@ -2882,13 +3002,16 @@ exports[`The Auth Entry component should render with a custom alternateLoginText
                                 rejectResponderTermination={true}
                                 returnKeyType="next"
                                 style={
-                                  Object {
-                                    "color": "#303030",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 14,
-                                    "height": 38,
-                                    "paddingVertical": 0,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#303030",
+                                      "fontFamily": "InterUI-Bold",
+                                      "fontSize": 14,
+                                      "height": 38,
+                                      "paddingVertical": 0,
+                                    },
+                                    undefined,
+                                  ]
                                 }
                                 underlineColorAndroid="transparent"
                               />
@@ -2923,9 +3046,9 @@ exports[`The Auth Entry component should render with a custom alternateLoginText
                                   Object {
                                     "backgroundColor": "transparent",
                                     "color": "#A5A5A5",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 12,
-                                    "lineHeight": 18,
+                                    "fontFamily": "InterUI-Medium",
+                                    "fontSize": 14,
+                                    "lineHeight": 21,
                                     "paddingVertical": 4,
                                   }
                                 }
@@ -3006,28 +3129,29 @@ exports[`The Auth Entry component should render with a custom alternateLoginText
         </View>
       </View>
     </RCTScrollView>
-  </View>
-</View>
+  </View>,
+]
 `;
 
 exports[`The Auth Entry component should render with a custom authTitleText 1`] = `
-<View
-  onLayout={[Function]}
-  style={
-    Array [
-      Object {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      },
-      Object {
-        "paddingBottom": 0,
-      },
-    ]
-  }
->
+Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <BVLinearGradient
     colors={
       Array [
@@ -3060,18 +3184,18 @@ exports[`The Auth Entry component should render with a custom authTitleText 1`] 
         "top": 0,
       }
     }
-  />
+  />,
   <View
     onLayout={[Function]}
-    pointerEvents="box-none"
     style={
-      Object {
-        "height": "100%",
-        "paddingBottom": 0,
-        "paddingLeft": 0,
-        "paddingRight": 0,
-        "paddingTop": 20,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
     }
   >
     <RCTScrollView
@@ -3120,6 +3244,13 @@ exports[`The Auth Entry component should render with a custom authTitleText 1`] 
                 "borderRadius": 16,
                 "marginHorizontal": 0,
                 "marginVertical": 0,
+                "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                "shadowOffset": Object {
+                  "height": 2,
+                  "width": 0,
+                },
+                "shadowOpacity": 1,
+                "shadowRadius": 8,
               }
             }
           >
@@ -3149,8 +3280,7 @@ exports[`The Auth Entry component should render with a custom authTitleText 1`] 
                 >
                   <View
                     accessible={true}
-                    clickable={false}
-                    isTVSelectable={true}
+                    focusable={false}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -3177,6 +3307,7 @@ exports[`The Auth Entry component should render with a custom authTitleText 1`] 
                           "justifyContent": "center",
                           "overflow": "hidden",
                           "paddingHorizontal": 16,
+                          "shadowOpacity": 0,
                         }
                       }
                     >
@@ -3207,6 +3338,13 @@ exports[`The Auth Entry component should render with a custom authTitleText 1`] 
                     "marginHorizontal": 0,
                     "marginVertical": 0,
                     "paddingTop": 0,
+                    "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                    "shadowOffset": Object {
+                      "height": 2,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0,
+                    "shadowRadius": 8,
                   }
                 }
               >
@@ -3278,13 +3416,16 @@ exports[`The Auth Entry component should render with a custom authTitleText 1`] 
                                 rejectResponderTermination={true}
                                 returnKeyType="next"
                                 style={
-                                  Object {
-                                    "color": "#303030",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 14,
-                                    "height": 38,
-                                    "paddingVertical": 0,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#303030",
+                                      "fontFamily": "InterUI-Bold",
+                                      "fontSize": 14,
+                                      "height": 38,
+                                      "paddingVertical": 0,
+                                    },
+                                    undefined,
+                                  ]
                                 }
                                 underlineColorAndroid="transparent"
                               />
@@ -3319,9 +3460,9 @@ exports[`The Auth Entry component should render with a custom authTitleText 1`] 
                                   Object {
                                     "backgroundColor": "transparent",
                                     "color": "#A5A5A5",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 12,
-                                    "lineHeight": 18,
+                                    "fontFamily": "InterUI-Medium",
+                                    "fontSize": 14,
+                                    "lineHeight": 21,
                                     "paddingVertical": 4,
                                   }
                                 }
@@ -3402,28 +3543,29 @@ exports[`The Auth Entry component should render with a custom authTitleText 1`] 
         </View>
       </View>
     </RCTScrollView>
-  </View>
-</View>
+  </View>,
+]
 `;
 
 exports[`The Auth Entry component should render with a custom promptText 1`] = `
-<View
-  onLayout={[Function]}
-  style={
-    Array [
-      Object {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      },
-      Object {
-        "paddingBottom": 0,
-      },
-    ]
-  }
->
+Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <BVLinearGradient
     colors={
       Array [
@@ -3456,18 +3598,18 @@ exports[`The Auth Entry component should render with a custom promptText 1`] = `
         "top": 0,
       }
     }
-  />
+  />,
   <View
     onLayout={[Function]}
-    pointerEvents="box-none"
     style={
-      Object {
-        "height": "100%",
-        "paddingBottom": 0,
-        "paddingLeft": 0,
-        "paddingRight": 0,
-        "paddingTop": 20,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
     }
   >
     <RCTScrollView
@@ -3516,6 +3658,13 @@ exports[`The Auth Entry component should render with a custom promptText 1`] = `
                 "borderRadius": 16,
                 "marginHorizontal": 0,
                 "marginVertical": 0,
+                "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                "shadowOffset": Object {
+                  "height": 2,
+                  "width": 0,
+                },
+                "shadowOpacity": 1,
+                "shadowRadius": 8,
               }
             }
           >
@@ -3545,8 +3694,7 @@ exports[`The Auth Entry component should render with a custom promptText 1`] = `
                 >
                   <View
                     accessible={true}
-                    clickable={false}
-                    isTVSelectable={true}
+                    focusable={false}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -3573,6 +3721,7 @@ exports[`The Auth Entry component should render with a custom promptText 1`] = `
                           "justifyContent": "center",
                           "overflow": "hidden",
                           "paddingHorizontal": 16,
+                          "shadowOpacity": 0,
                         }
                       }
                     >
@@ -3603,6 +3752,13 @@ exports[`The Auth Entry component should render with a custom promptText 1`] = `
                     "marginHorizontal": 0,
                     "marginVertical": 0,
                     "paddingTop": 0,
+                    "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                    "shadowOffset": Object {
+                      "height": 2,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0,
+                    "shadowRadius": 8,
                   }
                 }
               >
@@ -3674,13 +3830,16 @@ exports[`The Auth Entry component should render with a custom promptText 1`] = `
                                 rejectResponderTermination={true}
                                 returnKeyType="next"
                                 style={
-                                  Object {
-                                    "color": "#303030",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 14,
-                                    "height": 38,
-                                    "paddingVertical": 0,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#303030",
+                                      "fontFamily": "InterUI-Bold",
+                                      "fontSize": 14,
+                                      "height": 38,
+                                      "paddingVertical": 0,
+                                    },
+                                    undefined,
+                                  ]
                                 }
                                 underlineColorAndroid="transparent"
                               />
@@ -3715,9 +3874,9 @@ exports[`The Auth Entry component should render with a custom promptText 1`] = `
                                   Object {
                                     "backgroundColor": "transparent",
                                     "color": "#A5A5A5",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 12,
-                                    "lineHeight": 18,
+                                    "fontFamily": "InterUI-Medium",
+                                    "fontSize": 14,
+                                    "lineHeight": 21,
                                     "paddingVertical": 4,
                                   }
                                 }
@@ -3798,28 +3957,29 @@ exports[`The Auth Entry component should render with a custom promptText 1`] = `
         </View>
       </View>
     </RCTScrollView>
-  </View>
-</View>
+  </View>,
+]
 `;
 
 exports[`The Auth Entry component should render with a custom tabTitle 1`] = `
-<View
-  onLayout={[Function]}
-  style={
-    Array [
-      Object {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      },
-      Object {
-        "paddingBottom": 0,
-      },
-    ]
-  }
->
+Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <BVLinearGradient
     colors={
       Array [
@@ -3852,18 +4012,18 @@ exports[`The Auth Entry component should render with a custom tabTitle 1`] = `
         "top": 0,
       }
     }
-  />
+  />,
   <View
     onLayout={[Function]}
-    pointerEvents="box-none"
     style={
-      Object {
-        "height": "100%",
-        "paddingBottom": 0,
-        "paddingLeft": 0,
-        "paddingRight": 0,
-        "paddingTop": 20,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
     }
   >
     <RCTScrollView
@@ -3912,6 +4072,13 @@ exports[`The Auth Entry component should render with a custom tabTitle 1`] = `
                 "borderRadius": 16,
                 "marginHorizontal": 0,
                 "marginVertical": 0,
+                "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                "shadowOffset": Object {
+                  "height": 2,
+                  "width": 0,
+                },
+                "shadowOpacity": 1,
+                "shadowRadius": 8,
               }
             }
           >
@@ -3941,8 +4108,7 @@ exports[`The Auth Entry component should render with a custom tabTitle 1`] = `
                 >
                   <View
                     accessible={true}
-                    clickable={false}
-                    isTVSelectable={true}
+                    focusable={false}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -3969,6 +4135,7 @@ exports[`The Auth Entry component should render with a custom tabTitle 1`] = `
                           "justifyContent": "center",
                           "overflow": "hidden",
                           "paddingHorizontal": 16,
+                          "shadowOpacity": 0,
                         }
                       }
                     >
@@ -4001,6 +4168,13 @@ exports[`The Auth Entry component should render with a custom tabTitle 1`] = `
                     "marginHorizontal": 0,
                     "marginVertical": 0,
                     "paddingTop": 0,
+                    "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                    "shadowOffset": Object {
+                      "height": 2,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0,
+                    "shadowRadius": 8,
                   }
                 }
               >
@@ -4072,13 +4246,16 @@ exports[`The Auth Entry component should render with a custom tabTitle 1`] = `
                                 rejectResponderTermination={true}
                                 returnKeyType="next"
                                 style={
-                                  Object {
-                                    "color": "#303030",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 14,
-                                    "height": 38,
-                                    "paddingVertical": 0,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#303030",
+                                      "fontFamily": "InterUI-Bold",
+                                      "fontSize": 14,
+                                      "height": 38,
+                                      "paddingVertical": 0,
+                                    },
+                                    undefined,
+                                  ]
                                 }
                                 underlineColorAndroid="transparent"
                               />
@@ -4113,9 +4290,9 @@ exports[`The Auth Entry component should render with a custom tabTitle 1`] = `
                                   Object {
                                     "backgroundColor": "transparent",
                                     "color": "#A5A5A5",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 12,
-                                    "lineHeight": 18,
+                                    "fontFamily": "InterUI-Medium",
+                                    "fontSize": 14,
+                                    "lineHeight": 21,
                                     "paddingVertical": 4,
                                   }
                                 }
@@ -4196,28 +4373,29 @@ exports[`The Auth Entry component should render with a custom tabTitle 1`] = `
         </View>
       </View>
     </RCTScrollView>
-  </View>
-</View>
+  </View>,
+]
 `;
 
 exports[`The Auth Entry component should render with a inputAutoComplete as tel 1`] = `
-<View
-  onLayout={[Function]}
-  style={
-    Array [
-      Object {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      },
-      Object {
-        "paddingBottom": 0,
-      },
-    ]
-  }
->
+Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <BVLinearGradient
     colors={
       Array [
@@ -4250,18 +4428,18 @@ exports[`The Auth Entry component should render with a inputAutoComplete as tel 
         "top": 0,
       }
     }
-  />
+  />,
   <View
     onLayout={[Function]}
-    pointerEvents="box-none"
     style={
-      Object {
-        "height": "100%",
-        "paddingBottom": 0,
-        "paddingLeft": 0,
-        "paddingRight": 0,
-        "paddingTop": 20,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
     }
   >
     <RCTScrollView
@@ -4310,6 +4488,13 @@ exports[`The Auth Entry component should render with a inputAutoComplete as tel 
                 "borderRadius": 16,
                 "marginHorizontal": 0,
                 "marginVertical": 0,
+                "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                "shadowOffset": Object {
+                  "height": 2,
+                  "width": 0,
+                },
+                "shadowOpacity": 1,
+                "shadowRadius": 8,
               }
             }
           >
@@ -4339,8 +4524,7 @@ exports[`The Auth Entry component should render with a inputAutoComplete as tel 
                 >
                   <View
                     accessible={true}
-                    clickable={false}
-                    isTVSelectable={true}
+                    focusable={false}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -4367,6 +4551,7 @@ exports[`The Auth Entry component should render with a inputAutoComplete as tel 
                           "justifyContent": "center",
                           "overflow": "hidden",
                           "paddingHorizontal": 16,
+                          "shadowOpacity": 0,
                         }
                       }
                     >
@@ -4397,6 +4582,13 @@ exports[`The Auth Entry component should render with a inputAutoComplete as tel 
                     "marginHorizontal": 0,
                     "marginVertical": 0,
                     "paddingTop": 0,
+                    "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                    "shadowOffset": Object {
+                      "height": 2,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0,
+                    "shadowRadius": 8,
                   }
                 }
               >
@@ -4468,13 +4660,16 @@ exports[`The Auth Entry component should render with a inputAutoComplete as tel 
                                 rejectResponderTermination={true}
                                 returnKeyType="next"
                                 style={
-                                  Object {
-                                    "color": "#303030",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 14,
-                                    "height": 38,
-                                    "paddingVertical": 0,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#303030",
+                                      "fontFamily": "InterUI-Bold",
+                                      "fontSize": 14,
+                                      "height": 38,
+                                      "paddingVertical": 0,
+                                    },
+                                    undefined,
+                                  ]
                                 }
                                 underlineColorAndroid="transparent"
                               />
@@ -4509,9 +4704,9 @@ exports[`The Auth Entry component should render with a inputAutoComplete as tel 
                                   Object {
                                     "backgroundColor": "transparent",
                                     "color": "#A5A5A5",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 12,
-                                    "lineHeight": 18,
+                                    "fontFamily": "InterUI-Medium",
+                                    "fontSize": 14,
+                                    "lineHeight": 21,
                                     "paddingVertical": 4,
                                   }
                                 }
@@ -4594,28 +4789,29 @@ exports[`The Auth Entry component should render with a inputAutoComplete as tel 
         </View>
       </View>
     </RCTScrollView>
-  </View>
-</View>
+  </View>,
+]
 `;
 
 exports[`The Auth Entry component should render with a inputLabel Phone Number 1`] = `
-<View
-  onLayout={[Function]}
-  style={
-    Array [
-      Object {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      },
-      Object {
-        "paddingBottom": 0,
-      },
-    ]
-  }
->
+Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <BVLinearGradient
     colors={
       Array [
@@ -4648,18 +4844,18 @@ exports[`The Auth Entry component should render with a inputLabel Phone Number 1
         "top": 0,
       }
     }
-  />
+  />,
   <View
     onLayout={[Function]}
-    pointerEvents="box-none"
     style={
-      Object {
-        "height": "100%",
-        "paddingBottom": 0,
-        "paddingLeft": 0,
-        "paddingRight": 0,
-        "paddingTop": 20,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
     }
   >
     <RCTScrollView
@@ -4708,6 +4904,13 @@ exports[`The Auth Entry component should render with a inputLabel Phone Number 1
                 "borderRadius": 16,
                 "marginHorizontal": 0,
                 "marginVertical": 0,
+                "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                "shadowOffset": Object {
+                  "height": 2,
+                  "width": 0,
+                },
+                "shadowOpacity": 1,
+                "shadowRadius": 8,
               }
             }
           >
@@ -4737,8 +4940,7 @@ exports[`The Auth Entry component should render with a inputLabel Phone Number 1
                 >
                   <View
                     accessible={true}
-                    clickable={false}
-                    isTVSelectable={true}
+                    focusable={false}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -4765,6 +4967,7 @@ exports[`The Auth Entry component should render with a inputLabel Phone Number 1
                           "justifyContent": "center",
                           "overflow": "hidden",
                           "paddingHorizontal": 16,
+                          "shadowOpacity": 0,
                         }
                       }
                     >
@@ -4795,6 +4998,13 @@ exports[`The Auth Entry component should render with a inputLabel Phone Number 1
                     "marginHorizontal": 0,
                     "marginVertical": 0,
                     "paddingTop": 0,
+                    "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                    "shadowOffset": Object {
+                      "height": 2,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0,
+                    "shadowRadius": 8,
                   }
                 }
               >
@@ -4866,13 +5076,16 @@ exports[`The Auth Entry component should render with a inputLabel Phone Number 1
                                 rejectResponderTermination={true}
                                 returnKeyType="next"
                                 style={
-                                  Object {
-                                    "color": "#303030",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 14,
-                                    "height": 38,
-                                    "paddingVertical": 0,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#303030",
+                                      "fontFamily": "InterUI-Bold",
+                                      "fontSize": 14,
+                                      "height": 38,
+                                      "paddingVertical": 0,
+                                    },
+                                    undefined,
+                                  ]
                                 }
                                 underlineColorAndroid="transparent"
                               />
@@ -4907,9 +5120,9 @@ exports[`The Auth Entry component should render with a inputLabel Phone Number 1
                                   Object {
                                     "backgroundColor": "transparent",
                                     "color": "#A5A5A5",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 12,
-                                    "lineHeight": 18,
+                                    "fontFamily": "InterUI-Medium",
+                                    "fontSize": 14,
+                                    "lineHeight": 21,
                                     "paddingVertical": 4,
                                   }
                                 }
@@ -4992,28 +5205,29 @@ exports[`The Auth Entry component should render with a inputLabel Phone Number 1
         </View>
       </View>
     </RCTScrollView>
-  </View>
-</View>
+  </View>,
+]
 `;
 
 exports[`The Auth Entry component should render with a inputType phone 1`] = `
-<View
-  onLayout={[Function]}
-  style={
-    Array [
-      Object {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      },
-      Object {
-        "paddingBottom": 0,
-      },
-    ]
-  }
->
+Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <BVLinearGradient
     colors={
       Array [
@@ -5046,18 +5260,18 @@ exports[`The Auth Entry component should render with a inputType phone 1`] = `
         "top": 0,
       }
     }
-  />
+  />,
   <View
     onLayout={[Function]}
-    pointerEvents="box-none"
     style={
-      Object {
-        "height": "100%",
-        "paddingBottom": 0,
-        "paddingLeft": 0,
-        "paddingRight": 0,
-        "paddingTop": 20,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
     }
   >
     <RCTScrollView
@@ -5106,6 +5320,13 @@ exports[`The Auth Entry component should render with a inputType phone 1`] = `
                 "borderRadius": 16,
                 "marginHorizontal": 0,
                 "marginVertical": 0,
+                "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                "shadowOffset": Object {
+                  "height": 2,
+                  "width": 0,
+                },
+                "shadowOpacity": 1,
+                "shadowRadius": 8,
               }
             }
           >
@@ -5135,8 +5356,7 @@ exports[`The Auth Entry component should render with a inputType phone 1`] = `
                 >
                   <View
                     accessible={true}
-                    clickable={false}
-                    isTVSelectable={true}
+                    focusable={false}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -5163,6 +5383,7 @@ exports[`The Auth Entry component should render with a inputType phone 1`] = `
                           "justifyContent": "center",
                           "overflow": "hidden",
                           "paddingHorizontal": 16,
+                          "shadowOpacity": 0,
                         }
                       }
                     >
@@ -5193,6 +5414,13 @@ exports[`The Auth Entry component should render with a inputType phone 1`] = `
                     "marginHorizontal": 0,
                     "marginVertical": 0,
                     "paddingTop": 0,
+                    "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                    "shadowOffset": Object {
+                      "height": 2,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0,
+                    "shadowRadius": 8,
                   }
                 }
               >
@@ -5265,13 +5493,16 @@ exports[`The Auth Entry component should render with a inputType phone 1`] = `
                                 rejectResponderTermination={true}
                                 returnKeyType="next"
                                 style={
-                                  Object {
-                                    "color": "#303030",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 14,
-                                    "height": 38,
-                                    "paddingVertical": 0,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#303030",
+                                      "fontFamily": "InterUI-Bold",
+                                      "fontSize": 14,
+                                      "height": 38,
+                                      "paddingVertical": 0,
+                                    },
+                                    undefined,
+                                  ]
                                 }
                                 type="phone"
                                 underlineColorAndroid="transparent"
@@ -5307,9 +5538,9 @@ exports[`The Auth Entry component should render with a inputType phone 1`] = `
                                   Object {
                                     "backgroundColor": "transparent",
                                     "color": "#A5A5A5",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 12,
-                                    "lineHeight": 18,
+                                    "fontFamily": "InterUI-Medium",
+                                    "fontSize": 14,
+                                    "lineHeight": 21,
                                     "paddingVertical": 4,
                                   }
                                 }
@@ -5390,28 +5621,29 @@ exports[`The Auth Entry component should render with a inputType phone 1`] = `
         </View>
       </View>
     </RCTScrollView>
-  </View>
-</View>
+  </View>,
+]
 `;
 
 exports[`The Auth Entry component should render with a value 1`] = `
-<View
-  onLayout={[Function]}
-  style={
-    Array [
-      Object {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      },
-      Object {
-        "paddingBottom": 0,
-      },
-    ]
-  }
->
+Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <BVLinearGradient
     colors={
       Array [
@@ -5444,18 +5676,18 @@ exports[`The Auth Entry component should render with a value 1`] = `
         "top": 0,
       }
     }
-  />
+  />,
   <View
     onLayout={[Function]}
-    pointerEvents="box-none"
     style={
-      Object {
-        "height": "100%",
-        "paddingBottom": 0,
-        "paddingLeft": 0,
-        "paddingRight": 0,
-        "paddingTop": 20,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
     }
   >
     <RCTScrollView
@@ -5504,6 +5736,13 @@ exports[`The Auth Entry component should render with a value 1`] = `
                 "borderRadius": 16,
                 "marginHorizontal": 0,
                 "marginVertical": 0,
+                "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                "shadowOffset": Object {
+                  "height": 2,
+                  "width": 0,
+                },
+                "shadowOpacity": 1,
+                "shadowRadius": 8,
               }
             }
           >
@@ -5533,8 +5772,7 @@ exports[`The Auth Entry component should render with a value 1`] = `
                 >
                   <View
                     accessible={true}
-                    clickable={false}
-                    isTVSelectable={true}
+                    focusable={false}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -5561,6 +5799,7 @@ exports[`The Auth Entry component should render with a value 1`] = `
                           "justifyContent": "center",
                           "overflow": "hidden",
                           "paddingHorizontal": 16,
+                          "shadowOpacity": 0,
                         }
                       }
                     >
@@ -5591,6 +5830,13 @@ exports[`The Auth Entry component should render with a value 1`] = `
                     "marginHorizontal": 0,
                     "marginVertical": 0,
                     "paddingTop": 0,
+                    "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                    "shadowOffset": Object {
+                      "height": 2,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0,
+                    "shadowRadius": 8,
                   }
                 }
               >
@@ -5662,13 +5908,16 @@ exports[`The Auth Entry component should render with a value 1`] = `
                                 rejectResponderTermination={true}
                                 returnKeyType="next"
                                 style={
-                                  Object {
-                                    "color": "#303030",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 14,
-                                    "height": 38,
-                                    "paddingVertical": 0,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#303030",
+                                      "fontFamily": "InterUI-Bold",
+                                      "fontSize": 14,
+                                      "height": 38,
+                                      "paddingVertical": 0,
+                                    },
+                                    undefined,
+                                  ]
                                 }
                                 underlineColorAndroid="transparent"
                               />
@@ -5703,9 +5952,9 @@ exports[`The Auth Entry component should render with a value 1`] = `
                                   Object {
                                     "backgroundColor": "transparent",
                                     "color": "#A5A5A5",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 12,
-                                    "lineHeight": 18,
+                                    "fontFamily": "InterUI-Medium",
+                                    "fontSize": 14,
+                                    "lineHeight": 21,
                                     "paddingVertical": 4,
                                   }
                                 }
@@ -5786,28 +6035,29 @@ exports[`The Auth Entry component should render with a value 1`] = `
         </View>
       </View>
     </RCTScrollView>
-  </View>
-</View>
+  </View>,
+]
 `;
 
 exports[`The Auth Entry component should render with an alternate login option with default text 1`] = `
-<View
-  onLayout={[Function]}
-  style={
-    Array [
-      Object {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      },
-      Object {
-        "paddingBottom": 0,
-      },
-    ]
-  }
->
+Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <BVLinearGradient
     colors={
       Array [
@@ -5840,18 +6090,18 @@ exports[`The Auth Entry component should render with an alternate login option w
         "top": 0,
       }
     }
-  />
+  />,
   <View
     onLayout={[Function]}
-    pointerEvents="box-none"
     style={
-      Object {
-        "height": "100%",
-        "paddingBottom": 0,
-        "paddingLeft": 0,
-        "paddingRight": 0,
-        "paddingTop": 20,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
     }
   >
     <RCTScrollView
@@ -5900,6 +6150,13 @@ exports[`The Auth Entry component should render with an alternate login option w
                 "borderRadius": 16,
                 "marginHorizontal": 0,
                 "marginVertical": 0,
+                "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                "shadowOffset": Object {
+                  "height": 2,
+                  "width": 0,
+                },
+                "shadowOpacity": 1,
+                "shadowRadius": 8,
               }
             }
           >
@@ -5929,8 +6186,7 @@ exports[`The Auth Entry component should render with an alternate login option w
                 >
                   <View
                     accessible={true}
-                    clickable={false}
-                    isTVSelectable={true}
+                    focusable={false}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -5957,6 +6213,7 @@ exports[`The Auth Entry component should render with an alternate login option w
                           "justifyContent": "center",
                           "overflow": "hidden",
                           "paddingHorizontal": 16,
+                          "shadowOpacity": 0,
                         }
                       }
                     >
@@ -5985,8 +6242,7 @@ exports[`The Auth Entry component should render with an alternate login option w
                 >
                   <View
                     accessible={true}
-                    clickable={true}
-                    isTVSelectable={true}
+                    focusable={true}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -6012,6 +6268,7 @@ exports[`The Auth Entry component should render with an alternate login option w
                           "justifyContent": "center",
                           "overflow": "hidden",
                           "paddingHorizontal": 16,
+                          "shadowOpacity": 0,
                         }
                       }
                     >
@@ -6041,6 +6298,13 @@ exports[`The Auth Entry component should render with an alternate login option w
                     "marginHorizontal": 0,
                     "marginVertical": 0,
                     "paddingTop": 0,
+                    "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                    "shadowOffset": Object {
+                      "height": 2,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0,
+                    "shadowRadius": 8,
                   }
                 }
               >
@@ -6112,13 +6376,16 @@ exports[`The Auth Entry component should render with an alternate login option w
                                 rejectResponderTermination={true}
                                 returnKeyType="next"
                                 style={
-                                  Object {
-                                    "color": "#303030",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 14,
-                                    "height": 38,
-                                    "paddingVertical": 0,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#303030",
+                                      "fontFamily": "InterUI-Bold",
+                                      "fontSize": 14,
+                                      "height": 38,
+                                      "paddingVertical": 0,
+                                    },
+                                    undefined,
+                                  ]
                                 }
                                 underlineColorAndroid="transparent"
                               />
@@ -6153,9 +6420,9 @@ exports[`The Auth Entry component should render with an alternate login option w
                                   Object {
                                     "backgroundColor": "transparent",
                                     "color": "#A5A5A5",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 12,
-                                    "lineHeight": 18,
+                                    "fontFamily": "InterUI-Medium",
+                                    "fontSize": 14,
+                                    "lineHeight": 21,
                                     "paddingVertical": 4,
                                   }
                                 }
@@ -6236,28 +6503,29 @@ exports[`The Auth Entry component should render with an alternate login option w
         </View>
       </View>
     </RCTScrollView>
-  </View>
-</View>
+  </View>,
+]
 `;
 
 exports[`The Auth Entry component should render with keyboard vertical offset for Android 1`] = `
-<View
-  onLayout={[Function]}
-  style={
-    Array [
-      Object {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      },
-      Object {
-        "paddingBottom": 0,
-      },
-    ]
-  }
->
+Array [
+  <View
+    onLayout={[Function]}
+    pointerEvents="box-none"
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {},
+      ]
+    }
+  />,
   <BVLinearGradient
     colors={
       Array [
@@ -6290,18 +6558,18 @@ exports[`The Auth Entry component should render with keyboard vertical offset fo
         "top": 0,
       }
     }
-  />
+  />,
   <View
     onLayout={[Function]}
-    pointerEvents="box-none"
     style={
-      Object {
-        "height": "100%",
-        "paddingBottom": 0,
-        "paddingLeft": 0,
-        "paddingRight": 0,
-        "paddingTop": 0,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
     }
   >
     <RCTScrollView
@@ -6350,6 +6618,13 @@ exports[`The Auth Entry component should render with keyboard vertical offset fo
                 "borderRadius": 16,
                 "marginHorizontal": 0,
                 "marginVertical": 0,
+                "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                "shadowOffset": Object {
+                  "height": 2,
+                  "width": 0,
+                },
+                "shadowOpacity": 1,
+                "shadowRadius": 8,
               }
             }
           >
@@ -6388,8 +6663,7 @@ exports[`The Auth Entry component should render with keyboard vertical offset fo
                   >
                     <View
                       accessible={true}
-                      clickable={false}
-                      isTVSelectable={true}
+                      focusable={false}
                       onClick={[Function]}
                       onResponderGrant={[Function]}
                       onResponderMove={[Function]}
@@ -6416,6 +6690,7 @@ exports[`The Auth Entry component should render with keyboard vertical offset fo
                             "justifyContent": "center",
                             "overflow": "hidden",
                             "paddingHorizontal": 16,
+                            "shadowOpacity": 0,
                           }
                         }
                       >
@@ -6447,6 +6722,13 @@ exports[`The Auth Entry component should render with keyboard vertical offset fo
                     "marginHorizontal": 0,
                     "marginVertical": 0,
                     "paddingTop": 0,
+                    "shadowColor": "rgba(0, 0, 0, 0.09999999999999998)",
+                    "shadowOffset": Object {
+                      "height": 2,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0,
+                    "shadowRadius": 8,
                   }
                 }
               >
@@ -6518,13 +6800,16 @@ exports[`The Auth Entry component should render with keyboard vertical offset fo
                                 rejectResponderTermination={true}
                                 returnKeyType="next"
                                 style={
-                                  Object {
-                                    "color": "#303030",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 14,
-                                    "height": 38,
-                                    "paddingVertical": 0,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#303030",
+                                      "fontFamily": "InterUI-Bold",
+                                      "fontSize": 14,
+                                      "height": 38,
+                                      "paddingVertical": 0,
+                                    },
+                                    undefined,
+                                  ]
                                 }
                                 underlineColorAndroid="transparent"
                               />
@@ -6559,9 +6844,9 @@ exports[`The Auth Entry component should render with keyboard vertical offset fo
                                   Object {
                                     "backgroundColor": "transparent",
                                     "color": "#A5A5A5",
-                                    "fontFamily": "InterUI-Bold",
-                                    "fontSize": 12,
-                                    "lineHeight": 18,
+                                    "fontFamily": "InterUI-Medium",
+                                    "fontSize": 14,
+                                    "lineHeight": 21,
                                     "paddingVertical": 4,
                                   }
                                 }
@@ -6644,6 +6929,6 @@ exports[`The Auth Entry component should render with keyboard vertical offset fo
         </View>
       </View>
     </RCTScrollView>
-  </View>
-</View>
+  </View>,
+]
 `;

@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AsyncStorage from '@react-native-community/async-storage';
-import { ApolloConsumer } from 'react-apollo';
+import { ApolloConsumer } from '@apollo/client';
 import gql from 'graphql-tag';
 import { track } from '@apollosproject/ui-analytics';
-import { GET_PUSH_ID, updatePushId } from '@apollosproject/ui-notifications';
 import { LoginProvider } from './LoginProvider';
 import { GET_LOGIN_STATE } from './queries';
 
@@ -21,15 +20,23 @@ export const GET_AUTH_TOKEN = gql`
   }
 `;
 
+const UPDATE_PUSH_ID = gql`
+  mutation updateUserPushSettings($input: PushSettingsInput!) {
+    updateUserPushSettings(input: $input) {
+      id
+    }
+  }
+`;
+
 export const resolvers = {
   Query: {
     authToken: () => AsyncStorage.getItem('authToken'),
-    isLoggedIn: (_root, _args, { cache }) => {
+    isLoggedIn: async (_root, _args, { client }) => {
       // When logging out, this query returns an error.
       // Rescue the error, and return false.
       try {
-        const { authToken } = cache.readQuery({ query: GET_AUTH_TOKEN });
-        return !!authToken;
+        const { data } = await client.query({ query: GET_AUTH_TOKEN });
+        return !!data.authToken;
       } catch (e) {
         return false;
       }
@@ -55,16 +62,23 @@ export const resolvers = {
           query: GET_LOGIN_STATE,
           data: { isLoggedIn: true },
         });
-        await cache.writeData({
-          data: { authToken },
-        });
 
+        // shouldn't import the client query or push mutations from
+        // ui-notifications because that package already depends on login
+        // state from this package
         const { data: { pushId } = { data: {} } } = await client.query({
-          query: GET_PUSH_ID,
+          query: gql`
+            query {
+              pushId @client
+            }
+          `,
         });
 
         if (pushId) {
-          updatePushId({ pushId, client });
+          client.mutate({
+            mutation: UPDATE_PUSH_ID,
+            variables: { input: { pushProviderUserId: pushId } },
+          });
         }
 
         track({ eventName: 'UserLogin', client });
