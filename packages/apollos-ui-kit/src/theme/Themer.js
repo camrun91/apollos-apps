@@ -83,6 +83,7 @@ NamedWithTheme.propTypes = {
   initialProps: PropTypes.shape({}),
 };
 
+// eslint-disable-next-line react/display-name
 const named = (name) => (Component) => (props) => {
   return (
     <NamedWithTheme name={name} Component={Component} initialProps={props} />
